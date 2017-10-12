@@ -56,6 +56,7 @@ public class Engine
 
 	public static void gameLoop() {
 
+		window.actualiserMagasin();
 		while (!jeuFini)
 		{
 
@@ -66,7 +67,6 @@ public class Engine
 			{
 				regulation();
 				window.actualiserBesoins();
-				window.actualiserMagasin();
 			}
 
 			try
@@ -79,7 +79,6 @@ public class Engine
 			}
 
 			window.actualiserBesoins();
-			window.actualiserMagasin();
 
 			journee = new Jour(journee);
 			boolean temp = journee.declencherJour(window);
