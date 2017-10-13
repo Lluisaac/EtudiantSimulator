@@ -49,8 +49,6 @@ public class Engine
 		
 		ListeObjets listeObjets = new ListeObjets();
 		
-		System.out.println(listeObjets);
-		
 		gameLoop();
 	}
 

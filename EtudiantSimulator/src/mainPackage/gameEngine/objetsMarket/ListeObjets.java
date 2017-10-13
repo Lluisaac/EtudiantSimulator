@@ -44,7 +44,7 @@ public class ListeObjets {
 				attributs[j] = Float.parseFloat(listeAttributs[j]);
 			}
 
-			if (objetsInfo[0] == "Upgrade") {
+			if (objetsInfo[0].equals("Upgrade")) {
 				ListeObjets.listeObjets.add(new ObjetUpgrade(objetsInfo[1], attributs));
 			} else {
 				ListeObjets.listeObjets.add(new ObjetBonus(objetsInfo[1], attributs));

@@ -42,7 +42,6 @@ public abstract class ObjetGeneral {
 	abstract public void affectation(Player player);
 
 	public ArrayList<String> toTabString() {
-
 		ArrayList<String> string = new ArrayList<String>();
 		for (int i = 0; i < this.attributs.length-1; i++) {
 			if (this.attributs[i] != 0) {

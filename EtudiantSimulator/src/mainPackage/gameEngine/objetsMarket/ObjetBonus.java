@@ -17,7 +17,6 @@ public class ObjetBonus extends ObjetGeneral {
 
 	@Override
 	public void affectation(Player player) {
-
 		if(!this.getPurchaseDate().superieurDate(Engine.journee.getDate() )) 
 			//Vérifie que PurchaseDate soit dépassé ou égal a la date de validité
 		{
