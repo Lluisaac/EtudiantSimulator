@@ -30,10 +30,10 @@ public class ListeObjets {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String[] temp = content.split("#");
-		String[] contentTab = temp[1].split("\n");
+		
+String[] contentTab = content.split("\n");
 
-		for (int i = 0; i < contentTab.length; i++) {
+		for (int i = 0; i < contentTab.length-1; i++) {
 
 			String[] objetsInfo = contentTab[i].split(";");
 
