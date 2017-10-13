@@ -13,7 +13,7 @@ public class Jour {
 
 	private int tempsLibreJ;
 
-	private int[][] listeJoursFeries;
+	private static int[][] listeJoursFeries;
 
 	public Jour() {
 		this.date = new Date();
@@ -22,7 +22,6 @@ public class Jour {
 
 	public Jour(Jour jourPrecedent) {
 		// On conserve la liste des jours feries
-		this.listeJoursFeries = jourPrecedent.listeJoursFeries;
 		this.date = jourPrecedent.date.dateJourSuivant();
 	}
 
@@ -30,8 +29,8 @@ public class Jour {
 
 		boolean r = false;
 
-		for (int i = 0; i < this.listeJoursFeries.length; i++) {
-			if (this.listeJoursFeries[i][0] == this.date.getJour() && this.listeJoursFeries[i][1] == this.date.getMois()) {
+		for (int i = 0; i < Jour.listeJoursFeries.length; i++) {
+			if (Jour.listeJoursFeries[i][0] == this.date.getJour() && Jour.listeJoursFeries[i][1] == this.date.getMois()) {
 				r = true;
 			}
 		}
@@ -41,11 +40,11 @@ public class Jour {
 
 	private void genererJoursFeries() {
 
-		this.listeJoursFeries = new int[11][2];
-		for (int i = 0; i < this.listeJoursFeries.length; i++) {
+		Jour.listeJoursFeries = new int[11][2];
+		for (int i = 0; i < Jour.listeJoursFeries.length; i++) {
 			Random rand = new Random();
-			this.listeJoursFeries[i][0] = rand.nextInt(28) + 1;
-			this.listeJoursFeries[i][1] = rand.nextInt(12) + 1;
+			Jour.listeJoursFeries[i][0] = rand.nextInt(28) + 1;
+			Jour.listeJoursFeries[i][1] = rand.nextInt(12) + 1;
 		}
 	}
 
@@ -65,6 +64,7 @@ public class Jour {
 			mainWindow.mettreIcone("checklist.gif");
 			mainWindow.activerButtonSuivant();
 			mainWindow.setValider(false);
+			mainWindow.actualiserMagasin();
 		}
 
 		if (this.getJour() == 28) {

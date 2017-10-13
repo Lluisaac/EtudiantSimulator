@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
+import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.objetsMarket.ObjetGeneral;
 import mainPackage.gameEngine.player.Player;
 
@@ -50,6 +51,8 @@ public class JPanelMarketElement extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == this.buttonAcheter) {
+			this.objG.setDebloque(false);
+			Engine.getWindow().actualiserMagasin();
 			this.objG.affectation(this.player);
 		}
 	}

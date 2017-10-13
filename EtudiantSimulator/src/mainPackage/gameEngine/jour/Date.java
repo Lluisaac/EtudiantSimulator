@@ -33,7 +33,7 @@ public class Date {
 	}
 
 	/*
-	 * Voila les 6 seules méthodes qui vont Ãªtre utilisées en dehors de cette
+	 * Voila les 6 seules mï¿½thodes qui vont Ãªtre utilisï¿½es en dehors de cette
 	 * classe.
 	 */
 
@@ -46,16 +46,16 @@ public class Date {
 	}
 
 	public Date dateJourSuivant() {
-		// Va créer une Date a partir de la précédente.
+		// Va crï¿½er une Date a partir de la prï¿½cï¿½dente.
 		Date d = new Date(this);
 		d.addJour(1);
 		return d;
 	}
 
 	public void addJour(int i) {
-		// Va changer la date pour que ce soit i jours après l'actuel
+		// Va changer la date pour que ce soit i jours aprï¿½s l'actuel
 		// i >= 0
-		if (this.getJour() + i < 28) {
+		if (this.getJour() + i <= 28) {
 			this.setJour(this.getJour() + i);
 		} else {
 			this.addMois((getJour() + i) / 28);
@@ -65,9 +65,9 @@ public class Date {
 	}
 
 	public void addMois(int i) {
-		// Va changer la date pour que ce soit i mois après l'actuel
+		// Va changer la date pour que ce soit i mois aprï¿½s l'actuel
 		// i >= 0
-		if (this.getMois() + i < 10) {
+		if (this.getMois() + i <= 10) {
 			this.setMois(this.getMois() + i);
 		} else {
 			this.addAnnee((getMois() + i) / 10);
@@ -77,14 +77,14 @@ public class Date {
 	}
 
 	public void addAnnee(int i) {
-		// Va changer la date pour que ce soit i années après l'actuelle
+		// Va changer la date pour que ce soit i annï¿½es aprï¿½s l'actuelle
 		// i >= 0
 		this.setAnnee(this.getAnnee() + i);
 	}
 	
 	
 	public boolean superieurDate(Date date)
-	// Vèrifie que la date objet soit superieur a la date parametre
+	// Vï¿½rifie que la date objet soit superieur a la date parametre
 	{
 		if(this.getAnnee()>date.getAnnee())
 		{
@@ -120,7 +120,7 @@ public class Date {
 	}
 
 	/*
-	 * A priori il ne faudra pas utiliser les méthodes qui suivent.
+	 * A priori il ne faudra pas utiliser les mï¿½thodes qui suivent.
 	 */
 	private void setJour(int i) {
 		String[] temp = date.split("/");

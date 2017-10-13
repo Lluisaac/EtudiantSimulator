@@ -49,13 +49,12 @@ public class Engine
 		
 		ListeObjets listeObjets = new ListeObjets();
 		
-		System.out.println(listeObjets);
-		
 		gameLoop();
 	}
 
 	public static void gameLoop() {
 
+		window.actualiserMagasin();
 		while (!jeuFini)
 		{
 
@@ -66,7 +65,6 @@ public class Engine
 			{
 				regulation();
 				window.actualiserBesoins();
-				window.actualiserMagasin();
 			}
 
 			try
@@ -79,7 +77,6 @@ public class Engine
 			}
 
 			window.actualiserBesoins();
-			window.actualiserMagasin();
 
 			journee = new Jour(journee);
 			boolean temp = journee.declencherJour(window);
@@ -322,5 +319,9 @@ public class Engine
 			}
 			return player = new Player(ListeFilieres.getListeFilDebloquees().get(filiaireID), false);
 		}
+	}
+	
+	public static MainWindow getWindow() {
+		return window;
 	}
 }

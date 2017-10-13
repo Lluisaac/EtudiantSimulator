@@ -9,16 +9,15 @@ import mainPackage.graphicsEngine.window.MainWindow;
 @SuppressWarnings("unused")
 public class ObjetBonus extends ObjetGeneral {
 
-	public ObjetBonus(String nom, float[] attribut) {
-		super(nom, attribut);
+	public ObjetBonus(String nom, float[] attribut, boolean debloque) {
+		super(nom, attribut, debloque);
 		String[] titres = {"Prix", "Savoir", "Faim", "Fatigue", "Bonheur", "Tmps Perdu" ,"Durabilité"};
 		this.setTitres(titres);
 	}
 
 	@Override
 	public void affectation(Player player) {
-
-		if(!this.getPurchaseDate().superieurDate(Engine.journee.getDate() )) 
+		if( (!this.getPurchaseDate().superieurDate(Engine.journee.getDate() ) && this.isDebloque() )) 
 			//Vérifie que PurchaseDate soit dépassé ou égal a la date de validité
 		{
 			player.setArgent(player.getArgent() - this.attributs[0]);

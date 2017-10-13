@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -26,6 +27,7 @@ import javax.swing.border.TitledBorder;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.objetsMarket.ListeObjets;
+import mainPackage.gameEngine.objetsMarket.ObjetGeneral;
 import mainPackage.graphicsEngine.component.JPanelJour;
 import mainPackage.graphicsEngine.component.JPanelMarketElement;
 import mainPackage.graphicsEngine.component.JPanelModifier;
@@ -133,8 +135,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 		this.buildMainWindow();
 
-		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + "€");
-		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + "€");
+		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + "ï¿½");
+		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + "ï¿½");
 		
 		this.buttonValider.setEnabled(true);
 
@@ -285,9 +287,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 	public void actualiserMagasin() {
 
 		this.panelMagasin.removeAll();
-		if (ListeObjets.getlisteObjets().size() > 0) {
-			for (int i = 0; i < ListeObjets.getlisteObjets().size(); i++) {
-				this.panelMagasin.add(new JPanelMarketElement(ListeObjets.getlisteObjets().get(i), Engine.getPlayer()));
+		ArrayList<ObjetGeneral> temp = ListeObjets.getlisteObjetsDebloques();
+		if (temp.size() > 0) {
+			for (int i = 0; i < temp.size(); i++) {
+				this.panelMagasin.add(new JPanelMarketElement(temp.get(i), Engine.getPlayer()));
 			}
 		}
 
@@ -307,7 +310,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 	public void actualiserBesoins() 
 	{
 
-		this.labelArgent.setText("Argent: " + (int) Engine.getPlayer().getArgent() + "€");
+		this.labelArgent.setText("Argent: " + (int) Engine.getPlayer().getArgent() + "ï¿½");
 		this.labelSavoir.setText("Savoir: " + (int) Engine.getPlayer().getSavoir());
 		this.labelFaim.setText("Faim: " + (int) Engine.getPlayer().getFaim() + "%");
 		this.labelFatigue.setText("Fatigue: " + (int) Engine.getPlayer().getFatigue() + "%");
@@ -400,8 +403,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		this.labelArgent.setForeground(Color.GREEN);
 		this.labelFatigue.setForeground(Color.BLACK);
 		this.panelModifieur.cleanModifier();
-		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + "€");
-		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + "€");
+		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + "ï¿½");
+		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + "ï¿½");
 	}
 	
 	@Override

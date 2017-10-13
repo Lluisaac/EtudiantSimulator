@@ -9,16 +9,15 @@ import mainPackage.graphicsEngine.window.MainWindow;
 @SuppressWarnings("unused")
 public class ObjetUpgrade extends ObjetGeneral {
 	
-	public ObjetUpgrade(String nom, float[] attribut) {
-		super(nom, attribut);
+	public ObjetUpgrade(String nom, float[] attribut, boolean debloque) {
+		super(nom, attribut, debloque);
 		String[] titres = {"Prix", "Argent J", "Savoir J", "Faim J", "Fatigue J", "Bonheur J", "Tmps Libre", "Durabilité"};
 		this.setTitres(titres);
 	}
 
 	@Override
 	public void affectation(Player player) {
-
-		if( !this.getPurchaseDate().superieurDate(Engine.journee.getDate()))
+		if( (!this.getPurchaseDate().superieurDate(Engine.journee.getDate()) && this.isDebloque()))
 		{
 			player.setArgent(player.getArgent() - this.attributs[0]);
 			player.setArgentJ((int) (player.getArgentJ() + this.attributs[1]));
