@@ -30,9 +30,14 @@ public class ListeObjets {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+String[] contentTab = content.split("\n");
 
+<<<<<<< HEAD
 		String[] contentTab = content.split("\n");
 
+=======
+>>>>>>> 3effa97493ff1e3e19374f0411556f7e2a6bf9f3
 		for (int i = 0; i < contentTab.length-1; i++) {
 
 			String[] objetsInfo = contentTab[i].split(";");
@@ -46,6 +51,13 @@ public class ListeObjets {
 			
 			Boolean debloque;
 			
+<<<<<<< HEAD
+=======
+			String test= objetsInfo[3];
+			System.out.print(test);
+			System.out.println(test.equals("true"));
+			
+>>>>>>> 3effa97493ff1e3e19374f0411556f7e2a6bf9f3
 			debloque=objetsInfo[3].equals("true");
 			
 			if (objetsInfo[0].equals("Upgrade")) {
