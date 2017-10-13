@@ -83,6 +83,7 @@ public class Engine
 			jeuFini = temp;
 
 			window.mettreJour();
+			ListeObjets.refreshListeObjets();
 			window.creerContenuJour();
 		}
 	}

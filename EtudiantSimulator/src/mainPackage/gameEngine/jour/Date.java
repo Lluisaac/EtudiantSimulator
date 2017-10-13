@@ -148,5 +148,9 @@ public class Date {
 			this.setDate(temp[0] + "/" + temp[1] + "/" + i);
 		}
 	}
+	
+	public boolean equals(Date date) {
+		return this.getDate().equals(date.getDate());
+	}
 
 }

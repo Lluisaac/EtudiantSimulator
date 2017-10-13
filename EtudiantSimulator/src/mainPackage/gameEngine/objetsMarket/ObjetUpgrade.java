@@ -17,19 +17,20 @@ public class ObjetUpgrade extends ObjetGeneral {
 
 	@Override
 	public void affectation(Player player) {
-		if( (!this.getPurchaseDate().superieurDate(Engine.journee.getDate()) && this.isDebloque()))
-		{
+		if( (!this.getPurchaseDate().superieurDate(Engine.journee.getDate()) && this.isDebloque())) {
+			
 			player.setArgent(player.getArgent() - this.attributs[0]);
 			player.setArgentJ((int) (player.getArgentJ() + this.attributs[1]));
 			player.setSavoirJ((int) (player.getSavoirJ() + this.attributs[2]));
 			player.setFaimJ((int) (player.getFaimJ() + this.attributs[3]));
 			player.setFatigueJ((int) (player.getFatigueJ() + this.attributs[4]));
 			player.setBonheurJ((int) (player.getBonheurJ() + this.attributs[5]));
+			
 			Engine.journee.setTempsLibreJ((int) (Engine.journee.getTempsLibreJ() + this.attributs[6]));
 			Date newDate=new Date(Engine.journee.getDate());
 			newDate.addJour(Math.round(this.attributs[7]));
 			this.setPurchaseDate(newDate);
+			this.setDebloque(false);
 		}
 	}
-	//GitHub Test
 }

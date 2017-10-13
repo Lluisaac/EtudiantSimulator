@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import mainPackage.gameEngine.Engine;
+
 public class ListeObjets {
 
 	private static ArrayList<ObjetGeneral> listeObjets = new ArrayList<ObjetGeneral>();
@@ -56,9 +58,16 @@ public class ListeObjets {
 		}
 	}
 
-	public static ArrayList<ObjetGeneral> getlisteObjets() {
+	public static ArrayList<ObjetGeneral> getListeObjets() {
 
 		return listeObjets;
+	}
+	
+	public static void refreshListeObjets() {
+		for (int i = 0; i < ListeObjets.getListeObjets().size(); i++) {
+			ListeObjets.getListeObjets().get(i).refreshDebloque();
+		}
+		Engine.getWindow().actualiserMagasin();
 	}
 	
 	public static ArrayList<ObjetGeneral> getlisteObjetsDebloques() {
