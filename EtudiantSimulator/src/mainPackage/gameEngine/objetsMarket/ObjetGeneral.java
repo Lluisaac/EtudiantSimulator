@@ -10,20 +10,20 @@ import mainPackage.gameEngine.player.Player;
 public abstract class ObjetGeneral {
 
 	private String nom;
-
 	protected float[] attributs;
 
 	private String[] titres;
 	private Date purchaseDate;
 	
-	private boolean debloque = true;
+	private boolean debloque;
 
-	public ObjetGeneral(String nom, float[] attribut) {
+	public ObjetGeneral(String nom, float[] attribut, boolean debloque) {
 		this.nom = nom;
 		this.attributs = attribut;
 		this.purchaseDate = new Date();
+		this.debloque=debloque;
 	}
-
+	
 	public String getNom() {
 
 		return this.nom;

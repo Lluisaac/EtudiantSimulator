@@ -43,11 +43,26 @@ public class ListeObjets {
 			for (int j = 0; j < listeAttributs.length; j++) {
 				attributs[j] = Float.parseFloat(listeAttributs[j]);
 			}
-
+			
+			Boolean debloque;
+			
+			String test= objetsInfo[3];
+			System.out.print(test);
+			System.out.println(test.equals("true"));
+			
+			if(objetsInfo[3].equals("true"))
+			{
+				debloque=true;
+			}
+			else
+			{
+				debloque=false;
+			}
+			
 			if (objetsInfo[0].equals("Upgrade")) {
-				ListeObjets.listeObjets.add(new ObjetUpgrade(objetsInfo[1], attributs));
+				ListeObjets.listeObjets.add(new ObjetUpgrade(objetsInfo[1], attributs,debloque));
 			} else {
-				ListeObjets.listeObjets.add(new ObjetBonus(objetsInfo[1], attributs));
+				ListeObjets.listeObjets.add(new ObjetBonus(objetsInfo[1], attributs,debloque ));
 			}
 		}
 	}
