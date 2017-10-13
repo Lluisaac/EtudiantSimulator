@@ -30,8 +30,8 @@ public class ListeObjets {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		String[] contentTab = content.split("\n");
+		String[] temp = content.split("#");
+		String[] contentTab = temp[1].split("\n");
 
 		for (int i = 0; i < contentTab.length; i++) {
 
@@ -50,14 +50,7 @@ public class ListeObjets {
 			System.out.print(test);
 			System.out.println(test.equals("true"));
 			
-			if(objetsInfo[3].equals("true"))
-			{
-				debloque=true;
-			}
-			else
-			{
-				debloque=false;
-			}
+			debloque=objetsInfo[3].equals("true");
 			
 			if (objetsInfo[0].equals("Upgrade")) {
 				ListeObjets.listeObjets.add(new ObjetUpgrade(objetsInfo[1], attributs,debloque));
