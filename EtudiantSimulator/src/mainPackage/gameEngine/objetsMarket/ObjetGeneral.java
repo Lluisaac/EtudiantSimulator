@@ -4,7 +4,6 @@ package mainPackage.gameEngine.objetsMarket;
 
 import java.util.ArrayList;
 
-import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
 import mainPackage.gameEngine.player.Player;
 
@@ -23,6 +22,10 @@ public abstract class ObjetGeneral {
 		this.attributs = attribut;
 		this.purchaseDate = new Date();
 		this.debloque=debloque;
+	}
+	
+	public boolean equals(ObjetGeneral objet) {
+		return this.nom.equals(objet.getNom());
 	}
 	
 	public String getNom() {
@@ -68,11 +71,7 @@ public abstract class ObjetGeneral {
 		return this.debloque;
 	}
 	
-	public void refreshDebloque() {
-		if (Engine.journee.getDate().equals(this.getPurchaseDate())) {
-			this.setDebloque(true);
-		}
-	}
+	abstract public void refreshDebloque();
 	
 	public void setDebloque(boolean b) {
 		this.debloque = b;

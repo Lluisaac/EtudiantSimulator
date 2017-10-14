@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class Filiere {
 
-	private final int duree;
 	private String nom;
+	private final int duree;
 	private int[] heures;
 	private int savoirRequis;
 	private boolean debloque;
@@ -27,6 +27,39 @@ public class Filiere {
 		this.debloque = ListeFilieres.getFiliere(i).debloque;
 	}
 
+	public Filiere(String save) {
+		String[] content = save.split(",");
+		this.nom = content[0];
+		this.duree = Integer.parseInt(content[1]);
+
+		
+		String[] val = content[2].split("_");
+		int[] heures = new int[val.length];
+		for (int i = 0; i < val.length; i++) {
+			heures[i] = Integer.parseInt(val[i]);
+		}
+		this.heures = heures;
+		
+		this.savoirRequis = Integer.parseInt(content[3]);
+		this.debloque = Boolean.parseBoolean(content[4]);
+	}
+	
+	public String toString() {
+		String r = this.nom + "," + this.duree + ",";
+		
+		for (int i = 0; i < this.heures.length; i++) {
+			if (i < this.heures.length - 1) {
+				r += this.heures[i] + "_";				
+			}
+			else {
+				r += this.heures[i];				
+			}
+		}
+		r+= "," + savoirRequis + "," + debloque;
+		
+		return r;
+	}
+
 	public int getDuree() {
 
 		return duree;
@@ -35,12 +68,6 @@ public class Filiere {
 	public String getNom() {
 
 		return nom;
-	}
-
-	@Override
-	public String toString() {
-
-		return this.nom;
 	}
 
 	public int getTempsTravail(int i) {

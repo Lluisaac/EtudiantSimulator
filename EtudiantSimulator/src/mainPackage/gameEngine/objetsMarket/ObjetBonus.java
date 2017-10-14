@@ -32,4 +32,11 @@ public class ObjetBonus extends ObjetGeneral {
 			this.setDebloque(false);
 		}
 	}
+
+	@Override
+	public void refreshDebloque() {
+		if (Engine.journee.getDate().equals(this.getPurchaseDate())) {
+			this.setDebloque(true);
+		}
+	}
 }

@@ -13,7 +13,7 @@ public class Jour {
 
 	private int tempsLibreJ;
 
-	private static int[][] listeJoursFeries;
+	private static Date[] listeJoursFeries;
 
 	public Jour() {
 		this.date = new Date();
@@ -21,16 +21,45 @@ public class Jour {
 	}
 
 	public Jour(Jour jourPrecedent) {
-		// On conserve la liste des jours feries
+		//Chaque année, de nouveaux jours feriés!
+		if (jourPrecedent.date.getAnnee() < jourPrecedent.date.dateJourSuivant().getAnnee()) {
+			genererJoursFeries();
+		}
 		this.date = jourPrecedent.date.dateJourSuivant();
+
+	}
+	
+	public Jour(String save) {
+		String[] val = save.split(";");
+		String[] val2 = val[1].split(",");
+		
+		this.date = new Date(val[0]);
+		
+		this.genererJoursFeries();
+		for (int i = 0; i < val2.length; i++) {
+			Jour.listeJoursFeries[i] = new Date(val2[i]);
+		}
 	}
 
+	public String toString() {
+		String r = this.date.toString() + ";";
+		
+		for (int i = 0; i < Jour.listeJoursFeries.length; i++) {
+			r += Jour.listeJoursFeries[i].toString();
+					
+			if (i < Jour.listeJoursFeries.length - 1) {
+				r += ",";
+			}
+		}
+		return r + ";";
+	}
+	
 	private boolean isJourFerie() {
 
 		boolean r = false;
 
 		for (int i = 0; i < Jour.listeJoursFeries.length; i++) {
-			if (Jour.listeJoursFeries[i][0] == this.date.getJour() && Jour.listeJoursFeries[i][1] == this.date.getMois()) {
+			if (Jour.listeJoursFeries[i].equals(this.date)) {
 				r = true;
 			}
 		}
@@ -39,12 +68,11 @@ public class Jour {
 	}
 
 	private void genererJoursFeries() {
-
-		Jour.listeJoursFeries = new int[11][2];
+		Jour.listeJoursFeries = new Date[11];
+		Random rand = new Random();
 		for (int i = 0; i < Jour.listeJoursFeries.length; i++) {
-			Random rand = new Random();
-			Jour.listeJoursFeries[i][0] = rand.nextInt(28) + 1;
-			Jour.listeJoursFeries[i][1] = rand.nextInt(12) + 1;
+			Jour.listeJoursFeries[i] = new Date(rand.nextInt(28) + 1, rand.nextInt(10) + 1, this.date.getAnnee());
+			
 		}
 	}
 
@@ -58,9 +86,9 @@ public class Jour {
 
 		if (this.date.getJour() % 14 == 1) {
 			mainWindow.mettreIcone("calendar.gif");
-			Engine.saveGame();
 		}
 		else if (this.getJour() % 14 == 0) {
+			Engine.saveGame();
 			mainWindow.mettreIcone("checklist.gif");
 			mainWindow.activerButtonSuivant();
 			mainWindow.setValider(false);

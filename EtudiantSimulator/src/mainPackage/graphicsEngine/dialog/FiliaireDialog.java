@@ -46,7 +46,7 @@ public class FiliaireDialog extends JDialog implements ActionListener {
 			while (filiaires.get(i) == null) {
 				i = rand.nextInt(filiaires.size());
 			}
-			this.buttons[j].setText(filiaires.get(i).toString());
+			this.buttons[j].setText(filiaires.get(i).getNom());
 			this.filiaireIds[j] = i;
 			filiaires.set(i, null);
 		}

@@ -33,4 +33,15 @@ public class ObjetUpgrade extends ObjetGeneral {
 			this.setDebloque(false);
 		}
 	}
+
+	public void refreshDebloque() {
+		if (Engine.journee.getDate().equals(this.getPurchaseDate())) {
+			this.setDebloque(true);
+			Engine.getPlayer().setArgentJ((int) (Engine.getPlayer().getArgentJ() - this.attributs[1]));
+			Engine.getPlayer().setSavoirJ((int) (Engine.getPlayer().getSavoirJ() - this.attributs[2]));
+			Engine.getPlayer().setFaimJ((int) (Engine.getPlayer().getFaimJ() - this.attributs[3]));
+			Engine.getPlayer().setFatigueJ((int) (Engine.getPlayer().getFatigueJ() - this.attributs[4]));
+			Engine.getPlayer().setBonheurJ((int) (Engine.getPlayer().getBonheurJ() - this.attributs[5]));
+		}
+	}
 }

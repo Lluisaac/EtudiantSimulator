@@ -22,14 +22,22 @@ public class Date {
 		}
 
 		if (a < 10) {
-			date += "0" + a + "/";
+			date += "0" + a;
 		} else {
-			date += a + "/";
+			date += a;
 		}
 	}
 
 	public Date(Date date) {
 		this.date = date.date.toString();
+	}
+	
+	public Date(String date) {
+		this.date = date;
+	}
+	
+	public String toString() {
+		return this.date;
 	}
 
 	/*
@@ -86,15 +94,15 @@ public class Date {
 	public boolean superieurDate(Date date)
 	// V�rifie que la date objet soit superieur a la date parametre
 	{
-		if(this.getAnnee()>date.getAnnee())
+		if(this.getAnnee() > date.getAnnee())
 		{
 			return true;
 		}
-		else if(this.getMois()>date.getMois())
+		else if(this.getMois() > date.getMois())
 		{
 			return true;
 		}
-		else if(this.getJour()>date.getJour())
+		else if(this.getJour() > date.getJour())
 		{
 			return true;
 		}

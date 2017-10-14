@@ -6,12 +6,58 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import mainPackage.gameEngine.Engine;
+import mainPackage.gameEngine.jour.Date;
 
 public class ListeObjets {
 
 	private static ArrayList<ObjetGeneral> listeObjets = new ArrayList<ObjetGeneral>();
 
-	public ListeObjets() {
+	public static ArrayList<ObjetGeneral> getListeObjets() {
+
+		return listeObjets;
+	}
+	
+	public static void refreshListeObjets() {
+		for (int i = 0; i < ListeObjets.getListeObjets().size(); i++) {
+			ListeObjets.getListeObjets().get(i).refreshDebloque();
+		}
+		Engine.getWindow().actualiserMagasin();
+	}
+	
+	public static ArrayList<ObjetGeneral> getlisteObjetsDebloques() {
+		
+		ArrayList<ObjetGeneral> temp = new ArrayList<ObjetGeneral>();
+		
+		for (int i = 0; i < ListeObjets.listeObjets.size(); i++) {
+			if (ListeObjets.listeObjets.get(i).isDebloque()) {
+				temp.add(ListeObjets.listeObjets.get(i));
+			}
+		}
+		
+		return temp;
+	}
+
+	public static void setlisteObjets(ArrayList<ObjetGeneral> listeObjets) {
+
+		ListeObjets.listeObjets = listeObjets;
+	}
+
+	public static ObjetGeneral getObjetGeneral(int i) {
+		return listeObjets.get(i);
+	}
+	
+	public static String staticToString() {
+		String r = "";
+		
+		for (int i = 0; i < ListeObjets.listeObjets.size(); i++) {
+			if (!ListeObjets.listeObjets.get(i).isDebloque() && ListeObjets.listeObjets.get(i) != null) {
+				r+= ListeObjets.listeObjets.get(i).getNom() + "," + ListeObjets.listeObjets.get(i).getPurchaseDate().toString() + ";";
+			}
+		}
+		return r;
+	}
+
+	public static void genererListe() {
 		FileInputStream file;
 		String content = "";
 
@@ -55,50 +101,20 @@ public class ListeObjets {
 			} else {
 				ListeObjets.listeObjets.add(new ObjetBonus(objetsInfo[1], attributs,debloque ));
 			}
-		}
+		}		
 	}
 
-	public static ArrayList<ObjetGeneral> getListeObjets() {
-
-		return listeObjets;
-	}
-	
-	public static void refreshListeObjets() {
-		for (int i = 0; i < ListeObjets.getListeObjets().size(); i++) {
-			ListeObjets.getListeObjets().get(i).refreshDebloque();
-		}
-		Engine.getWindow().actualiserMagasin();
-	}
-	
-	public static ArrayList<ObjetGeneral> getlisteObjetsDebloques() {
+	public static void genererListe(String save) {
+		ListeObjets.genererListe();
+		String[] val = save.split(";");
 		
-		ArrayList<ObjetGeneral> temp = new ArrayList<ObjetGeneral>();
-		
-		for (int i = 0; i < ListeObjets.listeObjets.size(); i++) {
-			if (ListeObjets.listeObjets.get(i).isDebloque()) {
-				temp.add(ListeObjets.listeObjets.get(i));
+		for (int i = 0; i < val.length; i++) {
+			String[] val2 = val[i].split(",");
+			for (int j = 0; j < ListeObjets.listeObjets.size(); j++) {
+				if (ListeObjets.listeObjets.get(i).getNom().equals(val2[0])) {
+					ListeObjets.listeObjets.get(i).setPurchaseDate(new Date(val2[1]));
+				}
 			}
 		}
-		
-		return temp;
-	}
-
-	public static void setlisteObjets(ArrayList<ObjetGeneral> listeObjets) {
-
-		ListeObjets.listeObjets = listeObjets;
-	}
-
-	public static ObjetGeneral getObjetGeneral(int i) {
-		return listeObjets.get(i);
-	}
-	
-	public String toString() {
-		String r = "";
-		
-		for (int i = 0; i < ListeObjets.listeObjets.size(); i++) {
-			r += ListeObjets.listeObjets.get(i) + "\n";
-		}
-		
-		return r;
 	}
 }

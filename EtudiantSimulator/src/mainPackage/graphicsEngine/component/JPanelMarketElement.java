@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.objetsMarket.ListeObjets;
 import mainPackage.gameEngine.objetsMarket.ObjetGeneral;
 import mainPackage.gameEngine.player.Player;

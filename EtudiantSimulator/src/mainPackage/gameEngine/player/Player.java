@@ -23,10 +23,6 @@ public class Player {
 	private int bonheurJ = 0;
 
 	private final int ARGENT_DEPART;
-
-	// private int jourAct;
-	// private int moisAct;
-
 	private int gainParMois;
 	private int loyer;
 
@@ -38,7 +34,7 @@ public class Player {
 		this.faim = 100;
 		this.fatigue = 0;
 		this.bonheur = 100;
-		
+
 		if (isPlayerOP) {
 			this.setArgentJ(150);
 			this.setBonheurJ(10);
@@ -48,7 +44,7 @@ public class Player {
 		// this.moisAct = 1;
 
 		// Generation de gainParMois
-		int[] tabCROUS = {376, 400, 463};
+		int[] tabCROUS = { 376, 400, 463 };
 
 		Random rand = new Random();
 
@@ -70,29 +66,31 @@ public class Player {
 		this.argent = ARGENT_DEPART;
 	}
 
-	public Player(Filiere filiaire, float argent, float conn, float faim, float fat, float bon, int argentJ, int connJ,
-			int faimJ, int fatJ, int bonJ, int argentDepart, int gain, int loyer) {
-		this.filiere = filiaire;
-
-		// this.jourAct = jour;
-		// this.moisAct = mois;
-
-		this.argent = argent;
-		this.savoir = conn;
-		this.faim = faim;
-		this.fatigue = fat;
-		this.bonheur = bon;
-
-		this.argentJ = argentJ;
-		this.savoirJ = connJ;
-		this.faimJ = faimJ;
-		this.fatigueJ = fatJ;
-		this.bonheurJ = bonJ;
-
-		this.ARGENT_DEPART = argentDepart;
-
-		this.gainParMois = gain;
-		this.loyer = loyer;
+	public Player(String save) {
+		String[] content = save.split(";");
+		this.filiere = new Filiere(content[0]);
+		
+		String[] val = content[1].split(",");
+		
+		this.argent = Float.parseFloat(val[0]);
+		this.savoir = Float.parseFloat(val[1]);
+		this.faim = Float.parseFloat(val[2]);
+		this.fatigue = Float.parseFloat(val[3]);
+		this.bonheur = Float.parseFloat(val[4]);
+		
+		val = content[2].split(",");
+		
+		this.argentJ = Integer.parseInt(val[0]);
+		this.savoirJ = Integer.parseInt(val[1]);
+		this.faimJ = Integer.parseInt(val[2]);
+		this.fatigueJ = Integer.parseInt(val[3]);
+		this.bonheurJ = Integer.parseInt(val[4]);
+		
+		val = content[3].split(",");
+		
+		this.ARGENT_DEPART = Integer.parseInt(val[0]);
+		this.gainParMois = Integer.parseInt(val[1]);
+		this.loyer = Integer.parseInt(val[2]);
 	}
 
 	public void paimentEtGainsMois() {
@@ -234,11 +232,9 @@ public class Player {
 
 		if (modif < 50) {
 			temp += (8 * ((modif * 2) / 100)) * -1.875;
-		}
-		else if (modif == 50) {
+		} else if (modif == 50) {
 			temp += -15;
-		}
-		else {
+		} else {
 			temp += -15 - 1.875 * ((Engine.journee.getTempsLibreJ() / 60) * (2 * ((modif - 50) / 100)));
 		}
 		this.fatigue += temp;
@@ -246,12 +242,12 @@ public class Player {
 	}
 
 	public float modifierSavoir(float modif) {
-		float temp = this.savoirJ + ((Engine.journee.getTempsLibreJ() * (modif / 100)) / 30) + (Engine.journee.getTempsTravail(this) * 3);
-		
+		float temp = this.savoirJ + ((Engine.journee.getTempsLibreJ() * (modif / 100)) / 30)
+				+ (Engine.journee.getTempsTravail(this) * 3);
+
 		if (this.fatigue > 50 && this.fatigue <= 80) {
 			temp *= 0.8f;
-		}
-		else if (this.fatigue > 80) {
+		} else if (this.fatigue > 80) {
 			temp = temp / 2;
 		}
 
@@ -272,8 +268,7 @@ public class Player {
 
 		if (this.argent < 0) {
 			temp -= 2;
-		}
-		else if (this.argent < this.ARGENT_DEPART) {
+		} else if (this.argent < this.ARGENT_DEPART) {
 			temp -= 1;
 		}
 		this.bonheur += temp;
@@ -282,31 +277,29 @@ public class Player {
 
 	@Override
 	public String toString() {
-
-		String string = "";
-		string += this.filiere.getDuree() + ";" + this.filiere.getNom() + "\n" + this.argent + "\n" + this.savoir
-				+ "\n" + this.faim + "\n" + this.fatigue + "\n" + this.bonheur + "\n" + this.argentJ + "\n"
-				+ this.savoirJ + "\n" + this.faimJ + "\n" + this.fatigueJ + "\n" + this.bonheurJ + "\n"
-				+ this.ARGENT_DEPART + "\n" + this.gainParMois + "\n" + this.loyer;
-
-		return string;
+		return this.filiere.toString() + ";" + this.argent + "," + this.savoir + "," + this.faim + "," + this.fatigue + "," + this.bonheur + ";"
+				+ this.argentJ + "," + this.savoirJ + "," + this.faimJ + "," + this.fatigueJ + "," + this.bonheurJ + ";" + this.ARGENT_DEPART + "," 
+				+ this.gainParMois + "," + this.loyer + ";";
 	}
 
 	public boolean checkSavoir() {
 		boolean r = this.getFiliaire().getSavoirRequisParAn() <= this.getSavoir();
-		System.out.println("Savoir requis: " + this.getFiliaire().getSavoirRequisParAn() + "\nSavoir actuel: " + this.getSavoir());
+		System.out.println(
+				"Savoir requis: " + this.getFiliaire().getSavoirRequisParAn() + "\nSavoir actuel: " + this.getSavoir());
 		return r;
 	}
-	
+
 	public boolean checkSavoirTotal() {
 		boolean r = this.getFiliaire().getSavoirRequisParAn() * this.getFiliaire().getDuree() <= this.getSavoir();
-		System.out.println("Savoir requis total: " + this.getFiliaire().getSavoirRequisParAn() * this.getFiliaire().getDuree() + "\nSavoir actuel: " + this.getSavoir());
+		System.out.println(
+				"Savoir requis total: " + this.getFiliaire().getSavoirRequisParAn() * this.getFiliaire().getDuree()
+						+ "\nSavoir actuel: " + this.getSavoir());
 		return r;
 	}
 
 	public void prelassage() {
-		this.setSavoir(this.getSavoir() - this.getSavoir()/10);
-		this.setArgent(this.getArgent() + this.getArgentDepart()/5);
+		this.setSavoir(this.getSavoir() - this.getSavoir() / 10);
+		this.setArgent(this.getArgent() + this.getArgentDepart() / 5);
 		this.setBonheur(100);
 		this.setFaim(100);
 		this.setFatigue(0);

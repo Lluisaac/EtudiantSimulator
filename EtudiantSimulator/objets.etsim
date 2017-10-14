@@ -4,3 +4,4 @@ Upgrade;Carte Tam;200,0,0,0,0,0,60,320;true;
 Bonus;JeuVideo;20,0,0,0,3,360,14;true;
 Bonus;Livre;5,6,0,0,0,180,14;true;
 Bonus;Festin;15,0,10,0,5,30,14;true;
+Bonus;GrossBouf;15,0,10,0,5,30,40;true;
