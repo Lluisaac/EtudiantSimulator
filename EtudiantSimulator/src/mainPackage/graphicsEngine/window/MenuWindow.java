@@ -21,9 +21,10 @@ public class MenuWindow extends JDialog implements ActionListener {
 	private int isNewGame = -1;
 
 	private JLabel labelTitre = new JLabel("Etudiant Simulator");
-	private JLabel labelVersion = new JLabel("Version pre-alpha");
-	private JLabel labelCredit = new JLabel(
-			"Programmé par Louis Parent et Isaac LLuis, Une idée originale de Isaac LLuis et Kevin Villaroya");
+	private JLabel labelVersion = new JLabel("Version Alpha 1.0");
+	private JLabel labelCredit1 = new JLabel("Programmé par Louis Parent, Isaac LLuis et Kevin Villaroya");
+	private JLabel labelCredit2 = new JLabel("Une idée originale de Isaac LLuis et Kevin Villaroya\n");
+	private JLabel labelCredit3 = new JLabel("Images par Elisa Juin");
 
 	private JButton buttonContinuer = new JButton("Continuer");
 	private JButton buttonNouvellePartie = new JButton("Nouvelle Partie");
@@ -93,7 +94,23 @@ public class MenuWindow extends JDialog implements ActionListener {
 
 		constraints.gridheight = 1;
 		constraints.gridwidth = GridBagConstraints.REMAINDER;
-		this.add(labelCredit, constraints);
+		this.add(labelCredit1, constraints);
+		
+		// Ligne 5
+		constraints.gridx = 5;
+		constraints.gridy = 7;
+
+		constraints.gridheight = 1;
+		constraints.gridwidth = GridBagConstraints.REMAINDER;
+		this.add(labelCredit2, constraints);
+		
+		// Ligne 6
+		constraints.gridx = 7;
+		constraints.gridy = 9;
+
+		constraints.gridheight = 1;
+		constraints.gridwidth = GridBagConstraints.REMAINDER;
+		this.add(labelCredit3, constraints);
 	}
 
 	public int showDialog() {
