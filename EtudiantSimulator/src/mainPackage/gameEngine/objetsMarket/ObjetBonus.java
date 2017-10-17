@@ -11,21 +11,22 @@ public class ObjetBonus extends ObjetGeneral {
 
 	public ObjetBonus(String nom, float[] attribut, boolean debloque) {
 		super(nom, attribut, debloque);
-		String[] titres = { "Prix", "Savoir", "Faim", "Fatigue", "Bonheur", "Tmps Perdu", "Durabilité" };
+		String[] titres = { "Prix", "Savoir", "Faim", "Fatigue", "Bonheur", "Tmps Perdu", "Durabilitï¿½" };
 		this.setTitres(titres);
 	}
 
 	@Override
 	public void affectation(Player player) {
 		if ((!this.getPurchaseDate().superieurDate(Engine.journee.getDate()) && this.isDebloque())) {
-		// Vérifie que PurchaseDate soit dépassé ou égal a la date de validité
+		// Vï¿½rifie que PurchaseDate soit dï¿½passï¿½ ou ï¿½gal a la date de validitï¿½
 			player.setArgent(player.getArgent() - this.attributs[0]);
 			player.setSavoir(player.getSavoir() + this.attributs[1]);
 			player.setFaim(player.getFaim() + this.attributs[2]);
 			player.setFatigue(player.getFatigue() + this.attributs[3]);
 			player.setBonheur(player.getBonheur() + this.attributs[4]);
-
-			Engine.journee.setTempsLibreJ((int) (Engine.journee.getTempsLibreJ() - this.attributs[5]));
+			
+			Engine.journee.setBuffer((int) (Engine.journee.getBuffer() - this.attributs[5]));
+			
 			Date newDate = new Date(Engine.journee.getDate());
 			newDate.addJour(Math.round(this.attributs[6]));
 			this.setPurchaseDate(newDate);

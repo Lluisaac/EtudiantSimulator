@@ -11,7 +11,7 @@ public class ObjetUpgrade extends ObjetGeneral {
 	
 	public ObjetUpgrade(String nom, float[] attribut, boolean debloque) {
 		super(nom, attribut, debloque);
-		String[] titres = {"Prix", "Argent J", "Savoir J", "Faim J", "Fatigue J", "Bonheur J", "Tmps Libre", "Durabilité"};
+		String[] titres = {"Prix", "Argent J", "Savoir J", "Faim J", "Fatigue J", "Bonheur J", "Tmps Libre", "Durabilitï¿½"};
 		this.setTitres(titres);
 	}
 
@@ -26,7 +26,7 @@ public class ObjetUpgrade extends ObjetGeneral {
 			player.setFatigueJ((int) (player.getFatigueJ() + this.attributs[4]));
 			player.setBonheurJ((int) (player.getBonheurJ() + this.attributs[5]));
 			
-			Engine.journee.setTempsLibreJ((int) (Engine.journee.getTempsLibreJ() + this.attributs[6]));
+			Engine.journee.setTempsLibre((int) (Engine.journee.getTempsLibre() + this.attributs[6]));
 			Date newDate=new Date(Engine.journee.getDate());
 			newDate.addJour(Math.round(this.attributs[7]));
 			this.setPurchaseDate(newDate);

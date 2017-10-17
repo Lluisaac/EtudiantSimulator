@@ -46,7 +46,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 	private JLabel labelFaim = new JLabel("0");
 	private JLabel labelFatigue = new JLabel("0");
 	private JLabel labelBonheur = new JLabel("0");
-	private JLabel labelTempsLibre = new JLabel("0");
 
 	// Animation
 	private ImageIcon checklistIcon = new ImageIcon("checklist.gif");
@@ -154,7 +153,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		boxBesoins.add(labelFaim);
 		boxBesoins.add(labelFatigue);
 		boxBesoins.add(labelBonheur);
-		boxBesoins.add(labelTempsLibre);
 
 		panelBesoins.add(boxBesoins);
 		panelBesoins.setBorder(
@@ -315,7 +313,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		this.labelFaim.setText("Faim: " + (int) Engine.getPlayer().getFaim() + "%");
 		this.labelFatigue.setText("Fatigue: " + (int) Engine.getPlayer().getFatigue() + "%");
 		this.labelBonheur.setText("Bonheur: " + (int) Engine.getPlayer().getBonheur() + "%");
-		this.labelTempsLibre.setText("Temps Libre : " + (int) Engine.journee.getTempsLibreJ());
 	}
 
 	public void setValider(boolean b) {

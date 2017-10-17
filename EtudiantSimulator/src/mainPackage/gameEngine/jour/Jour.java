@@ -11,21 +11,30 @@ public class Jour {
 	
 	private Date date;
 
-	private int tempsLibreJ;
+	private int tempsLibreJ; //Temps libre d'aujourd'hui
+	
+	private int tempsLibre; //Temps libre a modifier pour chaque jour
+
+	private int buffer;
 
 	private static Date[] listeJoursFeries;
 
 	public Jour() {
 		this.date = new Date();
+		this.tempsLibreJ = 0;
+		this.tempsLibre = 0;
+		this.buffer = 0;
 		genererJoursFeries();
 	}
 
 	public Jour(Jour jourPrecedent) {
-		//Chaque année, de nouveaux jours feriés!
+		//Chaque annï¿½e, de nouveaux jours feriï¿½s!
+		this.date = jourPrecedent.date.dateJourSuivant();
 		if (jourPrecedent.date.getAnnee() < jourPrecedent.date.dateJourSuivant().getAnnee()) {
 			genererJoursFeries();
 		}
-		this.date = jourPrecedent.date.dateJourSuivant();
+		this.buffer = jourPrecedent.buffer;
+		this.tempsLibre = jourPrecedent.tempsLibre;
 
 	}
 	
@@ -120,6 +129,12 @@ public class Jour {
 	public void setTempsLibreJ(int i) {
 
 		this.tempsLibreJ = i;
+		
+		if (this.tempsLibreJ < 0) {
+			this.setBuffer(this.tempsLibreJ);
+			this.tempsLibreJ = 0;
+		}
+		
 	}
 
 	public int getAnnee() {
@@ -130,7 +145,7 @@ public class Jour {
 	public void setTempsLibreJ(Player player, float i) {
 
 		this.tempsLibreJ = 60
-				* (24 - (this.getTempsDodo(player, i) + this.getTempsTransport(player) + this.getTempsTravail(player)));
+				* (24 - (this.getTempsDodo(player, i) + this.getTempsTransport(player) + this.getTempsTravail(player))) + this.buffer + this.tempsLibreJ;
 	}
 
 	public int getTempsTravail(Player player) {
@@ -185,5 +200,22 @@ public class Jour {
 	public Date getDate() {
 
 		return this.date;
+	}
+
+	public int getBuffer() {
+		return buffer;
+	}
+
+	public void setBuffer(int buffer) {
+		this.buffer = buffer;
+	}
+
+	public void setTempsLibre(int i) {
+		this.tempsLibre = i;
+		
+	}
+
+	public float getTempsLibre() {
+		return this.tempsLibre;
 	}
 }

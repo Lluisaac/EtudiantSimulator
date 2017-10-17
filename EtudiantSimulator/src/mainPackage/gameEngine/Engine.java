@@ -146,22 +146,30 @@ public class Engine {
 		// Argent
 		if (player.getArgent() <= 0) {
 			window.actualiserEtatArgent(Color.RED);
-		} else {
+		} 
+		else if (player.getArgentDepart() > player.getArgent()) {
+			window.actualiserEtatArgent(Color.ORANGE);
+		}
+		else {
 			window.actualiserEtatArgent(Color.GREEN);
 		}
 
 		// Fatigue
-		if (player.getFatigue() < 0) {
-			player.setFatigue(0);
-		}
-		if (player.getFatigue() >= 50) {
-			window.actualiserEtatFatigue(Color.YELLOW);
-		}
-		if (player.getFatigue() >= 70) {
-			window.actualiserEtatFatigue(Color.ORANGE);
-		}
 		if (player.getFatigue() >= 90) {
 			window.actualiserEtatFatigue(Color.RED);
+		}
+		else if (player.getFatigue() >= 70) {
+			window.actualiserEtatFatigue(Color.ORANGE);
+		}
+		else if (player.getFatigue() >= 50) {
+			window.actualiserEtatFatigue(Color.YELLOW);
+		}
+		else if (player.getFatigue() < 0) {
+			window.actualiserEtatFatigue(Color.BLACK);
+			player.setFatigue(0);
+		}
+		else {
+			window.actualiserEtatFatigue(Color.BLACK);
 		}
 
 		// Regulation
