@@ -1,5 +1,5 @@
 
-package mainPackage.graphicsEngine.desing;
+package mainPackage.graphicsEngine.design;
 
 import javax.swing.UIManager;
 

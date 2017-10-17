@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import mainPackage.gameEngine.filiere.Filiere;
@@ -78,6 +79,7 @@ public class Engine {
 	private static void verifierFinDeJeu() {
 
 		if (player.getFaim() <= 0) {
+			ImageIcon icon = new ImageIcon("MortFaim.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"Apr�s avoir battu le record du plus faible poids pour un adulte, vous gagnez un Darwin Award : vous mourrez de faim !\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION);
@@ -87,27 +89,30 @@ public class Engine {
 				System.exit(0);
 			}
 		} else if (player.getFatigue() >= 100) {
+			ImageIcon icon = new ImageIcon("MortFatigue.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"La fatigue cr�e des l�sions dans votre cerveau et vous �tes intern� dans un centre m�dical jusqu'� votre euthanasie 25 ans plus tard\n Voulez-vous recommencer une nouvelle partie ?",
-					"Perdu !", JOptionPane.YES_NO_OPTION);
+					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 			if (rep == JOptionPane.YES_OPTION) {
 				restart();
 			} else {
 				System.exit(0);
 			}
 		} else if (player.getArgent() < (0 - player.getArgentDepart() - player.getLoyer())) {
+			ImageIcon icon = new ImageIcon("MortFaim.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"La banque saisis tous vos bien et vous vous retrouvez dans la rue, seul. Vous mourrez 8 ans plus tard a cause du sida apr�s avoir vendu votre corps\n Voulez-vous recommencer une nouvelle partie ?",
-					"Perdu !", JOptionPane.YES_NO_OPTION);
+					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 			if (rep == JOptionPane.YES_OPTION) {
 				restart();
 			} else {
 				System.exit(0);
 			}
 		} else if (player.getBonheur() < 0) {
+			ImageIcon icon = new ImageIcon("MortBonheur.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"Vous �tes trop malheureux... *Musique Triste* Le suicide est votre seule option a pr�sent, et vous reussissez\n Voulez-vous recommencer une nouvelle partie ?",
-					"Perdu !", JOptionPane.YES_NO_OPTION);
+					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 			if (rep == JOptionPane.YES_OPTION) {
 				restart();
 			} else {
@@ -115,9 +120,10 @@ public class Engine {
 			}
 		} else if (journee.getAnnee() - 1 > 0 && journee.getJour() == 1 && journee.getMois() == 1) {
 			if (getPlayer().getFiliaire().getDuree() < journee.getAnnee() && getPlayer().checkSavoirTotal()) {
+				ImageIcon icon = new ImageIcon("Victoire.png");
 				int rep = JOptionPane.showConfirmDialog(window,
 						"Et c'est une victoire!!! Bravo, vous avez reussi avec brio votre ann�e scolaire!\n Voulez-vous recommencer une nouvelle partie ?",
-						"Oh mon dieu il a gagn�! !", JOptionPane.YES_NO_OPTION);
+						"Oh mon dieu il a gagn�! !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 				if (rep == JOptionPane.YES_OPTION) {
 					restart();
 				} else {
@@ -129,9 +135,10 @@ public class Engine {
 						"Vous avez r�ussi votre premi�re ann�e de " + getPlayer().getFiliaire().getNom() + " !",
 						"GG !", JOptionPane.OK_CANCEL_OPTION);
 			} else {
+				ImageIcon icon = new ImageIcon("MortSavoir.png");
 				int rep = JOptionPane.showConfirmDialog(window,
 						"Vous avez rat� votre ann�e, passez moins de temps a faire des b�tises la prochaine fois!\n Voulez-vous recommencer une nouvelle partie ?",
-						"Perdu !", JOptionPane.YES_NO_OPTION);
+						"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 				if (rep == JOptionPane.YES_OPTION) {
 					restart();
 				} else {

@@ -1,7 +1,7 @@
 /*Mettre des commentaire dans vos codes*/
 package mainPackage;
 
-import mainPackage.graphicsEngine.desing.DesignTask;
+import mainPackage.graphicsEngine.design.DesignTask;
 
 public class Main {
 
