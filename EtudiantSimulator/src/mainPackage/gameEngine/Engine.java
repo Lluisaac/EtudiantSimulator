@@ -99,7 +99,7 @@ public class Engine {
 				System.exit(0);
 			}
 		} else if (player.getArgent() < (0 - player.getArgentDepart() - player.getLoyer())) {
-			ImageIcon icon = new ImageIcon("MortFaim.png");
+			ImageIcon icon = new ImageIcon("MortArgent.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"La banque saisis tous vos bien et vous vous retrouvez dans la rue, seul. Vous mourrez 8 ans plus tard a cause du sida apr�s avoir vendu votre corps\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
