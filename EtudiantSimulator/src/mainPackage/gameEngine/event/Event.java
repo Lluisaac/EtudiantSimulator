@@ -51,7 +51,7 @@ public class Event {
 		return probabilite;
 	}
 	
-	public Event[] getAcces() {
+	public ArrayList<Event> getAcces() {
 		return acces;
 	}
 	
