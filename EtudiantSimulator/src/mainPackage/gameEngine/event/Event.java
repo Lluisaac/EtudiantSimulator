@@ -6,18 +6,21 @@ import mainPackage.gameEngine.jour.Date;
 
 public class Event {
 
+	
 	//Plusieurs type  de Event, ce qui ont une proba de infinie sur une date, et le reste.
 	private String resume;// Une explication de l'event
 	private String nom;
 	private Date date;
+	private int occurence;
 	private int probabilite;
 	private String archetype;
-	private ArrayList<Event> acces = new ArrayList<Event>();
+	private ArrayList<ArrayList<Event>> acces=new ArrayList<ArrayList<Event>>();
 
 	
-	public Event(Date date,String nom,String resume, String archetype,ArrayList<Event> acces)//Noel,Paque,anniverssaire du joueur,JAPD,../
+	public Event(Date date,String nom,String resume, String archetype,int occurence, ArrayList<ArrayList<Event>> acces)//Noel,Paque,anniverssaire du joueur,JAPD,../
 	{
 		this.nom=nom;
+		this.setOccurence(occurence);
 		this.date=date;
 		this.resume=resume;
 		this.archetype=archetype;
@@ -25,9 +28,10 @@ public class Event {
 		this.probabilite=-1;  //Infini
 	}
 	
-	public Event(String nom,String resume,String archetype,int probabilite,ArrayList<Event> acces)//tous le reste
+	public Event(String nom,String resume,String archetype,int probabilite,int occurence, ArrayList<ArrayList<Event>> acces)//tous le reste
 	{
 		this.nom=nom;
+		this.setOccurence(occurence);
 		this.resume=resume;
 		this.archetype=archetype;
 		this.acces=acces;
@@ -51,11 +55,23 @@ public class Event {
 		return probabilite;
 	}
 	
-	public ArrayList<Event> getAcces() {
+	public void setProbabilite(int probabilite) {
+		this.probabilite=probabilite;
+	}
+	
+	public  ArrayList<ArrayList<Event>> getAcces() {
 		return acces;
 	}
 	
 	public Date getDate() {
 		return date;
+	}
+
+	public int getOccurence() {
+		return occurence;
+	}
+
+	public void setOccurence(int occurence) {
+		this.occurence = occurence;
 	}
 }
