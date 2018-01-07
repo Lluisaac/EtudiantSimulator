@@ -16,15 +16,7 @@ public class ListEvent {
 	}
 	
 	
-	public int probaTotal() // Renvoie la somme des proba de tous les events
-	{
-		int total=0;
-		for(int i=0;i<listeEvent.length;i++)
-		{
-			total=total+listeEvent[i].getProbabilite();
-		}
-		return total;
-	}
+
 	
 	public Event touverEvent(String nom)//Trouve un event a partir de son nom
 	{
@@ -49,12 +41,28 @@ public class ListEvent {
 		return evenement;
 	}
 	
+	public int probaTotal() // Renvoie la somme des proba de tous les events
+	{
+		int total=0;
+		for(int i=0;i<this.listeEvent.length;i++)
+		{
+			total=total+this.listeEvent[i].getProbabilite();
+		}
+		return total;
+	}
+	
 	public Event choisisEvent() //Prend l'evenement pour le jour meme
 	{
-		Event evenementChoisis;
+		Event evenementChoisis=null;
+		int proba=0;
 		
 		int nbrAlea=(int)( Math.random()*( probaTotal()*4 + 1 ) );
-		evenementChoisis= this.listeEvent[nbrAlea];
+		for(int i=0;nbrAlea>=proba;i++)
+		{
+			proba=proba+listeEvent[i].getProbabilite();
+			evenementChoisis= this.listeEvent[i];
+
+		}
 		
 		for(int i=0;i<listeEventDate.length;i++)
 		{
@@ -63,10 +71,30 @@ public class ListEvent {
 				evenementChoisis=listeEventDate[i];
 			}
 		}
+
 		
 		evenementChoisis.setOccurence(evenementChoisis.getOccurence()-1); //reduit son occurence de 1
 		
 		return evenementChoisis;
 	}
+
+	public Event[] getListeEvent()
+	{
+		return this.listeEvent;
+	}
+
+	public Event[] getListeEventDate()
+	{
+		return this.listeEventDate;
+	}
 	
+	public void setListeEvent(Event[] listeEvent)
+	{
+		this.listeEvent=listeEvent;
+	}
+	
+	public void setListeEventDate(Event[] listeEventDate)
+	{
+		this.listeEventDate=listeEventDate;
+	}
 }
