@@ -1,6 +1,7 @@
 package mainPackage.gameEngine.event;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import mainPackage.gameEngine.jour.Date;
 
@@ -14,10 +15,15 @@ public class Event {
 	private int occurence;
 	private int probabilite;
 	private String archetype;
-	private ArrayList<ArrayList<Event>> acces=new ArrayList<ArrayList<Event>>();
+	private ArrayList<ArrayList<Objects>> acces=new ArrayList<ArrayList<Objects>>();
 
+	public Event()
+	{
+		this.probabilite=0;
+		this.occurence=0;
+	}
 	
-	public Event(Date date,String nom,String resume, String archetype,int occurence, ArrayList<ArrayList<Event>> acces)//Noel,Paque,anniverssaire du joueur,JAPD,../
+	public Event(Date date,String nom,String resume, String archetype,int occurence, ArrayList<ArrayList<Objects>> acces)//Noel,Paque,anniverssaire du joueur,JAPD,../
 	{
 		this.nom=nom;
 		this.setOccurence(occurence);
@@ -28,7 +34,7 @@ public class Event {
 		this.probabilite=-1;  //Infini
 	}
 	
-	public Event(String nom,String resume,String archetype,int probabilite,int occurence, ArrayList<ArrayList<Event>> acces)//tous le reste
+	public Event(String nom,String resume,String archetype,int probabilite,int occurence, ArrayList<ArrayList<Objects>> acces)//tous le reste
 	{
 		this.nom=nom;
 		this.setOccurence(occurence);
@@ -47,6 +53,10 @@ public class Event {
 		return nom;
 	}
 	
+	public void setNom(String nom) {
+		this.nom=nom;
+	}
+	
 	public String getArchetype() {
 		return archetype;
 	}
@@ -59,7 +69,7 @@ public class Event {
 		this.probabilite=probabilite;
 	}
 	
-	public  ArrayList<ArrayList<Event>> getAcces() {
+	public  ArrayList<ArrayList<Objects>> getAcces() {
 		return acces;
 	}
 	
