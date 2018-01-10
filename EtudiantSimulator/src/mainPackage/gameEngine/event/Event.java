@@ -1,7 +1,6 @@
 package mainPackage.gameEngine.event;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import mainPackage.gameEngine.jour.Date;
 
@@ -15,7 +14,7 @@ public class Event {
 	private int occurence;
 	private int probabilite;
 	private String archetype;
-	private ArrayList<ArrayList<Objects>> acces=new ArrayList<ArrayList<Objects>>();
+	private ArrayList<ArrayList<String>> acces=new ArrayList<ArrayList<String>>();
 
 	public Event()
 	{
@@ -23,7 +22,7 @@ public class Event {
 		this.occurence=0;
 	}
 	
-	public Event(Date date,String nom,String resume, String archetype,int occurence, ArrayList<ArrayList<Objects>> acces)//Noel,Paque,anniverssaire du joueur,JAPD,../
+	public Event(Date date,String nom,String resume, String archetype,int occurence, ArrayList<ArrayList<String>> acces)//Noel,Paque,anniverssaire du joueur,JAPD,../
 	{
 		this.nom=nom;
 		this.setOccurence(occurence);
@@ -34,7 +33,7 @@ public class Event {
 		this.probabilite=-1;  //Infini
 	}
 	
-	public Event(String nom,String resume,String archetype,int probabilite,int occurence, ArrayList<ArrayList<Objects>> acces)//tous le reste
+	public Event(String nom,String resume,String archetype,int probabilite,int occurence, ArrayList<ArrayList<String>> acces)//tous le reste
 	{
 		this.nom=nom;
 		this.setOccurence(occurence);
@@ -69,7 +68,7 @@ public class Event {
 		this.probabilite=probabilite;
 	}
 	
-	public  ArrayList<ArrayList<Objects>> getAcces() {
+	public  ArrayList<ArrayList<String>> getAcces() {
 		return acces;
 	}
 	

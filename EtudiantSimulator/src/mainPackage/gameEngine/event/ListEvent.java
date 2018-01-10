@@ -10,7 +10,7 @@ public class ListEvent {
 	
 	public ListEvent()
 	{
-		//Creation de listeEventDate et listeEvent a partir d'un fichier.esm
+		//Si date==null alors listeEvent, sinon listeEventDate
 		//Rappel pour la partit acces = "nom" , "probabilité" , "nbr jour", "occurence ajoute" pour ce qui ont une certaines proba
 		//Rappel pour la partit accces= "nom" , "date" pour ce qui ont 100% de proba d'arrivée
 	}
@@ -18,7 +18,7 @@ public class ListEvent {
 	
 
 	
-	public Event touverEvent(String nom)//Trouve un event a partir de son nom
+	public Event trouverEvent(String nom)//Trouve un event a partir de son nom
 	{
 		Event evenement= new Event();
 		evenement.setNom("dhbfuevdbu<kvcuECVufvguef"); //Initialisation du nom peu probable qu'il soit le meme
