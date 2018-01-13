@@ -28,7 +28,7 @@ public class Jour {
 	}
 
 	public Jour(Jour jourPrecedent) {
-		//Chaque ann�e, de nouveaux jours feri�s!
+		//Chaque annee, de nouveaux jours feries!
 		this.date = jourPrecedent.date.dateJourSuivant();
 		if (jourPrecedent.date.getAnnee() < jourPrecedent.date.dateJourSuivant().getAnnee()) {
 			genererJoursFeries();
