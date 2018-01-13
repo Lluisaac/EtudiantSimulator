@@ -1,100 +1,88 @@
 package mainPackage.gameEngine.event;
 
+import java.util.Random;
+
 import mainPackage.gameEngine.Engine;
 
 public class ListEvent {
 
-	private Event[] listeEventDate = new Event[15]; //15 et 78 a modifier
-	private Event[] listeEvent = new Event[78];
-	
-	
-	public ListEvent()
-	{
-		//Si date==null alors listeEvent, sinon listeEventDate
-		//Rappel pour la partit acces = "nom" , "probabilité" , "nbr jour", "occurence ajoute" pour ce qui ont une certaines proba
-		//Rappel pour la partit accces= "nom" , "date" pour ce qui ont 100% de proba d'arrivée
-	}
-	
-	
+	private static Event[] listeEventDate = new Event[15]; // 15 et 78 a automatiser
+	private static Event[] listeEvent = new Event[78];
 
-	
-	public Event trouverEvent(String nom)//Trouve un event a partir de son nom
+	public static final int INDICE_NOM = 0;
+	public static final int INDICE_PROBA = 1;
+
+	public static Event trouverEvent(String nom)// Trouve un event a partir de son nom
 	{
-		Event evenement= new Event();
-		evenement.setNom("dhbfuevdbu<kvcuECVufvguef"); //Initialisation du nom peu probable qu'il soit le meme
-		
-		for(int i=0;i<this.listeEventDate.length;i++)
-		{
-			if(this.listeEventDate[i].getNom()==nom)
-			{
-					evenement=this.listeEventDate[i];
+		Event evenement = new Event();
+		evenement.setNom("dhbfuevdbu<kvcuECVufvguef"); // Initialisation du nom
+														// peu probable qu'il
+														// soit le meme
+
+		for (int i = 0; i < ListEvent.listeEventDate.length; i++) {
+			if (ListEvent.listeEventDate[i].getNom() == nom) {
+				evenement = ListEvent.listeEventDate[i];
 			}
 		}
-		for(int i=0;i<this.listeEvent.length;i++)
-		{
-			if(this.listeEvent[i].getNom()==nom)
-			{
-					evenement=this.listeEvent[i];
+		for (int i = 0; i < ListEvent.listeEvent.length; i++) {
+			if (ListEvent.listeEvent[i].getNom() == nom) {
+				evenement = ListEvent.listeEvent[i];
 			}
 		}
-		
+
 		return evenement;
 	}
-	
-	public int probaTotal() // Renvoie la somme des proba de tous les events
+
+	public static int probaTotal() // Renvoie la somme des proba de tous les events
 	{
-		int total=0;
-		for(int i=0;i<this.listeEvent.length;i++)
-		{
-			total=total+this.listeEvent[i].getProbabilite();
+		int total = 0;
+		for (int i = 0; i < ListEvent.listeEvent.length; i++) {
+			total = total + ListEvent.listeEvent[i].getProbabilite();
 		}
 		return total;
 	}
-	
-	public Event choisisEvent() //Prend l'evenement pour le jour meme
-	{
-		Event evenementChoisis=null;
-		int proba=0;
-		
-		int nbrAlea=(int)( Math.random()*( probaTotal()*4 + 1 ) );
-		for(int i=0;nbrAlea>=proba;i++)
-		{
-			proba=proba+listeEvent[i].getProbabilite();
-			evenementChoisis= this.listeEvent[i];
 
-		}
-		
-		for(int i=0;i<listeEventDate.length;i++)
-		{
-			if(listeEventDate[i].getDate()== Engine.journee.getDate())
-			{
-				evenementChoisis=listeEventDate[i];
+	public static Event choisisEvent() // Prend l'evenement pour le jour meme
+	{
+		Event evenementChoisi = null;
+		int proba = 0;
+
+		Random rand = new Random();
+		int nbrAlea = rand.nextInt(probaTotal());
+
+		for (int i = 0; nbrAlea >= proba; i++) {
+			proba += ListEvent.listeEvent[i].getProbabilite();
+			if (nbrAlea < proba) {
+				evenementChoisi = ListEvent.listeEvent[i];
 			}
 		}
 
+		for (int i = 0; i < listeEventDate.length; i++) {
+			if (listeEventDate[i].getDate() == Engine.journee.getDate()) {
+				evenementChoisi = listeEventDate[i];
+			}
+		}
 		
-		evenementChoisis.setOccurence(evenementChoisis.getOccurence()-1); //reduit son occurence de 1
-		
-		return evenementChoisis;
+		if (evenementChoisi.getOccurence() != -1) {
+			evenementChoisi.setOccurence(evenementChoisi.getOccurence() - 1);
+		}
+
+		return evenementChoisi;
 	}
 
-	public Event[] getListeEvent()
-	{
-		return this.listeEvent;
+	public static Event[] getListeEvent() {
+		return ListEvent.listeEvent;
 	}
 
-	public Event[] getListeEventDate()
-	{
-		return this.listeEventDate;
+	public static Event[] getListeEventDate() {
+		return ListEvent.listeEventDate;
 	}
-	
-	public void setListeEvent(Event[] listeEvent)
-	{
-		this.listeEvent=listeEvent;
+
+	public static void setListeEvent(Event[] listeEvent) {
+		ListEvent.listeEvent = listeEvent;
 	}
-	
-	public void setListeEventDate(Event[] listeEventDate)
-	{
-		this.listeEventDate=listeEventDate;
+
+	public static void setListeEventDate(Event[] listeEventDate) {
+		ListEvent.listeEventDate = listeEventDate;
 	}
 }
