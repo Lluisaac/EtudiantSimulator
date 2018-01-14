@@ -14,17 +14,17 @@ public class Event {
 	private int occurence;//Signifie non valide
 	private int probabilite;
 	private String archetype;
-	private ArrayList<ArrayList<String>> acces;
 	private int[] joursRestantsProbaAjoutee = new int[2];//Utile que pour les quetes
+	private ArrayList<ModificateurEvent> acces;
 
 	public Event() {
-		this.acces = new ArrayList<ArrayList<String>>();
+		this.acces = new ArrayList<ModificateurEvent>();
 		this.probabilite = 0;
 		this.occurence = 0;
 	}
 
-	public Event(Date date, String nom, String resume, String archetype, int occurence,
-			ArrayList<ArrayList<String>> acces)// Noel,Paque,anniverssaire du
+	public Event(String nom, String resume, String archetype, Date date, int occurence,
+			ArrayList<ModificateurEvent> acces)// Noel,Paque,anniverssaire du
 												// joueur,JAPD,../
 	{
 		this.nom = nom;
@@ -36,8 +36,8 @@ public class Event {
 		this.probabilite = -1; // Infini
 	}
 
-	public Event(String nom, String resume, String archetype, int probabilite, int occurence,
-			ArrayList<ArrayList<String>> acces)// tous le reste
+	public Event(String nom, String resume, String archetype, int occurence, int probabilite,
+			ArrayList<ModificateurEvent> acces)// tous le reste
 	{
 		this.nom = nom;
 		this.setOccurence(occurence);
@@ -46,6 +46,13 @@ public class Event {
 		this.acces = acces;
 		this.probabilite = probabilite;
 		this.date = null;
+	}
+	
+	
+	public void executer() {
+		for (int i = 0; i < this.acces.size(); i++) {
+		this.acces.get(i).appliquer();
+		}
 	}
 
 	public String getResume() {
@@ -72,7 +79,7 @@ public class Event {
 		this.probabilite = probabilite;
 	}
 
-	public ArrayList<ArrayList<String>> getAcces() {
+	public ArrayList<ModificateurEvent> getAcces() {
 		return acces;
 	}
 

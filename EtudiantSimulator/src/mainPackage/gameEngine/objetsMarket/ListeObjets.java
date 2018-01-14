@@ -101,7 +101,7 @@ public class ListeObjets {
 			} else {
 				ListeObjets.listeObjets.add(new ObjetBonus(objetsInfo[1], attributs,debloque ));
 			}
-		}		
+		}
 	}
 
 	public static void genererListe(String save) {

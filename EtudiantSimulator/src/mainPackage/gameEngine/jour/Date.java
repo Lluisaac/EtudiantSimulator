@@ -111,6 +111,25 @@ public class Date {
 			return false;
 		}
 	}
+	
+	public int differenceDate(Date date) {
+		int val = 0;
+		Date temp = new Date(this);
+		
+		if (temp.superieurDate(date)) {
+			while (!temp.equals(date)) {
+				date.addJour(1);
+				val++;
+			}
+		} else {
+			while (!temp.equals(date)) {
+				temp.addJour(1);
+				val++;
+			}
+		}
+		
+		return val;
+	}
 
 	public int getJour() {
 		String[] temp = date.split("/");

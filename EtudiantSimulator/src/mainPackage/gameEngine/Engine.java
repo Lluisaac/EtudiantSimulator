@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import mainPackage.gameEngine.event.ModificateurEvent;
+import mainPackage.gameEngine.event.ListEvent;
 import mainPackage.gameEngine.filiere.Filiere;
 import mainPackage.gameEngine.filiere.ListeFilieres;
 import mainPackage.gameEngine.jour.Jour;
@@ -190,7 +190,7 @@ public class Engine {
 		if (journee.getTempsLibreJ() < 0) {
 			journee.setTempsLibreJ(0);
 		}
-		ModificateurEvent.regulateur();
+		ListEvent.regulateur();
 	}
 
 	public static Player getPlayer() {
