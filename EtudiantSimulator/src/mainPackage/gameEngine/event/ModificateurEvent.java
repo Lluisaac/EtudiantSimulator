@@ -2,7 +2,7 @@ package mainPackage.gameEngine.event;
 
 public class ModificateurEvent { // A fusionner avec ListEvent
 
-	public void applicateur(Event evenement)
+	public static void applicateur(Event evenement)
 	{
 		Event evenementModif;
 		for (int i = 0; i < evenement.getAcces().size(); i++) {
@@ -17,12 +17,12 @@ public class ModificateurEvent { // A fusionner avec ListEvent
 			else
 			{
 				evenementModif.setDate( evenement.getAcces().get(i).get(ListEvent.INDICE_DATE) );
-				evenementModif.setOccurence(Integer.parseInt(evenement.getAcces().get(i).get(ListEvent.INDICE_OCCURENCE)));
+				evenementModif.setOccurence(Integer.parseInt(evenement.getAcces().get(i).get( evenementModif.getOccurence()+ListEvent.INDICE_OCCURENCE )));
 			}
 		}
 	}
 
-	public void regulateur()// Verifie que des probas ne doivent pas etre
+	public static void regulateur()// Verifie que des probas ne doivent pas etre
 									// ajuste par occurence, vérifie les jours restants et regule
 	{
 		int[] jourRestant=new int[2];

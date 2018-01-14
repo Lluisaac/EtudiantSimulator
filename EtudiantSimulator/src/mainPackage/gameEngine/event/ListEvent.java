@@ -7,8 +7,8 @@ import mainPackage.gameEngine.jour.Date;
 
 public class ListEvent {
 
-	private static Event[] listeEventDate = new Event[15]; // 15 et 78 a automatiser
-	private static Event[] listeEvent = new Event[78];
+	private static Event[] listeEventDate = new Event[0]; // 0 et 0 a automatiser
+	private static Event[] listeEvent = new Event[0];
 
 	public static final int INDICE_NOM = 0;
 	public static final int INDICE_DATE= 1;
@@ -23,6 +23,8 @@ public class ListEvent {
 		//"heritage":"":"170":"1":"5,0"
 		//ou/et
 		//"feteDesMorts","03/11/2018","","1",""
+		
+		//Rappel pour l'occurence on l'ajoute a ce qu'il y as de base.
 	}
 	
 	public static Event trouverEvent(String nom)// Trouve un event a partir de son nom
@@ -79,7 +81,7 @@ public class ListEvent {
 		if (evenementChoisi.getOccurence() != -1) {
 			evenementChoisi.setOccurence(evenementChoisi.getOccurence() - 1);
 		}
-
+		ModificateurEvent.applicateur(evenementChoisi);
 		return evenementChoisi;
 	}
 	
