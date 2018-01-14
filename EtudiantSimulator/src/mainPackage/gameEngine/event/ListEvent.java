@@ -56,11 +56,11 @@ public class ListEvent {
 			
 			Event newEvent;
 			
-			if(contentTab2[3].equals("")) {
+			if(!contentTab2[3].equals("")) {
 				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]), Integer.parseInt(contentTab2[4]), ModificateurEvent.createArrayFromString(contentTab2[7]));
 				temp.add(newEvent);
-			} else if (contentTab2[5].equals("")) {
-				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[4]), Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]));
+			} else if (!contentTab2[5].equals("")) {
+				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], Integer.parseInt(contentTab2[4]), Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]));
 				tempDate.add(newEvent);
 			} else {
 				newEvent = new Event();
