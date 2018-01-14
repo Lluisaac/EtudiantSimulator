@@ -159,7 +159,7 @@ public class ListEvent {
 		do {
 			date.addJour(1);
 			for (int i = 0; i < listeEventDate.length; i++) {
-				if (ListEvent.listeEventDate[i].getDate() == date) {
+				if (ListEvent.listeEvent[i].getDate() == date || ListEvent.listeEventDate[i].getDate() == date) {
 					verification = false;
 				}
 			}
@@ -179,11 +179,10 @@ public class ListEvent {
 			switch(ListEvent.getListeEvent()[i].getJoursRestantsProbaAjoutee()[0])//A faire
 			{
 				case(0):
-				case(-1):
 				break;
 				case(1):
 					ListEvent.getListeEvent()[i].setJoursRestantsProbaAjoutee( jourRestant );
-					ListEvent.getListeEvent()[i].setProbabilite(jourRestant[1]);
+					ListEvent.getListeEvent()[i].setProbabilite(ListEvent.getListeEvent()[i].getProbabilite() - jourRestant[1]);
 				default:
 					ListEvent.getListeEvent()[i].setJoursRestantsProbaAjoutee( jourRestant );
 			}
