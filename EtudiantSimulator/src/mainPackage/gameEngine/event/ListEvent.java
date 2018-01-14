@@ -137,11 +137,18 @@ public class ListEvent {
 				}
 			}
 		}
-			
 
-		for (int i = 0; i < listeEventDate.length; i++) {
-			if (listeEventDate[i].getDate() == Engine.journee.getDate()) {
-				evenementChoisi = listeEventDate[i];
+		for (int i = 0; i < listeEventDate.length || i<listeEvent.length; i++) {
+			if(ListEvent.listeEvent[i].getOccurence()!=0)
+			{
+				if( i < listeEventDate.length && listeEventDate[i].getDate() == Engine.journee.getDate())
+				{
+					evenementChoisi = listeEventDate[i];
+				}
+				if( i < listeEvent.length  && listeEvent[i].getDate() == Engine.journee.getDate())
+				{
+					evenementChoisi = listeEvent[i];
+				}
 			}
 		}
 
@@ -159,7 +166,7 @@ public class ListEvent {
 		do {
 			date.addJour(1);
 			for (int i = 0; i < listeEventDate.length; i++) {
-				if (ListEvent.listeEvent[i].getDate() == date || ListEvent.listeEventDate[i].getDate() == date) {
+				if (ListEvent.listeEventDate[i].getDate() == date) {
 					verification = false;
 				}
 			}
@@ -179,6 +186,7 @@ public class ListEvent {
 			switch(ListEvent.getListeEvent()[i].getJoursRestantsProbaAjoutee()[0])//A faire
 			{
 				case(0):
+				case(-1)://Occurence infinie
 				break;
 				case(1):
 					ListEvent.getListeEvent()[i].setJoursRestantsProbaAjoutee( jourRestant );
