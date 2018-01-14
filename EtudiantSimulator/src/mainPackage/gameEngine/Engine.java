@@ -80,11 +80,10 @@ public class Engine {
 	private static void verifierFinDeJeu() {
 
 		if (player.getFaim() <= 0) {
-			@SuppressWarnings("unused")
 			ImageIcon icon = new ImageIcon("MortFaim.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"Apr�s avoir battu le record du plus faible poids pour un adulte, vous gagnez un Darwin Award : vous mourrez de faim !\n Voulez-vous recommencer une nouvelle partie ?",
-					"Perdu !", JOptionPane.YES_NO_OPTION);
+					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 			if (rep == JOptionPane.YES_OPTION) {
 				restart();
 			} else {
