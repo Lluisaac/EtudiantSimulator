@@ -79,11 +79,11 @@ public class Event {
 	public Date getDate() {
 		return date;
 	}
-	
+
 	public void setDate(Date date) {
 		this.date=date;
 	}
-	
+
 	public void setDate(String date) {
 		this.date.setDate(date);
 	}
