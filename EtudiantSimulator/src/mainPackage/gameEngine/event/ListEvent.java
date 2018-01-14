@@ -126,12 +126,18 @@ public class ListEvent {
 		Random rand = new Random();
 		int nbrAlea = rand.nextInt(probaTotal());
 
-		for (int i = 0; nbrAlea >= proba; i++) {
-			proba += ListEvent.listeEvent[i].getProbabilite();
-			if (nbrAlea < proba) {
-				evenementChoisi = ListEvent.listeEvent[i];
+		for (int i = 0; nbrAlea >= proba; i++) 
+		{
+			if(ListEvent.listeEvent[i].getOccurence()!=0)
+			{
+				proba += ListEvent.listeEvent[i].getProbabilite();
+				if (nbrAlea < proba) 
+				{
+					evenementChoisi = ListEvent.listeEvent[i];
+				}
 			}
 		}
+			
 
 		for (int i = 0; i < listeEventDate.length; i++) {
 			if (listeEventDate[i].getDate() == Engine.journee.getDate()) {
@@ -169,11 +175,6 @@ public class ListEvent {
 		{
 			jourRestant[0]=ListEvent.getListeEvent()[i].getJoursRestantsProbaAjoutee()[0]-1;
 			jourRestant[1]=ListEvent.getListeEvent()[i].getJoursRestantsProbaAjoutee()[1];
-			
-			if(ListEvent.getListeEvent()[i].getOccurence()==0 )
-			{
-				ListEvent.getListeEvent()[i].setProbabilite(0);
-			}
 			
 			switch(ListEvent.getListeEvent()[i].getJoursRestantsProbaAjoutee()[0])//A faire
 			{
