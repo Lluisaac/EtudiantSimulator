@@ -11,11 +11,11 @@ public class Event {
 	private String resume;// Une explication de l'event
 	private String nom;
 	private Date date;
-	private int occurence;
+	private int occurence;//Signifie non valide
 	private int probabilite;
 	private String archetype;
 	private ArrayList<ArrayList<String>> acces;
-	private int[] joursRestantsProbaAjoutee = new int[2];
+	private int[] joursRestantsProbaAjoutee = new int[2];//Utile que pour les quetes
 
 	public Event() {
 		this.acces = new ArrayList<ArrayList<String>>();
@@ -79,6 +79,14 @@ public class Event {
 	public Date getDate() {
 		return date;
 	}
+	
+	public void setDate(Date date) {
+		this.date=date;
+	}
+	
+	public void setDate(String date) {
+		this.date.setDate(date);
+	}
 
 	public int getOccurence() {
 		return occurence;
@@ -94,5 +102,12 @@ public class Event {
 
 	public void setJoursRestantsProbaAjoutee(int[] joursRestantsProbaAjoutee) {
 		this.joursRestantsProbaAjoutee = joursRestantsProbaAjoutee;
+	}
+	
+	public void setJoursRestantsProbaAjoutee(String texte) {
+		int[] joursRestants=new int[2];
+		String[] tabString=texte.split(",");
+		joursRestants[0]=Integer.parseInt(tabString[0]);
+		joursRestants[1]=Integer.parseInt(tabString[1]);
 	}
 }

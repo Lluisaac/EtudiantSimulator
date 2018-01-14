@@ -3,6 +3,7 @@ package mainPackage.gameEngine.event;
 import java.util.Random;
 
 import mainPackage.gameEngine.Engine;
+import mainPackage.gameEngine.jour.Date;
 
 public class ListEvent {
 
@@ -10,8 +11,20 @@ public class ListEvent {
 	private static Event[] listeEvent = new Event[78];
 
 	public static final int INDICE_NOM = 0;
-	public static final int INDICE_PROBA = 1;
-
+	public static final int INDICE_DATE= 1;
+	public static final int INDICE_PROBA = 2;
+	public static final int INDICE_OCCURENCE = 3;
+	public static final int INDICE_JOURS_RESTANTS =4 ;
+	
+	public static void mettreListEvent()
+	{
+		//Exemple de event classic dans le fichier texte( modif possible):
+		//"mamie":"elle est morte":"la mort":"7":"2"
+		//"heritage":"":"170":"1":"5,0"
+		//ou/et
+		//"feteDesMorts","03/11/2018","","1",""
+	}
+	
 	public static Event trouverEvent(String nom)// Trouve un event a partir de son nom
 	{
 		Event evenement = new Event();
@@ -68,6 +81,25 @@ public class ListEvent {
 		}
 
 		return evenementChoisi;
+	}
+	
+	public Date chercheDateDispo()
+	{
+		boolean verification=true;
+		Date date=Engine.journee.getDate().dateJourSuivant();
+		
+		do
+		{
+			date.addJour(1);
+			for(int i=0;i<listeEventDate.length;i++)
+			{
+				if(ListEvent.listeEventDate[i].getDate()==date)
+				{
+					verification=false;
+				}
+			}
+		}while(verification);
+		return date;
 	}
 
 	public static Event[] getListeEvent() {
