@@ -2,13 +2,12 @@ package mainPackage.gameEngine.event;
 
 import java.util.ArrayList;
 
-import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
 
 public class ModificateurEvent { 
 	
 	private String nom;
-	
+
 	private Date date;
 	
 	private int occurence;
@@ -47,17 +46,17 @@ public class ModificateurEvent {
 		temp.setOccurence(temp.getOccurence() + this.occurence);
 		temp.setProbabilite(temp.getProbabilite() + this.proba);
 		
-		if (this.date == null) {
+		if (!(this.date == null)) {
 			if (this.proba == 0) {
 				temp.setDate(this.date);
 			} else {
-				int[] tab = {Engine.journee.getDate().differenceDate(this.date), this.proba};
+				int[] tab = {new Date("1/1/1").differenceDate(this.date), this.proba};
 				temp.setJoursRestantsProbaAjoutee(tab);
 			}
 		}
 	}
 	
-	public static ArrayList<ModificateurEvent> creatArrayFromString(String liste) {
+	public static ArrayList<ModificateurEvent> createArrayFromString(String liste) {
 		//Va créer chaque modifEvent pour en faire une array list, chaque modifEvent doit etre séparé par _
 		
 		ArrayList<ModificateurEvent> modifListe = new ArrayList<ModificateurEvent>();

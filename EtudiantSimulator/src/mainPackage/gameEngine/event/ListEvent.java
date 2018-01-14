@@ -11,8 +11,8 @@ import mainPackage.gameEngine.jour.Date;
 
 public class ListEvent {
 
-	private static ArrayList<Event> listeEventDate;
-	private static ArrayList<Event> listeEvent;
+	private static Event[] listeEventDate;
+	private static Event[] listeEvent;
 
 	public static void mettreListEvent() {		
 		//Syntaxe: 
@@ -21,7 +21,9 @@ public class ListEvent {
 		//Séparation pour chaque Sous-attribut (tableau, liste...): _
 		//Séparation auxilière pour chaque sous-sous-attribut: |
 		
-		//nom,description,archetype,date,occurence,probabilite,joursrestants,acces
+		//nom;description;archetype;date;occurence;probabilite;joursrestants;acces;
+		//PCCassé;Votre PC est cassé;broken;;-1;5;;GoReparateur_5/1/1_0_15;
+		//L'evenement PCCassé peut arriver une infinité de fois, a une probabilité de 5 et va augmenter de 15 la probabilité de GoReparateur pendant 4 jours.
 		
 		FileInputStream file;
 		String content = "";
@@ -46,8 +48,8 @@ public class ListEvent {
 		
 		String[] contentTab1 = content.split("\n");
 		
-		ListEvent.listeEvent = new ArrayList<Event>();
-		ListEvent.listeEventDate = new ArrayList<Event>();
+		ArrayList<Event> temp = new ArrayList<Event>();
+		ArrayList<Event> tempDate = new ArrayList<Event>();
 		
 		for (int i = 0; i < contentTab1.length - 1; i++) {
 			String[] contentTab2 = contentTab1[i].split(";");
@@ -55,11 +57,11 @@ public class ListEvent {
 			Event newEvent;
 			
 			if(contentTab2[3].equals("")) {
-				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]), Integer.parseInt(contentTab2[4]), ModificateurEvent.creatArrayFromString(contentTab2[7]));
-				ListEvent.listeEvent.add(newEvent);
+				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]), Integer.parseInt(contentTab2[4]), ModificateurEvent.createArrayFromString(contentTab2[7]));
+				temp.add(newEvent);
 			} else if (contentTab2[5].equals("")) {
-				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[4]), Integer.parseInt(contentTab2[5]), ModificateurEvent.creatArrayFromString(contentTab2[7]));
-				ListEvent.listeEventDate.add(newEvent);
+				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[4]), Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]));
+				tempDate.add(newEvent);
 			} else {
 				newEvent = new Event();
 			}
@@ -70,21 +72,36 @@ public class ListEvent {
 				newEvent.setJoursRestantsProbaAjoutee(tabJoursRestants);
 			}			
 		}
+		
+		ListEvent.fromListToArray(temp, tempDate);
 	}
 
+	public static void fromListToArray(ArrayList<Event> liste, ArrayList<Event> listeDate) {
+		ListEvent.listeEvent = new Event[liste.size()];
+		ListEvent.listeEventDate = new Event[listeDate.size()];
+		
+		for (int i = 0; i < liste.size(); i++) {
+			ListEvent.listeEvent[i] = liste.get(i);
+		}
+		
+		for (int i = 0; i < listeDate.size(); i++) {
+			ListEvent.listeEventDate[i] = listeDate.get(i);
+		}
+	}
+	
 	public static Event trouverEvent(String nom)// Trouve un event a partir de
 												// son nom
 	{
 
-		for (int i = 0; i < ListEvent.listeEventDate.size(); i++) {
-			if (ListEvent.listeEventDate.get(i).getNom() == nom) {
-				return ListEvent.listeEventDate.get(i);
+		for (int i = 0; i < ListEvent.listeEventDate.length; i++) {
+			if (ListEvent.listeEventDate[i].getNom() == nom) {
+				return ListEvent.listeEventDate[i];
 			}
 		}
 		
-		for (int i = 0; i < ListEvent.listeEvent.size(); i++) {
-			if (ListEvent.listeEvent.get(i).getNom() == nom) {
-				return ListEvent.listeEvent.get(i);
+		for (int i = 0; i < ListEvent.listeEvent.length; i++) {
+			if (ListEvent.listeEvent[i].getNom() == nom) {
+				return ListEvent.listeEvent[i];
 			}
 		}
 		
@@ -95,8 +112,8 @@ public class ListEvent {
 									// events
 	{
 		int total = 0;
-		for (int i = 0; i < ListEvent.listeEvent.size(); i++) {
-			total = total + ListEvent.listeEvent.get(i).getProbabilite();
+		for (int i = 0; i < ListEvent.listeEvent.length; i++) {
+			total = total + ListEvent.listeEvent[i].getProbabilite();
 		}
 		return total;
 	}
@@ -110,15 +127,15 @@ public class ListEvent {
 		int nbrAlea = rand.nextInt(probaTotal());
 
 		for (int i = 0; nbrAlea >= proba; i++) {
-			proba += ListEvent.listeEvent.get(i).getProbabilite();
+			proba += ListEvent.listeEvent[i].getProbabilite();
 			if (nbrAlea < proba) {
-				evenementChoisi = ListEvent.listeEvent.get(i);
+				evenementChoisi = ListEvent.listeEvent[i];
 			}
 		}
 
-		for (int i = 0; i < listeEventDate.size(); i++) {
-			if (listeEventDate.get(i).getDate() == Engine.journee.getDate()) {
-				evenementChoisi = listeEventDate.get(i);
+		for (int i = 0; i < listeEventDate.length; i++) {
+			if (listeEventDate[i].getDate() == Engine.journee.getDate()) {
+				evenementChoisi = listeEventDate[i];
 			}
 		}
 
@@ -135,8 +152,8 @@ public class ListEvent {
 
 		do {
 			date.addJour(1);
-			for (int i = 0; i < listeEventDate.size(); i++) {
-				if (ListEvent.listeEventDate.get(i).getDate() == date) {
+			for (int i = 0; i < listeEventDate.length; i++) {
+				if (ListEvent.listeEventDate[i].getDate() == date) {
 					verification = false;
 				}
 			}
@@ -144,69 +161,48 @@ public class ListEvent {
 		return date;
 	}
 
-	public static void applicateur(Event evenement)
-	{
-//		Event evenementModif;
-//		for (int i = 0; i < evenement.getAcces().size(); i++) {
-//			evenementModif = ListEvent.trouverEvent(evenement.getAcces().get(i).get(ListEvent.INDICE_NOM));
-//
-//			if (evenementModif.getDate() == null) {
-//				evenementModif.setProbabilite(Integer.parseInt(evenement.getAcces().get(i).get(ListEvent.INDICE_PROBA)));
-//				evenementModif.setOccurence(Integer.parseInt(evenement.getAcces().get(i).get(ListEvent.INDICE_OCCURENCE)));
-//				evenementModif.setJoursRestantsProbaAjoutee(evenement.getAcces().get(i).get(ListEvent.INDICE_JOURS_RESTANTS));
-//
-//			}
-//			else
-//			{
-//				evenementModif.setDate( evenement.getAcces().get(i).get(ListEvent.INDICE_DATE) );
-//				evenementModif.setOccurence(Integer.parseInt(evenement.getAcces().get(i).get( evenementModif.getOccurence()+ListEvent.INDICE_OCCURENCE )));
-//			}
-//		}
-		
-	}
-
 	public static void regulateur()// Verifie que des probas ne doivent pas etre
 									// ajuste par occurence, vérifie les jours restants et regule
 	{
 		int[] jourRestant=new int[2];
-		for(int i=0;i<ListEvent.getListeEvent().size();i++)
+		for(int i=0;i<ListEvent.getListeEvent().length;i++)
 		{
-			jourRestant[0]=ListEvent.getListeEvent().get(i).getJoursRestantsProbaAjoutee()[0]-1;
-			jourRestant[1]=ListEvent.getListeEvent().get(i).getJoursRestantsProbaAjoutee()[1];
+			jourRestant[0]=ListEvent.getListeEvent()[i].getJoursRestantsProbaAjoutee()[0]-1;
+			jourRestant[1]=ListEvent.getListeEvent()[i].getJoursRestantsProbaAjoutee()[1];
 			
-			if(ListEvent.getListeEvent().get(i).getOccurence()==0 )
+			if(ListEvent.getListeEvent()[i].getOccurence()==0 )
 			{
-				ListEvent.getListeEvent().get(i).setProbabilite(0);
+				ListEvent.getListeEvent()[i].setProbabilite(0);
 			}
 			
-			switch(ListEvent.getListeEvent().get(i).getJoursRestantsProbaAjoutee()[0])//A faire
+			switch(ListEvent.getListeEvent()[i].getJoursRestantsProbaAjoutee()[0])//A faire
 			{
 				case(0):
 				case(-1):
 				break;
 				case(1):
-					ListEvent.getListeEvent().get(i).setJoursRestantsProbaAjoutee( jourRestant );
-					ListEvent.getListeEvent().get(i).setProbabilite(jourRestant[1]);
+					ListEvent.getListeEvent()[i].setJoursRestantsProbaAjoutee( jourRestant );
+					ListEvent.getListeEvent()[i].setProbabilite(jourRestant[1]);
 				default:
-					ListEvent.getListeEvent().get(i).setJoursRestantsProbaAjoutee( jourRestant );
+					ListEvent.getListeEvent()[i].setJoursRestantsProbaAjoutee( jourRestant );
 			}
 			
 		}
 	}
 	
-	public static ArrayList<Event> getListeEvent() {
+	public static Event[] getListeEvent() {
 		return ListEvent.listeEvent;
 	}
 
-	public static ArrayList<Event> getListeEventDate() {
+	public static Event[] getListeEventDate() {
 		return ListEvent.listeEventDate;
 	}
 
-	public static void setListeEvent(ArrayList<Event> listeEvent) {
+	public static void setListeEvent(Event[] listeEvent) {
 		ListEvent.listeEvent = listeEvent;
 	}
 
-	public static void setListeEventDate(ArrayList<Event> listeEventDate) {
+	public static void setListeEventDate(Event[] listeEventDate) {
 		ListEvent.listeEventDate = listeEventDate;
 	}
 }
