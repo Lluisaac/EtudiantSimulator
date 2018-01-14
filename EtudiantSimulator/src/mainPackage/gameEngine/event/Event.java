@@ -113,7 +113,7 @@ public class Event {
 	
 	public void setJoursRestantsProbaAjoutee(String texte) {
 		int[] joursRestants=new int[2];
-		String[] tabString=texte.split(",");
+		String[] tabString=texte.split("_");
 		joursRestants[0]=Integer.parseInt(tabString[0]);
 		joursRestants[1]=Integer.parseInt(tabString[1]);
 	}
