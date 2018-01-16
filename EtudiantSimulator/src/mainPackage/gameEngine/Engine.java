@@ -44,7 +44,7 @@ public class Engine {
 			window.resetPanel();
 		} else {
 			window = new MainWindow();
-			window.buildMainWindow();
+			window.activer();
 		}
 
 		window.reinitialiserCalendrier();

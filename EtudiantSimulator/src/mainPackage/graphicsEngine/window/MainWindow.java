@@ -129,6 +129,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 			}
 		});
+	}
+	
+	public void activer() {
+		this.buildMainWindow();
 		this.setVisible(true);
 	}
 
