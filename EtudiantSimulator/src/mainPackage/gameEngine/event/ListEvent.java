@@ -52,7 +52,7 @@ public class ListEvent {
 		ArrayList<Event> temp = new ArrayList<Event>();
 		ArrayList<Event> tempDate = new ArrayList<Event>();
 		
-		for (int i = 0; i < contentTab1.length - 1; i++) {
+		for (int i = 0; i < contentTab1.length; i++) {
 			String[] contentTab2 = contentTab1[i].split(";");
 			
 			Event newEvent;
@@ -121,6 +121,7 @@ public class ListEvent {
 
 	public static Event choisisEvent() // Prend l'evenement pour le jour meme
 	{		
+		System.out.println(ListEvent.staticToString());
 		Event evenementChoisi = null;
 		int proba = 0;
 
@@ -197,6 +198,21 @@ public class ListEvent {
 			}
 			
 		}
+	}
+	
+	public static String staticToString() {
+		String r = "Base:";
+		for (int i = 0; i < ListEvent.listeEvent.length; i++) {
+			r += ListEvent.listeEvent[i].toString() + "\n";
+		}
+		
+		r += "Dates:";
+		
+		for (int i = 0; i < ListEvent.listeEventDate.length; i++) {
+			r += ListEvent.listeEventDate[i].toString() + "\n";
+		}
+		
+		return r;
 	}
 	
 	public static Event[] getListeEvent() {
