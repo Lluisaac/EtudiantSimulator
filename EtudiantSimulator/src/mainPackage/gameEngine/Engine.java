@@ -43,6 +43,7 @@ public class Engine {
 
 		window.reinitialiserCalendrier();
 		Engine.saveGame();
+		ListEvent.mettreListEvent();
 		gameLoop();
 	}
 
@@ -207,6 +208,7 @@ public class Engine {
 		}
 		player = new Player(ListeFilieres.getListeFilDebloquees().get(filiaireID), false);
 		journee = new Jour();
+		ListeObjets.genererListe();
 		window.reinitialiserCalendrier();
 		window.mettreMois();
 		window.reset();
