@@ -117,4 +117,9 @@ public class ListeObjets {
 			}
 		}
 	}
+
+	public static void resetListe() {
+		ListeObjets.listeObjets = new ArrayList<ObjetGeneral>();
+		ListeObjets.genererListe();	
+	}
 }

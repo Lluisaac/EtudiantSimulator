@@ -42,6 +42,7 @@ public class Engine {
 
 		if (window != null) {
 			window.resetPanel();
+			Engine.reset(filiaire);
 		} else {
 			window = new MainWindow();
 			window.activer();
@@ -214,14 +215,15 @@ public class Engine {
 		}
 
 		Engine.createEngine(true, ListeFilieres.getListeFilDebloquees().get(filiaireID));
+	}
 
-		/*
-		 * player = new
-		 * Player(ListeFilieres.getListeFilDebloquees().get(filiaireID), false);
-		 * journee = new Jour(); ListeObjets.genererListe();
-		 * window.reinitialiserCalendrier(); window.mettreMois();
-		 * window.reset();
-		 */
+	public static void reset(Filiere filiaire) {
+		player = new Player(filiaire, false);
+		journee = new Jour();
+		ListeObjets.resetListe();
+		window.reinitialiserCalendrier();
+		window.mettreMois();
+		window.reset();
 	}
 
 	private static void deleteSave() {
