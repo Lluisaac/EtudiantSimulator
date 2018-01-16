@@ -33,8 +33,7 @@ import mainPackage.graphicsEngine.component.JPanelMarketElement;
 import mainPackage.graphicsEngine.component.JPanelModifier;
 
 @SuppressWarnings("serial")
-public class MainWindow extends JFrame implements ActionListener, WindowListener 
-{
+public class MainWindow extends JFrame implements ActionListener, WindowListener {
 	// Modifier
 	JPanelModifier panelModifieur = new JPanelModifier();
 
@@ -67,9 +66,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 	private String stringMois = "Mois 1";
 	private TitledBorder borderCentral = BorderFactory.createTitledBorder(stringMois);
 
-	private JPanelJour[] panelJourTab = {new JPanelJour(), new JPanelJour(), new JPanelJour(), new JPanelJour(),
+	private JPanelJour[] panelJourTab = { new JPanelJour(), new JPanelJour(), new JPanelJour(), new JPanelJour(),
 			new JPanelJour(), new JPanelJour(), new JPanelJour(), new JPanelJour(), new JPanelJour(), new JPanelJour(),
-			new JPanelJour(), new JPanelJour(), new JPanelJour(), new JPanelJour()};
+			new JPanelJour(), new JPanelJour(), new JPanelJour(), new JPanelJour() };
 
 	private JButton buttonSuivant = new JButton("Suivant");
 
@@ -82,9 +81,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 	private JPanel panelMagasin;
 
 	private boolean valider = false;
-	
-	public MainWindow()
-	{
+
+	public MainWindow() {
 		// Window settings
 		this.setTitle("Etudiant Simulator");
 		this.setSize(1280, 520);
@@ -131,18 +129,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 			}
 		});
-
-		this.buildMainWindow();
-
-		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + "�");
-		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + "�");
-		
-		this.buttonValider.setEnabled(true);
-
 		this.setVisible(true);
 	}
 
-	private void buildMainWindow() {
+	public void buildMainWindow() {
 
 		// Besoins
 		panelBesoins = new JPanel();
@@ -201,7 +191,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		boxBudget.add(buttonValider);
 
 		panelBudget.add(boxBudget);
-		panelBudget.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), BorderFactory.createTitledBorder("Budget")));
+		panelBudget
+				.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), BorderFactory.createTitledBorder("Budget")));
 
 		// Interface Droite
 		JPanel panelDroit = new JPanel();
@@ -253,6 +244,16 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		this.add(panelCentral, BorderLayout.CENTER);
 		this.add(panelDroit, BorderLayout.EAST);
 		this.add(new JScrollPane(panelMagasin), BorderLayout.SOUTH);
+		
+		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + "�");
+		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + "�");
+
+		this.buttonValider.setEnabled(true);
+	}
+	
+	public void resetPanel() {
+		this.getContentPane().removeAll();
+		this.buildMainWindow();
 	}
 
 	public void mettreMois() {
@@ -266,8 +267,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 		if (Engine.journee.getJour() > 14) {
 			this.panelJourTab[Engine.journee.getJour() - 15].setJour(Engine.journee.getJour());
-		}
-		else {
+		} else {
 			this.panelJourTab[Engine.journee.getJour() - 1].setJour(Engine.journee.getJour());
 		}
 	}
@@ -276,7 +276,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 		this.labelAnimation.setIcon(new ImageIcon(icone));
 	}
-	
+
 	public void activerButtonSuivant() {
 
 		this.buttonSuivant.setEnabled(true);
@@ -294,19 +294,16 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 		this.panelMagasin.repaint();
 	}
-	
-	public void actualiserEtatArgent(Color color)
-	{
+
+	public void actualiserEtatArgent(Color color) {
 		this.labelArgent.setForeground(color);
 	}
-	
-	public void actualiserEtatFatigue(Color color)
-	{
+
+	public void actualiserEtatFatigue(Color color) {
 		this.labelFatigue.setForeground(color);
 	}
-	
-	public void actualiserBesoins() 
-	{
+
+	public void actualiserBesoins() {
 
 		this.labelArgent.setText("Argent: " + (int) Engine.getPlayer().getArgent() + "�");
 		this.labelSavoir.setText("Savoir: " + (int) Engine.getPlayer().getSavoir());
@@ -319,9 +316,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 		this.valider = b;
 	}
-	
-	public void reinitialiserCalendrier() 
-	{
+
+	public void reinitialiserCalendrier() {
 
 		for (int i = 0; i < this.panelJourTab.length; i++) {
 			this.panelJourTab[i].effacerContenu();
@@ -330,8 +326,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		for (int i = 0; i < this.panelJourTab.length; i++) {
 			if (Engine.journee.getJour() == 28) {
 				this.panelJourTab[i].setJour(Engine.journee.getJour() + i - 27);
-			}
-			else {
+			} else {
 				this.panelJourTab[i].setJour(Engine.journee.getJour() + i + 1);
 			}
 		}
@@ -344,13 +339,13 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 					.setLabelFatigue(Engine.getPlayer().modifierFatigue(this.sommeil));
 			this.panelJourTab[Engine.journee.getJour() - 1]
 					.setLabelArgent(Engine.getPlayer().modifierArgent(this.nourriture));
-			this.panelJourTab[Engine.journee.getJour() - 1].setLabelFaim(Engine.getPlayer().modifierFaim(this.nourriture));
+			this.panelJourTab[Engine.journee.getJour() - 1]
+					.setLabelFaim(Engine.getPlayer().modifierFaim(this.nourriture));
 			this.panelJourTab[Engine.journee.getJour() - 1]
 					.setLabelSavoir(Engine.getPlayer().modifierSavoir(this.devoirs));
 			this.panelJourTab[Engine.journee.getJour() - 1]
 					.setLabelBonheur(Engine.getPlayer().modifierBonheur(this.devoirs));
-		}
-		else {
+		} else {
 			this.panelJourTab[Engine.journee.getJour() - 15]
 					.setLabelFatigue(Engine.getPlayer().modifierFatigue(this.sommeil));
 			this.panelJourTab[Engine.journee.getJour() - 15]
@@ -363,7 +358,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 					.setLabelBonheur(Engine.getPlayer().modifierBonheur(this.devoirs));
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -377,33 +372,30 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 			this.valider = true;
 
 			mettreIcone("calendar.gif");
-		}
-		else if (e.getSource() == this.buttonSuivant) {
+		} else if (e.getSource() == this.buttonSuivant) {
 			this.buttonSuivant.setEnabled(false);
 			this.buttonValider.setEnabled(true);
 			reinitialiserCalendrier();
 			mettreMois();
 		}
 	}
-	
-	public int getWaitingTime()
-	{
+
+	public int getWaitingTime() {
 		return (int) (750.0 / Math.pow(((float) this.sliderVitesse.getValue() / 100.0), 2));
 	}
 
-	public void reset()
-	{
+	public void reset() {
 		this.valider = false;
 		this.buttonValider.setEnabled(true);
 		this.buttonSuivant.setEnabled(false);
-		
+
 		this.labelArgent.setForeground(Color.GREEN);
 		this.labelFatigue.setForeground(Color.BLACK);
 		this.panelModifieur.cleanModifier();
 		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + "�");
 		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + "�");
 	}
-	
+
 	@Override
 	public void windowClosed(WindowEvent e) {
 
@@ -440,8 +432,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 	}
 
-	public boolean isValidated()
-	{
+	public boolean isValidated() {
 		return this.valider;
 	}
 }

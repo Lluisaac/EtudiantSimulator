@@ -33,7 +33,6 @@ public class ListeObjets {
 				temp.add(ListeObjets.listeObjets.get(i));
 			}
 		}
-		
 		return temp;
 	}
 
@@ -51,7 +50,7 @@ public class ListeObjets {
 		
 		for (int i = 0; i < ListeObjets.listeObjets.size(); i++) {
 			if (!ListeObjets.listeObjets.get(i).isDebloque() && ListeObjets.listeObjets.get(i) != null) {
-				r+= ListeObjets.listeObjets.get(i).getNom() + "," + ListeObjets.listeObjets.get(i).getPurchaseDate().toString() + ";";
+				r+= ListeObjets.listeObjets.get(i).getNom() + "," + ListeObjets.listeObjets.get(i).getEndOfPurchaseDate().toString() + ";";
 			}
 		}
 		return r;
@@ -85,7 +84,7 @@ public class ListeObjets {
 
 			String[] objetsInfo = contentTab[i].split(";");
 
-			String[] listeAttributs = objetsInfo[2].split(",");
+			String[] listeAttributs = objetsInfo[2].split("\\,");
 			float[] attributs = new float[listeAttributs.length];
 
 			for (int j = 0; j < listeAttributs.length; j++) {
@@ -109,10 +108,11 @@ public class ListeObjets {
 		String[] val = save.split(";");
 		
 		for (int i = 0; i < val.length; i++) {
-			String[] val2 = val[i].split(",");
+			String[] val2 = val[i].split("\\,");
 			for (int j = 0; j < ListeObjets.listeObjets.size(); j++) {
-				if (ListeObjets.listeObjets.get(i).getNom().equals(val2[0])) {
-					ListeObjets.listeObjets.get(i).setPurchaseDate(new Date(val2[1]));
+				
+				if (ListeObjets.listeObjets.get(j).getNom().equals(val2[0])) {			
+					ListeObjets.listeObjets.get(j).setEndOfPurchaseDate(new Date(val2[1]));
 				}
 			}
 		}

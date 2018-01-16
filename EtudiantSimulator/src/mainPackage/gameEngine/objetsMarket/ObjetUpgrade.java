@@ -17,7 +17,7 @@ public class ObjetUpgrade extends ObjetGeneral {
 
 	@Override
 	public void affectation(Player player) {
-		if( (!this.getPurchaseDate().superieurDate(Engine.journee.getDate()) && this.isDebloque())) {
+		if( (!this.getEndOfPurchaseDate().superieurDate(Engine.journee.getDate()) && this.isDebloque())) {
 			
 			player.setArgent(player.getArgent() - this.attributs[0]);
 			player.setArgentJ((int) (player.getArgentJ() + this.attributs[1]));
@@ -29,13 +29,13 @@ public class ObjetUpgrade extends ObjetGeneral {
 			Engine.journee.setTempsLibre((int) (Engine.journee.getTempsLibre() + this.attributs[6]));
 			Date newDate=new Date(Engine.journee.getDate());
 			newDate.addJour(Math.round(this.attributs[7]));
-			this.setPurchaseDate(newDate);
+			this.setEndOfPurchaseDate(newDate);
 			this.setDebloque(false);
 		}
 	}
 
 	public void refreshDebloque() {
-		if (Engine.journee.getDate().equals(this.getPurchaseDate())) {
+		if (Engine.journee.getDate().equals(this.getEndOfPurchaseDate())) {
 			this.setDebloque(true);
 			Engine.getPlayer().setArgentJ((int) (Engine.getPlayer().getArgentJ() - this.attributs[1]));
 			Engine.getPlayer().setSavoirJ((int) (Engine.getPlayer().getSavoirJ() - this.attributs[2]));

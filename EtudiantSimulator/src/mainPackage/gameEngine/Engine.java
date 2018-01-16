@@ -39,7 +39,13 @@ public class Engine {
 		} else {
 			loadGame();
 		}
-		window = new MainWindow();
+
+		if (window != null) {
+			window.resetPanel();
+		} else {
+			window = new MainWindow();
+			window.buildMainWindow();
+		}
 
 		window.reinitialiserCalendrier();
 		Engine.saveGame();
@@ -81,6 +87,7 @@ public class Engine {
 	private static void verifierFinDeJeu() {
 
 		if (player.getFaim() <= 0) {
+			Engine.deleteSave();
 			ImageIcon icon = new ImageIcon("MortFaim.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"Apr�s avoir battu le record du plus faible poids pour un adulte, vous gagnez un Darwin Award : vous mourrez de faim !\n Voulez-vous recommencer une nouvelle partie ?",
@@ -91,6 +98,7 @@ public class Engine {
 				System.exit(0);
 			}
 		} else if (player.getFatigue() >= 100) {
+			Engine.deleteSave();
 			ImageIcon icon = new ImageIcon("MortFatigue.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"La fatigue cr�e des l�sions dans votre cerveau et vous �tes intern� dans un centre m�dical jusqu'� votre euthanasie 25 ans plus tard\n Voulez-vous recommencer une nouvelle partie ?",
@@ -101,6 +109,7 @@ public class Engine {
 				System.exit(0);
 			}
 		} else if (player.getArgent() < (0 - player.getArgentDepart() - player.getLoyer())) {
+			Engine.deleteSave();
 			ImageIcon icon = new ImageIcon("MortArgent.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"La banque saisis tous vos bien et vous vous retrouvez dans la rue, seul. Vous mourrez 8 ans plus tard a cause du sida apr�s avoir vendu votre corps\n Voulez-vous recommencer une nouvelle partie ?",
@@ -111,6 +120,7 @@ public class Engine {
 				System.exit(0);
 			}
 		} else if (player.getBonheur() < 0) {
+			Engine.deleteSave();
 			ImageIcon icon = new ImageIcon("MortBonheur.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"Vous �tes trop malheureux... *Musique Triste* Le suicide est votre seule option a pr�sent, et vous reussissez\n Voulez-vous recommencer une nouvelle partie ?",
@@ -125,7 +135,8 @@ public class Engine {
 				ImageIcon icon = new ImageIcon("Victoire.png");
 				int rep = JOptionPane.showConfirmDialog(window,
 						"Et c'est une victoire!!! Bravo, vous avez reussi avec brio votre ann�e scolaire!\n Voulez-vous recommencer une nouvelle partie ?",
-						"Oh mon dieu il a gagn�! !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
+						"Oh mon dieu il a gagn�! !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+						icon);
 				if (rep == JOptionPane.YES_OPTION) {
 					restart();
 				} else {
@@ -137,6 +148,7 @@ public class Engine {
 						"Vous avez r�ussi votre premi�re ann�e de " + getPlayer().getFiliaire().getNom() + " !",
 						"GG !", JOptionPane.OK_CANCEL_OPTION);
 			} else {
+				Engine.deleteSave();
 				ImageIcon icon = new ImageIcon("MortSavoir.png");
 				int rep = JOptionPane.showConfirmDialog(window,
 						"Vous avez rat� votre ann�e, passez moins de temps a faire des b�tises la prochaine fois!\n Voulez-vous recommencer une nouvelle partie ?",
@@ -155,29 +167,23 @@ public class Engine {
 		// Argent
 		if (player.getArgent() <= 0) {
 			window.actualiserEtatArgent(Color.RED);
-		} 
-		else if (player.getArgentDepart() > player.getArgent()) {
+		} else if (player.getArgentDepart() > player.getArgent()) {
 			window.actualiserEtatArgent(Color.ORANGE);
-		}
-		else {
+		} else {
 			window.actualiserEtatArgent(Color.GREEN);
 		}
 
 		// Fatigue
 		if (player.getFatigue() >= 90) {
 			window.actualiserEtatFatigue(Color.RED);
-		}
-		else if (player.getFatigue() >= 70) {
+		} else if (player.getFatigue() >= 70) {
 			window.actualiserEtatFatigue(Color.ORANGE);
-		}
-		else if (player.getFatigue() >= 50) {
+		} else if (player.getFatigue() >= 50) {
 			window.actualiserEtatFatigue(Color.YELLOW);
-		}
-		else if (player.getFatigue() < 0) {
+		} else if (player.getFatigue() < 0) {
 			window.actualiserEtatFatigue(Color.BLACK);
 			player.setFatigue(0);
-		}
-		else {
+		} else {
 			window.actualiserEtatFatigue(Color.BLACK);
 		}
 
@@ -206,12 +212,28 @@ public class Engine {
 			FiliaireDialog dialog = new FiliaireDialog(window);
 			filiaireID = dialog.showDialog();
 		}
-		player = new Player(ListeFilieres.getListeFilDebloquees().get(filiaireID), false);
-		journee = new Jour();
-		ListeObjets.genererListe();
-		window.reinitialiserCalendrier();
-		window.mettreMois();
-		window.reset();
+
+		Engine.createEngine(true, ListeFilieres.getListeFilDebloquees().get(filiaireID));
+
+		/*
+		 * player = new
+		 * Player(ListeFilieres.getListeFilDebloquees().get(filiaireID), false);
+		 * journee = new Jour(); ListeObjets.genererListe();
+		 * window.reinitialiserCalendrier(); window.mettreMois();
+		 * window.reset();
+		 */
+	}
+
+	private static void deleteSave() {
+		try {
+			FileOutputStream file = new FileOutputStream("save.etsim");
+			file.write("".getBytes());
+			file.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void saveGame() {
@@ -220,9 +242,9 @@ public class Engine {
 			FileOutputStream file = new FileOutputStream("save.etsim");
 			file.write(player.toString().getBytes());
 			file.write("\n".getBytes());
-			file.write(ListeObjets.staticToString().getBytes());
-			file.write("\n".getBytes());
 			file.write(journee.toString().getBytes());
+			file.write("\n".getBytes());
+			file.write(ListeObjets.staticToString().getBytes());
 			file.write("\n".getBytes());
 			file.close();
 		} catch (FileNotFoundException e) {
@@ -258,8 +280,8 @@ public class Engine {
 		String[] val = content.split("\n");
 
 		Engine.player = new Player(val[0]);
-		ListeObjets.genererListe(val[1]);
-		Engine.journee = new Jour(val[2]);
+		Engine.journee = new Jour(val[1]);
+		ListeObjets.genererListe(val[2]);
 	}
 
 	public static MainWindow getWindow() {

@@ -4,6 +4,7 @@ package mainPackage.gameEngine.objetsMarket;
 
 import java.util.ArrayList;
 
+import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
 import mainPackage.gameEngine.player.Player;
 
@@ -13,14 +14,14 @@ public abstract class ObjetGeneral {
 	protected float[] attributs;
 
 	private String[] titres;
-	private Date purchaseDate;
+	private Date endOfPurchaseDate;
 	
 	private boolean debloque;
 
 	public ObjetGeneral(String nom, float[] attribut, boolean debloque) {
 		this.nom = nom;
 		this.attributs = attribut;
-		this.purchaseDate = new Date();
+		this.endOfPurchaseDate = new Date();
 		this.debloque=debloque;
 	}
 	
@@ -59,12 +60,13 @@ public abstract class ObjetGeneral {
 		return string;
 	}
 
-	public Date getPurchaseDate() {
-		return purchaseDate;
+	public Date getEndOfPurchaseDate() {
+		return endOfPurchaseDate;
 	}
 
-	public void setPurchaseDate(Date date) {
-		this.purchaseDate = date;
+	public void setEndOfPurchaseDate(Date date) {
+		this.endOfPurchaseDate = date;
+		this.setDebloque(Engine.journee.getDate().superieurDate(date) || Engine.journee.getDate().equals(date));
 	}
 
 	public boolean isDebloque() {

@@ -97,11 +97,11 @@ public class Jour {
 			mainWindow.mettreIcone("calendar.gif");
 		}
 		else if (this.getJour() % 14 == 0) {
-			Engine.saveGame();
 			mainWindow.mettreIcone("checklist.gif");
 			mainWindow.activerButtonSuivant();
 			mainWindow.setValider(false);
 			mainWindow.actualiserMagasin();
+			Engine.saveGame();
 		}
 
 		if (this.getJour() == 28) {
