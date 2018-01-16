@@ -47,8 +47,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 	private JLabel labelBonheur = new JLabel("0");
 
 	// Animation
-	private ImageIcon checklistIcon = new ImageIcon("checklist.gif");
-	private ImageIcon calendarIcon = new ImageIcon("calendar.gif");
+	private ImageIcon checklistIcon = new ImageIcon("misc\\checklist.gif");
+	private ImageIcon calendarIcon = new ImageIcon("misc\\calendar.gif");
 
 	private JLabel labelAnimation = new JLabel(checklistIcon);
 
@@ -375,7 +375,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 			this.buttonValider.setEnabled(false);
 			this.valider = true;
 
-			mettreIcone("calendar.gif");
+			mettreIcone("misc\\calendar.gif");
 		} else if (e.getSource() == this.buttonSuivant) {
 			this.buttonSuivant.setEnabled(false);
 			this.buttonValider.setEnabled(true);

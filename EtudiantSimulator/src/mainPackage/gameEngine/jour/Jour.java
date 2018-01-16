@@ -94,10 +94,10 @@ public class Jour {
 	public boolean declencherJour(MainWindow mainWindow) {
 
 		if (this.date.getJour() % 14 == 1) {
-			mainWindow.mettreIcone("calendar.gif");
+			mainWindow.mettreIcone("misc\\calendar.gif");
 		}
 		else if (this.getJour() % 14 == 0) {
-			mainWindow.mettreIcone("checklist.gif");
+			mainWindow.mettreIcone("misc\\checklist.gif");
 			mainWindow.activerButtonSuivant();
 			mainWindow.setValider(false);
 			mainWindow.actualiserMagasin();

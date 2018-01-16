@@ -16,6 +16,7 @@ import mainPackage.gameEngine.filiere.ListeFilieres;
 import mainPackage.gameEngine.jour.Jour;
 import mainPackage.gameEngine.objetsMarket.ListeObjets;
 import mainPackage.gameEngine.player.Player;
+import mainPackage.graphicsEngine.dialog.EventDialog;
 import mainPackage.graphicsEngine.dialog.FiliaireDialog;
 import mainPackage.graphicsEngine.window.MainWindow;
 
@@ -29,6 +30,10 @@ public class Engine {
 	public static Jour journee;
 
 	private static MainWindow window;
+	
+	public static boolean eventFini = false; 
+	
+	public static EventDialog eventDialog; 
 
 	public static void createEngine(boolean newGame, Filiere filiaire) {
 
@@ -78,7 +83,18 @@ public class Engine {
 			journee = new Jour(journee);
 			boolean temp = journee.declencherJour(window);
 			jeuFini = temp;
-
+			ListEvent.afficherEvent(ListEvent.choisisEvent());
+			
+			while(!eventFini) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			eventFini = false;
+			
 			window.mettreJour();
 			ListeObjets.refreshListeObjets();
 			window.creerContenuJour();
@@ -89,7 +105,7 @@ public class Engine {
 
 		if (player.getFaim() <= 0) {
 			Engine.deleteSave();
-			ImageIcon icon = new ImageIcon("MortFaim.png");
+			ImageIcon icon = new ImageIcon("fins\\MortFaim.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"Apr�s avoir battu le record du plus faible poids pour un adulte, vous gagnez un Darwin Award : vous mourrez de faim !\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
@@ -100,7 +116,7 @@ public class Engine {
 			}
 		} else if (player.getFatigue() >= 100) {
 			Engine.deleteSave();
-			ImageIcon icon = new ImageIcon("MortFatigue.png");
+			ImageIcon icon = new ImageIcon("fins\\MortFatigue.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"La fatigue cr�e des l�sions dans votre cerveau et vous �tes intern� dans un centre m�dical jusqu'� votre euthanasie 25 ans plus tard\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
@@ -111,7 +127,7 @@ public class Engine {
 			}
 		} else if (player.getArgent() < (0 - player.getArgentDepart() - player.getLoyer())) {
 			Engine.deleteSave();
-			ImageIcon icon = new ImageIcon("MortArgent.png");
+			ImageIcon icon = new ImageIcon("fins\\MortArgent.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"La banque saisis tous vos bien et vous vous retrouvez dans la rue, seul. Vous mourrez 8 ans plus tard a cause du sida apr�s avoir vendu votre corps\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
@@ -122,7 +138,7 @@ public class Engine {
 			}
 		} else if (player.getBonheur() < 0) {
 			Engine.deleteSave();
-			ImageIcon icon = new ImageIcon("MortBonheur.png");
+			ImageIcon icon = new ImageIcon("fins\\MortBonheur.png");
 			int rep = JOptionPane.showConfirmDialog(window,
 					"Vous �tes trop malheureux... *Musique Triste* Le suicide est votre seule option a pr�sent, et vous reussissez\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
@@ -133,7 +149,7 @@ public class Engine {
 			}
 		} else if (journee.getAnnee() - 1 > 0 && journee.getJour() == 1 && journee.getMois() == 1) {
 			if (getPlayer().getFiliaire().getDuree() < journee.getAnnee() && getPlayer().checkSavoirTotal()) {
-				ImageIcon icon = new ImageIcon("Victoire.png");
+				ImageIcon icon = new ImageIcon("fins\\Victoire.png");
 				int rep = JOptionPane.showConfirmDialog(window,
 						"Et c'est une victoire!!! Bravo, vous avez reussi avec brio votre ann�e scolaire!\n Voulez-vous recommencer une nouvelle partie ?",
 						"Oh mon dieu il a gagn�! !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
@@ -150,7 +166,7 @@ public class Engine {
 						"GG !", JOptionPane.OK_CANCEL_OPTION);
 			} else {
 				Engine.deleteSave();
-				ImageIcon icon = new ImageIcon("MortSavoir.png");
+				ImageIcon icon = new ImageIcon("fins\\MortSavoir.png");
 				int rep = JOptionPane.showConfirmDialog(window,
 						"Vous avez rat� votre ann�e, passez moins de temps a faire des b�tises la prochaine fois!\n Voulez-vous recommencer une nouvelle partie ?",
 						"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
@@ -228,7 +244,7 @@ public class Engine {
 
 	private static void deleteSave() {
 		try {
-			FileOutputStream file = new FileOutputStream("save.etsim");
+			FileOutputStream file = new FileOutputStream("saves\\save.etsim");
 			file.write("".getBytes());
 			file.close();
 		} catch (FileNotFoundException e) {
@@ -241,7 +257,7 @@ public class Engine {
 	public static void saveGame() {
 
 		try {
-			FileOutputStream file = new FileOutputStream("save.etsim");
+			FileOutputStream file = new FileOutputStream("saves\\save.etsim");
 			file.write(player.toString().getBytes());
 			file.write("\n".getBytes());
 			file.write(journee.toString().getBytes());
@@ -262,7 +278,7 @@ public class Engine {
 		String content = "";
 
 		try {
-			file = new FileInputStream("save.etsim");
+			file = new FileInputStream("saves\\save.etsim");
 
 			byte[] buffer = new byte[8];
 

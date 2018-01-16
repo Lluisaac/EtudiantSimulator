@@ -15,6 +15,7 @@ public class Main {
 
 		Controller.start();
 		
+		System.out.println("Yoan tu suces");
 		
 	}
 }

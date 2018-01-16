@@ -54,6 +54,10 @@ public class Event {
 			this.acces.get(i).appliquer();
 		}
 	}
+	
+	public String toString() {
+		return nom + ";" + resume + ";" + archetype + ";" + ";" + occurence + ";" + probabilite + ";";
+	}
 
 	public String getResume() {
 		return resume;

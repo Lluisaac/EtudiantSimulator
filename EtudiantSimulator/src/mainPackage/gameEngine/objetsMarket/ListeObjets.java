@@ -61,7 +61,7 @@ public class ListeObjets {
 		String content = "";
 
 		try {
-			file = new FileInputStream("objets.etsim");
+			file = new FileInputStream("listes\\objets.etsim");
 
 			byte[] buffer = new byte[8];
 

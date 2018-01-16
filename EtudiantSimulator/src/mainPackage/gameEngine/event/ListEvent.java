@@ -8,6 +8,7 @@ import java.util.Random;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
+import mainPackage.graphicsEngine.dialog.EventDialog;
 
 public class ListEvent {
 
@@ -29,7 +30,7 @@ public class ListEvent {
 		String content = "";
 
 		try {
-			file = new FileInputStream("events.etsim");
+			file = new FileInputStream("listes\\events.etsim");
 
 			byte[] buffer = new byte[8];
 
@@ -58,10 +59,10 @@ public class ListEvent {
 			
 			if(!contentTab2[3].equals("")) {
 				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]), Integer.parseInt(contentTab2[4]), ModificateurEvent.createArrayFromString(contentTab2[7]));
-				temp.add(newEvent);
+				tempDate.add(newEvent);
 			} else if (!contentTab2[5].equals("")) {
 				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], Integer.parseInt(contentTab2[4]), Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]));
-				tempDate.add(newEvent);
+				temp.add(newEvent);
 			} else {
 				newEvent = new Event();
 			}
@@ -119,7 +120,7 @@ public class ListEvent {
 	}
 
 	public static Event choisisEvent() // Prend l'evenement pour le jour meme
-	{
+	{		
 		Event evenementChoisi = null;
 		int proba = 0;
 
@@ -212,5 +213,9 @@ public class ListEvent {
 
 	public static void setListeEventDate(Event[] listeEventDate) {
 		ListEvent.listeEventDate = listeEventDate;
+	}
+
+	public static void afficherEvent(Event event) {
+		Engine.eventDialog = new EventDialog(event.getNom(), event.getResume(), event.getArchetype());	
 	}
 }
