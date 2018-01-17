@@ -54,7 +54,6 @@ public class ListEvent {
 		
 		for (int i = 0; i < contentTab1.length; i++) {
 			String[] contentTab2 = contentTab1[i].split(";",-1);
-			System.out.println(contentTab2.length);
 			Event newEvent;
 			
 			if(!contentTab2[3].equals("")) {
@@ -134,7 +133,6 @@ public class ListEvent {
 
 	public static Event choisisEvent() // Prend l'evenement pour le jour meme
 	{		
-		System.out.println(ListEvent.staticToString());
 		Event evenementChoisi = null;
 		int proba = 0;
 

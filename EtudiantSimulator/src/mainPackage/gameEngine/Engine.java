@@ -39,7 +39,7 @@ public class Engine {
 	public static void createEngine(boolean newGame, Filiere filiaire) {
 
 		if (newGame) {
-			player = new Player(filiaire, false);
+			player = new Player(filiaire, true);
 			ListeObjets.genererListe();
 			journee = new Jour();
 		} else {
@@ -64,6 +64,8 @@ public class Engine {
 
 		window.actualiserMagasin();
 		while (!jeuFini) {
+			
+			journee = new Jour(journee);
 
 			verifierFinDeJeu();
 			regulation();
@@ -81,26 +83,9 @@ public class Engine {
 
 			window.actualiserBesoins();
 
-			journee = new Jour(journee);
-			boolean temp = journee.declencherJour(window);
-			jeuFini = temp;
+			jeuFini = journee.declencherJour(window);
 			
-			Event choisi = ListEvent.choisisEvent();
-			if (choisi != null) {
-				ListEvent.afficherEvent(choisi);
-			} else {
-				eventFini = true;
-			}
-			
-			while(!eventFini) {
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			eventFini = false;
+			Engine.faireEvent();
 			
 			window.mettreJour();
 			ListeObjets.refreshListeObjets();
@@ -114,7 +99,7 @@ public class Engine {
 			Engine.deleteSave();
 			ImageIcon icon = new ImageIcon("fins\\MortFaim.png");
 			int rep = JOptionPane.showConfirmDialog(window,
-					"Aprï¿½s avoir battu le record du plus faible poids pour un adulte, vous gagnez un Darwin Award : vous mourrez de faim !\n Voulez-vous recommencer une nouvelle partie ?",
+					"Après avoir battu le record du plus faible poids pour un adulte, vous gagnez un Darwin Award : vous mourrez de faim !\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 			if (rep == JOptionPane.YES_OPTION) {
 				restart();
@@ -125,7 +110,7 @@ public class Engine {
 			Engine.deleteSave();
 			ImageIcon icon = new ImageIcon("fins\\MortFatigue.png");
 			int rep = JOptionPane.showConfirmDialog(window,
-					"La fatigue crï¿½e des lï¿½sions dans votre cerveau et vous ï¿½tes internï¿½ dans un centre mï¿½dical jusqu'ï¿½ votre euthanasie 25 ans plus tard\n Voulez-vous recommencer une nouvelle partie ?",
+					"La fatigue crée des lésions dans votre cerveau et vous êtes interné dans un centre médical jusqu'à votre euthanasie 25 ans plus tard\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 			if (rep == JOptionPane.YES_OPTION) {
 				restart();
@@ -136,7 +121,7 @@ public class Engine {
 			Engine.deleteSave();
 			ImageIcon icon = new ImageIcon("fins\\MortArgent.png");
 			int rep = JOptionPane.showConfirmDialog(window,
-					"La banque saisis tous vos bien et vous vous retrouvez dans la rue, seul. Vous mourrez 8 ans plus tard a cause du sida aprï¿½s avoir vendu votre corps\n Voulez-vous recommencer une nouvelle partie ?",
+					"La banque saisis tous vos bien et vous vous retrouvez dans la rue, seul. Vous mourrez 8 ans plus tard a cause du sida après avoir vendu votre corps\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 			if (rep == JOptionPane.YES_OPTION) {
 				restart();
@@ -147,7 +132,7 @@ public class Engine {
 			Engine.deleteSave();
 			ImageIcon icon = new ImageIcon("fins\\MortBonheur.png");
 			int rep = JOptionPane.showConfirmDialog(window,
-					"Vous ï¿½tes trop malheureux... *Musique Triste* Le suicide est votre seule option a prï¿½sent, et vous reussissez\n Voulez-vous recommencer une nouvelle partie ?",
+					"Vous êtes trop malheureux... *Musique Triste* Le suicide est votre seule option a présent, et vous reussissez\n Voulez-vous recommencer une nouvelle partie ?",
 					"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 			if (rep == JOptionPane.YES_OPTION) {
 				restart();
@@ -158,8 +143,8 @@ public class Engine {
 			if (getPlayer().getFiliaire().getDuree() < journee.getAnnee() && getPlayer().checkSavoirTotal()) {
 				ImageIcon icon = new ImageIcon("fins\\Victoire.png");
 				int rep = JOptionPane.showConfirmDialog(window,
-						"Et c'est une victoire!!! Bravo, vous avez reussi avec brio votre annï¿½e scolaire!\n Voulez-vous recommencer une nouvelle partie ?",
-						"Oh mon dieu il a gagnï¿½! !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+						"Et c'est une victoire!!! Bravo, vous avez reussi avec brio votre année scolaire!\n Voulez-vous recommencer une nouvelle partie ?",
+						"Oh mon dieu il a gagné! !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
 						icon);
 				if (rep == JOptionPane.YES_OPTION) {
 					restart();
@@ -169,13 +154,13 @@ public class Engine {
 			} else if (getPlayer().checkSavoir()) {
 				getPlayer().prelassage();
 				JOptionPane.showMessageDialog(window,
-						"Vous avez rï¿½ussi votre premiï¿½re annï¿½e de " + getPlayer().getFiliaire().getNom() + " !",
+						"Vous avez réussi votre " + (Engine.journee.getAnnee() -1) +  "º année de " + getPlayer().getFiliaire().getNom() + " !",
 						"GG !", JOptionPane.OK_CANCEL_OPTION);
 			} else {
 				Engine.deleteSave();
 				ImageIcon icon = new ImageIcon("fins\\MortSavoir.png");
 				int rep = JOptionPane.showConfirmDialog(window,
-						"Vous avez ratï¿½ votre annï¿½e, passez moins de temps a faire des bï¿½tises la prochaine fois!\n Voulez-vous recommencer une nouvelle partie ?",
+						"Vous avez raté votre année, passez moins de temps a faire des bétises la prochaine fois!\n Voulez-vous recommencer une nouvelle partie ?",
 						"Perdu !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 				if (rep == JOptionPane.YES_OPTION) {
 					restart();
@@ -227,6 +212,26 @@ public class Engine {
 	public static Player getPlayer() {
 
 		return player;
+	}
+	
+
+	private static void faireEvent() {
+		Event choisi = ListEvent.choisisEvent();
+		if (choisi != null) {
+			ListEvent.afficherEvent(choisi);
+		} else {
+			eventFini = true;
+		}
+		
+		while(!eventFini) {
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		eventFini = false;
 	}
 
 	private static void restart() {

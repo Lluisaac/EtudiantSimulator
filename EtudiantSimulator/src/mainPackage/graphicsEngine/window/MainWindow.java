@@ -309,7 +309,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 
 	public void actualiserBesoins() {
 
-		this.labelArgent.setText("Argent: " + (int) Engine.getPlayer().getArgent() + "�");
+		this.labelArgent.setText("Argent: " + (int) Engine.getPlayer().getArgent() + " euros");
 		this.labelSavoir.setText("Savoir: " + (int) Engine.getPlayer().getSavoir());
 		this.labelFaim.setText("Faim: " + (int) Engine.getPlayer().getFaim() + "%");
 		this.labelFatigue.setText("Fatigue: " + (int) Engine.getPlayer().getFatigue() + "%");

@@ -51,7 +51,7 @@ public abstract class ObjetGeneral {
 		for (int i = 0; i < this.attributs.length-1; i++) {
 			if (this.attributs[i] != 0) {
 				if (i == 0) {
-					string.add(titres[i] + ": " + attributs[i] + "�");
+					string.add(titres[i] + ": " + attributs[i] + " euros");
 				} else {
 					string.add(titres[i] + ": " + attributs[i]);
 				}
