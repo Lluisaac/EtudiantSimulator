@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import mainPackage.gameEngine.event.Event;
 import mainPackage.gameEngine.event.ListEvent;
 import mainPackage.gameEngine.filiere.Filiere;
 import mainPackage.gameEngine.filiere.ListeFilieres;
@@ -83,7 +84,13 @@ public class Engine {
 			journee = new Jour(journee);
 			boolean temp = journee.declencherJour(window);
 			jeuFini = temp;
-			ListEvent.afficherEvent(ListEvent.choisisEvent());
+			
+			Event choisi = ListEvent.choisisEvent();
+			if (choisi != null) {
+				ListEvent.afficherEvent(choisi);
+			} else {
+				eventFini = true;
+			}
 			
 			while(!eventFini) {
 				try {

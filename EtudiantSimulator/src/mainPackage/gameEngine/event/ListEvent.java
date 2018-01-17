@@ -54,7 +54,7 @@ public class ListEvent {
 		
 		for (int i = 0; i < contentTab1.length; i++) {
 			String[] contentTab2 = contentTab1[i].split(";");
-			
+			System.out.println(contentTab2.length);
 			Event newEvent;
 			
 			if(!contentTab2[3].equals("")) {
@@ -75,10 +75,23 @@ public class ListEvent {
 		}
 		
 		ListEvent.fromListToArray(temp, tempDate);
+		ListEvent.createTampon();
+	}
+
+	private static void createTampon() {
+		ListEvent.listeEvent[ListEvent.listeEvent.length - 1] = new Event("Blank", "Blank", "Blank", -1, ListEvent.sommeProbas() * 3, null);
+	}
+
+	private static int sommeProbas() {
+		int val = 0;
+		for (int i = 0; i < ListEvent.listeEvent.length - 1; i++) {
+			val += ListEvent.listeEvent[i].getProbabilite();
+		}
+		return val;
 	}
 
 	public static void fromListToArray(ArrayList<Event> liste, ArrayList<Event> listeDate) {
-		ListEvent.listeEvent = new Event[liste.size()];
+		ListEvent.listeEvent = new Event[liste.size() + 1];
 		ListEvent.listeEventDate = new Event[listeDate.size()];
 		
 		for (int i = 0; i < liste.size(); i++) {
@@ -157,8 +170,13 @@ public class ListEvent {
 		if (evenementChoisi.getOccurence() != -1) {
 			evenementChoisi.setOccurence(evenementChoisi.getOccurence() - 1);
 		}
-		evenementChoisi.executer();
-		return evenementChoisi;
+		
+		if (evenementChoisi.getNom() == "Blank") {
+			evenementChoisi.executer();
+			return evenementChoisi;
+		} else {
+			return null;
+		}
 	}
 
 	public Date chercheDateDispo() {
