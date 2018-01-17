@@ -53,7 +53,7 @@ public class ListEvent {
 		ArrayList<Event> tempDate = new ArrayList<Event>();
 		
 		for (int i = 0; i < contentTab1.length; i++) {
-			String[] contentTab2 = contentTab1[i].split(";");
+			String[] contentTab2 = contentTab1[i].split(";",-1);
 			System.out.println(contentTab2.length);
 			Event newEvent;
 			
@@ -171,7 +171,7 @@ public class ListEvent {
 			evenementChoisi.setOccurence(evenementChoisi.getOccurence() - 1);
 		}
 		
-		if (evenementChoisi.getNom() == "Blank") {
+		if (evenementChoisi.getNom() != "Blank") {
 			evenementChoisi.executer();
 			return evenementChoisi;
 		} else {

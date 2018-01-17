@@ -59,6 +59,10 @@ public class ModificateurEvent {
 	public static ArrayList<ModificateurEvent> createArrayFromString(String liste) {
 		//Va créer chaque modifEvent pour en faire une array list, chaque modifEvent doit etre séparé par _
 		
+		if (liste.equals("")) {
+			return null;
+		}
+		
 		ArrayList<ModificateurEvent> modifListe = new ArrayList<ModificateurEvent>();
 		
 		String[] contentTab = liste.split("_");

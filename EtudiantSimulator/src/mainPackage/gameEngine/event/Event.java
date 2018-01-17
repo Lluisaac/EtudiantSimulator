@@ -11,10 +11,10 @@ public class Event {
 	private String resume;// Une explication de l'event
 	private String nom;
 	private Date date;
-	private int occurence;//Signifie non valide
+	private int occurence;// Signifie non valide
 	private int probabilite;
 	private String archetype;
-	private int[] joursRestantsProbaAjoutee = new int[2];//Utile que pour les quetes
+	private int[] joursRestantsProbaAjoutee = new int[2];// Utile que pour les quetes
 	private ArrayList<ModificateurEvent> acces;
 
 	public Event() {
@@ -47,14 +47,15 @@ public class Event {
 		this.probabilite = probabilite;
 		this.date = null;
 	}
-	
-	
+
 	public void executer() {
-		for (int i = 0; i < this.acces.size(); i++) {
-			this.acces.get(i).appliquer();
+		if (!(this.acces == null)) {
+			for (int i = 0; i < this.acces.size(); i++) {
+				this.acces.get(i).appliquer();
+			}
 		}
 	}
-	
+
 	public String toString() {
 		return nom + ";" + resume + ";" + archetype + ";" + ";" + occurence + ";" + probabilite + ";";
 	}
@@ -92,7 +93,7 @@ public class Event {
 	}
 
 	public void setDate(Date date) {
-		this.date=date;
+		this.date = date;
 	}
 
 	public void setDate(String date) {
@@ -114,11 +115,11 @@ public class Event {
 	public void setJoursRestantsProbaAjoutee(int[] joursRestantsProbaAjoutee) {
 		this.joursRestantsProbaAjoutee = joursRestantsProbaAjoutee;
 	}
-	
+
 	public void setJoursRestantsProbaAjoutee(String texte) {
-		int[] joursRestants=new int[2];
-		String[] tabString=texte.split("_");
-		joursRestants[0]=Integer.parseInt(tabString[0]);
-		joursRestants[1]=Integer.parseInt(tabString[1]);
+		int[] joursRestants = new int[2];
+		String[] tabString = texte.split("_");
+		joursRestants[0] = Integer.parseInt(tabString[0]);
+		joursRestants[1] = Integer.parseInt(tabString[1]);
 	}
 }
