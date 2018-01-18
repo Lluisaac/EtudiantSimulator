@@ -31,10 +31,10 @@ public class Engine {
 	public static Jour journee;
 
 	private static MainWindow window;
-	
-	public static boolean eventFini = false; 
-	
-	public static EventDialog eventDialog; 
+
+	public static boolean eventFini = false;
+
+	public static EventDialog eventDialog;
 
 	public static void createEngine(boolean newGame, Filiere filiaire) {
 
@@ -64,7 +64,7 @@ public class Engine {
 
 		window.actualiserMagasin();
 		while (!jeuFini) {
-			
+
 			journee = new Jour(journee);
 
 			verifierFinDeJeu();
@@ -84,9 +84,9 @@ public class Engine {
 			window.actualiserBesoins();
 
 			jeuFini = journee.declencherJour(window);
-			
+
 			Engine.faireEvent();
-			
+
 			window.mettreJour();
 			ListeObjets.refreshListeObjets();
 			window.creerContenuJour();
@@ -144,8 +144,7 @@ public class Engine {
 				ImageIcon icon = new ImageIcon("fins\\Victoire.png");
 				int rep = JOptionPane.showConfirmDialog(window,
 						"Et c'est une victoire!!! Bravo, vous avez reussi avec brio votre année scolaire!\n Voulez-vous recommencer une nouvelle partie ?",
-						"Oh mon dieu il a gagné! !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
-						icon);
+						"Oh mon dieu il a gagné! !", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
 				if (rep == JOptionPane.YES_OPTION) {
 					restart();
 				} else {
@@ -153,9 +152,11 @@ public class Engine {
 				}
 			} else if (getPlayer().checkSavoir()) {
 				getPlayer().prelassage();
-				JOptionPane.showMessageDialog(window,
-						"Vous avez réussi votre " + (Engine.journee.getAnnee() -1) +  "º année de " + getPlayer().getFiliaire().getNom() + " !",
-						"GG !", JOptionPane.OK_CANCEL_OPTION);
+				JOptionPane
+						.showMessageDialog(window,
+								"Vous avez réussi votre " + (Engine.journee.getAnnee() - 1) + "º année de "
+										+ getPlayer().getFiliaire().getNom() + " !",
+								"GG !", JOptionPane.OK_CANCEL_OPTION);
 			} else {
 				Engine.deleteSave();
 				ImageIcon icon = new ImageIcon("fins\\MortSavoir.png");
@@ -213,7 +214,6 @@ public class Engine {
 
 		return player;
 	}
-	
 
 	private static void faireEvent() {
 		Event choisi = ListEvent.choisisEvent();
@@ -222,15 +222,15 @@ public class Engine {
 		} else {
 			eventFini = true;
 		}
-		
-		while(!eventFini) {
+
+		while (!eventFini) {
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		eventFini = false;
 	}
 

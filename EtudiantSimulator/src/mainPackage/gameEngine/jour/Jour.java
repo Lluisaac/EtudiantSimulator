@@ -8,12 +8,12 @@ import mainPackage.gameEngine.player.Player;
 import mainPackage.graphicsEngine.window.MainWindow;
 
 public class Jour {
-	
+
 	private Date date;
 
-	private int tempsLibreJ; //Temps libre d'aujourd'hui
-	
-	private int tempsLibre; //Temps libre a modifier pour chaque jour
+	private int tempsLibreJ; // Temps libre d'aujourd'hui
+
+	private int tempsLibre; // Temps libre a modifier pour chaque jour
 
 	private int buffer;
 
@@ -28,7 +28,7 @@ public class Jour {
 	}
 
 	public Jour(Jour jourPrecedent) {
-		//Chaque annee, de nouveaux jours feries!
+		// Chaque annee, de nouveaux jours feries!
 		this.date = jourPrecedent.date.dateJourSuivant();
 		if (jourPrecedent.date.getAnnee() < jourPrecedent.date.dateJourSuivant().getAnnee()) {
 			genererJoursFeries();
@@ -37,13 +37,13 @@ public class Jour {
 		this.tempsLibre = jourPrecedent.tempsLibre;
 
 	}
-	
+
 	public Jour(String save) {
 		String[] val = save.split(";");
 		String[] val2 = val[1].split(",");
-		
+
 		this.date = new Date(val[0]);
-		
+
 		this.genererJoursFeries();
 		for (int i = 0; i < val2.length; i++) {
 			Jour.listeJoursFeries[i] = new Date(val2[i]);
@@ -52,17 +52,17 @@ public class Jour {
 
 	public String toString() {
 		String r = this.date.toString() + ";";
-		
+
 		for (int i = 0; i < Jour.listeJoursFeries.length; i++) {
 			r += Jour.listeJoursFeries[i].toString();
-					
+
 			if (i < Jour.listeJoursFeries.length - 1) {
 				r += ",";
 			}
 		}
 		return r + ";";
 	}
-	
+
 	private boolean isJourFerie() {
 
 		boolean r = false;
@@ -81,8 +81,16 @@ public class Jour {
 		Random rand = new Random();
 		for (int i = 0; i < Jour.listeJoursFeries.length; i++) {
 			Jour.listeJoursFeries[i] = new Date(rand.nextInt(28) + 1, rand.nextInt(10) + 1, this.date.getAnnee());
-			
+
 		}
+	}
+
+	public static void addJourFerie(Date date) {
+		Date[] temp = new Date[Jour.listeJoursFeries.length + 1];
+		for (int i = 0; i < Jour.listeJoursFeries.length; i++) {
+			temp[i] = Jour.listeJoursFeries[i];
+		}
+		temp[Jour.listeJoursFeries.length] = date;
 	}
 
 	private boolean isJourVacances() {
@@ -95,8 +103,7 @@ public class Jour {
 
 		if (this.date.getJour() % 14 == 1) {
 			mainWindow.mettreIcone("misc\\calendar.gif");
-		}
-		else if (this.getJour() % 14 == 0) {
+		} else if (this.getJour() % 14 == 0) {
 			mainWindow.mettreIcone("misc\\checklist.gif");
 			mainWindow.activerButtonSuivant();
 			mainWindow.setValider(false);
@@ -129,12 +136,12 @@ public class Jour {
 	public void setTempsLibreJ(int i) {
 
 		this.tempsLibreJ = i;
-		
+
 		if (this.tempsLibreJ < 0) {
 			this.setBuffer(this.tempsLibreJ);
 			this.tempsLibreJ = 0;
 		}
-		
+
 	}
 
 	public int getAnnee() {
@@ -145,15 +152,15 @@ public class Jour {
 	public void setTempsLibreJ(Player player, float i) {
 
 		this.tempsLibreJ = 60
-				* (24 - (this.getTempsDodo(player, i) + this.getTempsTransport(player) + this.getTempsTravail(player))) + this.buffer + this.tempsLibreJ;
+				* (24 - (this.getTempsDodo(player, i) + this.getTempsTransport(player) + this.getTempsTravail(player)))
+				+ this.buffer + this.tempsLibreJ;
 	}
 
 	public int getTempsTravail(Player player) {
 
 		if (this.isJourFerie() || this.isJourVacances()) {
 			return 0;
-		}
-		else {
+		} else {
 			return player.getFiliaire().getTempsTravail((this.getJour() - 1) % 7);
 		}
 	}
@@ -162,8 +169,7 @@ public class Jour {
 
 		if (this.getTempsTravail(player) == 0) {
 			return 0;
-		}
-		else {
+		} else {
 			return 2;
 		}
 	}
@@ -172,8 +178,7 @@ public class Jour {
 
 		if (i <= 50) {
 			return (int) (8 * (i / 50f));
-		}
-		else {
+		} else {
 			return (int) (((i * 2) - 50) / 100)
 					* (24 - (this.getTempsTransport(player) + this.getTempsTravail(player) + 8));
 		}
@@ -185,12 +190,10 @@ public class Jour {
 		if (this.getJour() == 28) {
 			if (this.getMois() == 10) {
 				i = 1;
-			}
-			else {
+			} else {
 				i = this.getMois() + 1;
 			}
-		}
-		else {
+		} else {
 			i = this.getMois();
 		}
 
@@ -212,7 +215,7 @@ public class Jour {
 
 	public void setTempsLibre(int i) {
 		this.tempsLibre = i;
-		
+
 	}
 
 	public float getTempsLibre() {
