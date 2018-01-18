@@ -21,6 +21,7 @@ public class Event {
 															// quetes
 	private ArrayList<ModificateurEvent> acces;
 	private String[] modifieurAttribut;
+	
 
 	public Event() {
 		this.acces = new ArrayList<ModificateurEvent>();
