@@ -122,4 +122,15 @@ public class ListeObjets {
 		ListeObjets.listeObjets = new ArrayList<ObjetGeneral>();
 		ListeObjets.genererListe();	
 	}
+
+	public static ObjetGeneral trouveObjet(String nom) {
+		for(int i=0;i<listeObjets.size();i++)
+		{
+			if(nom.equals(listeObjets.get(i).getNom()))
+			{
+				return listeObjets.get(i);
+			}
+		}
+		return null;
+	}
 }

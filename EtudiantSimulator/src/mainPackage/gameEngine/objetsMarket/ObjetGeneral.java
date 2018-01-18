@@ -73,6 +73,11 @@ public abstract class ObjetGeneral {
 		return this.debloque;
 	}
 	
+	public void setAttributs(float attributs[])
+	{
+		this.attributs=attributs;
+	}
+	
 	abstract public void refreshDebloque();
 	
 	public void setDebloque(boolean b) {

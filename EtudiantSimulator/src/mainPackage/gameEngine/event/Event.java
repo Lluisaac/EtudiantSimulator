@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
 import mainPackage.gameEngine.jour.Jour;
+import mainPackage.gameEngine.objetsMarket.ListeObjets;
 
 public class Event {
 
@@ -122,7 +123,21 @@ public class Event {
 			Engine.getPlayer().setGainParMois(Engine.getPlayer().getGainParMois() + Integer.parseInt(change[1]));
 			break;
 		case "statObjet":
-			// A faire un jour
+			float[] attributs=new float[8];
+			if(change[1]=="upgrade")
+			{
+				for(int i=0;i<8;i++)
+				{
+					attributs[i]=Float.parseFloat( change[i+3] );
+				}
+			}else if(change[1]=="bonus")
+			{
+				for(int i=0;i<7;i++)
+				{
+					attributs[i]=Float.parseFloat( change[i+3] );
+				}
+			}
+			ListeObjets.trouveObjet(change[2]).setAttributs(attributs);
 			break;
 		}
 
