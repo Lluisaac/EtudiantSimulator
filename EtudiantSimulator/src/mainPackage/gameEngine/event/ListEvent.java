@@ -57,10 +57,10 @@ public class ListEvent {
 			Event newEvent;
 			
 			if(!contentTab2[3].equals("")) {
-				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]), Integer.parseInt(contentTab2[4]), ModificateurEvent.createArrayFromString(contentTab2[7]));
+				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]), Integer.parseInt(contentTab2[4]), ModificateurEvent.createArrayFromString(contentTab2[7]),contentTab2[8].split("_"));
 				tempDate.add(newEvent);
 			} else if (!contentTab2[5].equals("")) {
-				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], Integer.parseInt(contentTab2[4]), Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]));
+				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], Integer.parseInt(contentTab2[4]), Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]),contentTab2[8].split("_"));
 				temp.add(newEvent);
 			} else {
 				newEvent = new Event();
@@ -78,7 +78,7 @@ public class ListEvent {
 	}
 
 	private static void createTampon() {
-		ListEvent.listeEvent[ListEvent.listeEvent.length - 1] = new Event("Blank", "Blank", "Blank", -1, ListEvent.sommeProbas() * 3, null);
+		ListEvent.listeEvent[ListEvent.listeEvent.length - 1] = new Event("Blank", "Blank", "Blank", -1, ListEvent.sommeProbas() * 3, null,null);
 	}
 
 	private static int sommeProbas() {

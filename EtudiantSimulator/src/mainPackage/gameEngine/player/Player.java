@@ -217,6 +217,14 @@ public class Player {
 
 		return this.filiere;
 	}
+	
+	public void setLoyer(int loyer) {
+		this.loyer = loyer;
+	}
+
+	public void setGainParMois(int gainParMois) {
+		this.gainParMois = gainParMois;
+	}
 
 	public float modifierArgent(float modif) {
 

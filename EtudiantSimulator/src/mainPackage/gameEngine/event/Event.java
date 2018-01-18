@@ -2,6 +2,7 @@ package mainPackage.gameEngine.event;
 
 import java.util.ArrayList;
 
+import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
 
 public class Event {
@@ -16,6 +17,7 @@ public class Event {
 	private String archetype;
 	private int[] joursRestantsProbaAjoutee = new int[2];// Utile que pour les quetes
 	private ArrayList<ModificateurEvent> acces;
+	private String[] modifieurAttribut;
 
 	public Event() {
 		this.acces = new ArrayList<ModificateurEvent>();
@@ -24,7 +26,7 @@ public class Event {
 	}
 
 	public Event(String nom, String resume, String archetype, Date date, int occurence,
-			ArrayList<ModificateurEvent> acces)// Noel,Paque,anniverssaire du
+			ArrayList<ModificateurEvent> acces, String[] modifieurAttribut)// Noel,Paque,anniverssaire du
 												// joueur,JAPD,../
 	{
 		this.nom = nom;
@@ -34,10 +36,11 @@ public class Event {
 		this.archetype = archetype;
 		this.acces = acces;
 		this.probabilite = -1; // Infini
+		this.modifieurAttribut=modifieurAttribut;
 	}
 
 	public Event(String nom, String resume, String archetype, int occurence, int probabilite,
-			ArrayList<ModificateurEvent> acces)// tous le reste
+			ArrayList<ModificateurEvent> acces, String[] modifieurAttribut)// tous le reste
 	{
 		this.nom = nom;
 		this.setOccurence(occurence);
@@ -46,6 +49,7 @@ public class Event {
 		this.acces = acces;
 		this.probabilite = probabilite;
 		this.date = null;
+		this.modifieurAttribut=modifieurAttribut;
 	}
 
 	public void executer() {
@@ -54,6 +58,74 @@ public class Event {
 				this.acces.get(i).appliquer();
 			}
 		}
+		this.appliquerAttributs();
+	}
+
+	
+	
+	public void appliquerAttributs() {
+		String[] change=new String[2];
+		for(int i=0;i<this.modifieurAttribut.length;i++)
+		{
+			change=modifieurAttribut[i].split("|");
+			verifAttribut(change);
+		}	
+	}
+
+	public void verifAttribut(String[] change) {
+		switch (change[0])
+		{
+		case "loyerAjout":
+			Engine.getPlayer().setLoyer(Engine.getPlayer().getLoyer() + Integer.parseInt(change[1]));
+			break;
+		case "loyer":
+			Engine.getPlayer().setLoyer(Integer.parseInt(change[1]));
+			break;
+		case "bonheur":
+			Engine.getPlayer().setBonheur(Engine.getPlayer().getBonheur() +  Integer.parseInt(change[1]));
+			break;
+		case "bonheurJ":
+			Engine.getPlayer().setBonheurJ(Engine.getPlayer().getBonheurJ() +  Integer.parseInt(change[1]));
+			break;
+		case "fatigue":
+			Engine.getPlayer().setFatigue(Engine.getPlayer().getFatigue() +  Integer.parseInt(change[1]));
+			break;
+		case "fatigueJ":
+			Engine.getPlayer().setFatigueJ(Engine.getPlayer().getFatigueJ() +  Integer.parseInt(change[1]));
+			break;
+		case "faim":
+			Engine.getPlayer().setFaim(Engine.getPlayer().getFaim() +  Integer.parseInt(change[1]));
+			break;
+		case "faimJ":
+			Engine.getPlayer().setFaimJ(Engine.getPlayer().getFaimJ() +  Integer.parseInt(change[1]));
+			break;
+		case "savoir":
+			Engine.getPlayer().setSavoir(Engine.getPlayer().getSavoir() +  Integer.parseInt(change[1]));
+			break;
+		case "savoirJ":
+			Engine.getPlayer().setSavoirJ(Engine.getPlayer().getSavoirJ() +  Integer.parseInt(change[1]));
+			break;
+		case "argent":
+			Engine.getPlayer().setArgent(Engine.getPlayer().getArgent() +  Integer.parseInt(change[1]));
+			break;
+		case "argentJ":
+			Engine.getPlayer().setArgentJ(Engine.getPlayer().getArgentJ() +  Integer.parseInt(change[1]));
+			break;
+		case "orientation":
+			//A faire un jouir
+			break;
+		case "jourFerie":
+			break;
+		case "vacance":
+			//A faire
+			break;
+		case "mensuel":
+			Engine.getPlayer().setGainParMois(Engine.getPlayer().getGainParMois() +  Integer.parseInt(change[1]));
+			break;
+		case "statObjet":
+			break;
+		}
+		
 	}
 
 	public String toString() {
