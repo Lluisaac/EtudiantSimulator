@@ -19,18 +19,20 @@ public class Event {
 	private String archetype;
 	private int[] joursRestantsProbaAjoutee = new int[2];// Utile que pour les
 															// quetes
-	private ArrayList<ModificateurEvent> acces;
-	private String[] modifieurAttribut;
+	private ArrayList<ModificateurEvent> accesEvent;
+	private ArrayList<ModificateurObjet> accesObjet;
+	private ArrayList<ModificateurPlayer> accesPlayer;
 	
 
 	public Event() {
-		this.acces = new ArrayList<ModificateurEvent>();
+		this.accesEvent = new ArrayList<ModificateurEvent>();
 		this.probabilite = 0;
 		this.occurence = 0;
 	}
 
 	public Event(String nom, String resume, String archetype, Date date, int occurence,
-			ArrayList<ModificateurEvent> acces, String[] modifieurAttribut)// Noel,Paque,anniverssaire
+			ArrayList<ModificateurEvent> accesEvent,ArrayList<ModificateurObjet> accesObjet,
+			ArrayList<ModificateurPlayer> accesPlayer)// Noel,Paque,anniverssaire
 																			// du
 	// joueur,JAPD,../
 	{
@@ -39,13 +41,15 @@ public class Event {
 		this.date = date;
 		this.resume = resume;
 		this.archetype = archetype;
-		this.acces = acces;
+		this.accesEvent = accesEvent;
+		this.accesObjet = accesObjet;
+		this.accesPlayer = accesPlayer;
 		this.probabilite = -1; // Infini
-		this.modifieurAttribut = modifieurAttribut;
 	}
 
 	public Event(String nom, String resume, String archetype, int occurence, int probabilite,
-			ArrayList<ModificateurEvent> acces, String[] modifieurAttribut)// tous
+			ArrayList<ModificateurEvent> accesEvent,ArrayList<ModificateurObjet> accesObjet,
+			ArrayList<ModificateurPlayer> accesPlayer)// Noel,Paque,anniverssaire // tous
 																			// le
 																			// reste
 	{
@@ -53,19 +57,21 @@ public class Event {
 		this.setOccurence(occurence);
 		this.resume = resume;
 		this.archetype = archetype;
-		this.acces = acces;
+		this.accesEvent = accesEvent;
+		this.accesObjet = accesObjet;
+		this.accesPlayer = accesPlayer;
 		this.probabilite = probabilite;
 		this.date = null;
-		this.modifieurAttribut = modifieurAttribut;
 	}
 
 	public void executer() {
-		if (!(this.acces == null)) {
-			for (int i = 0; i < this.acces.size(); i++) {
-				this.acces.get(i).appliquer();
+		if (this.accesEvent != null) {
+			for (int i = 0; i < this.accesEvent.size(); i++) {
+				this.accesEvent.get(i).appliquer();
 			}
 		}
 		this.appliquerAttributs();
+		
 	}
 
 	public void appliquerAttributs() {
@@ -173,7 +179,7 @@ public class Event {
 	}
 
 	public ArrayList<ModificateurEvent> getAcces() {
-		return acces;
+		return accesEvent;
 	}
 
 	public Date getDate() {

@@ -1,5 +1,7 @@
 package mainPackage.gameEngine.event;
 
+import java.util.ArrayList;
+
 import mainPackage.gameEngine.Engine;
 
 public class ModificateurPlayer {//L'ordre est à respecter
@@ -54,5 +56,23 @@ public class ModificateurPlayer {//L'ordre est à respecter
 		
 		Engine.getPlayer().setGainParMois(this.gainParMois + Engine.getPlayer().getGainParMois());
 		Engine.getPlayer().setLoyer(this.loyer + Engine.getPlayer().getLoyer());
+	}
+	
+	public static ArrayList<ModificateurPlayer> createArrayFromString(String liste) {
+		//Va créer chaque modifObjet pour en faire une array list, chaque modifObjet doit etre séparé par _
+		
+		if (liste.equals("")) {
+			return null;
+		}
+		
+		ArrayList<ModificateurPlayer> modifListe = new ArrayList<ModificateurPlayer>();
+		
+		String[] contentTab = liste.split("_");
+		
+		for (int i = 0; i < contentTab.length - 1; i++) {
+			modifListe.add(new ModificateurPlayer(contentTab[i]));
+		}
+		
+		return modifListe;
 	}
 }
