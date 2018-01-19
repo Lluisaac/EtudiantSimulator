@@ -26,6 +26,8 @@ public class Event {
 
 	public Event() {
 		this.accesEvent = new ArrayList<ModificateurEvent>();
+		this.accesPlayer = new ArrayList<ModificateurPlayer>();
+		this.accesObjet = new ArrayList<ModificateurObjet>();
 		this.probabilite = 0;
 		this.occurence = 0;
 	}
@@ -70,84 +72,16 @@ public class Event {
 				this.accesEvent.get(i).appliquer();
 			}
 		}
-		this.appliquerAttributs();
-		
-	}
-
-	public void appliquerAttributs() {
-		String[] change = new String[2];
-		for (int i = 0; i < this.modifieurAttribut.length; i++) {
-			change = modifieurAttribut[i].split("|");
-			verifAttribut(change);
-		}
-	}
-
-	public void verifAttribut(String[] change) {
-		switch (change[0]) {
-		case "loyerAjout":
-			Engine.getPlayer().setLoyer(Engine.getPlayer().getLoyer() + Integer.parseInt(change[1]));
-			break;
-		case "loyer":
-			Engine.getPlayer().setLoyer(Integer.parseInt(change[1]));
-			break;
-		case "bonheur":
-			Engine.getPlayer().setBonheur(Engine.getPlayer().getBonheur() + Integer.parseInt(change[1]));
-			break;
-		case "bonheurJ":
-			Engine.getPlayer().setBonheurJ(Engine.getPlayer().getBonheurJ() + Integer.parseInt(change[1]));
-			break;
-		case "fatigue":
-			Engine.getPlayer().setFatigue(Engine.getPlayer().getFatigue() + Integer.parseInt(change[1]));
-			break;
-		case "fatigueJ":
-			Engine.getPlayer().setFatigueJ(Engine.getPlayer().getFatigueJ() + Integer.parseInt(change[1]));
-			break;
-		case "faim":
-			Engine.getPlayer().setFaim(Engine.getPlayer().getFaim() + Integer.parseInt(change[1]));
-			break;
-		case "faimJ":
-			Engine.getPlayer().setFaimJ(Engine.getPlayer().getFaimJ() + Integer.parseInt(change[1]));
-			break;
-		case "savoir":
-			Engine.getPlayer().setSavoir(Engine.getPlayer().getSavoir() + Integer.parseInt(change[1]));
-			break;
-		case "savoirJ":
-			Engine.getPlayer().setSavoirJ(Engine.getPlayer().getSavoirJ() + Integer.parseInt(change[1]));
-			break;
-		case "argent":
-			Engine.getPlayer().setArgent(Engine.getPlayer().getArgent() + Integer.parseInt(change[1]));
-			break;
-		case "argentJ":
-			Engine.getPlayer().setArgentJ(Engine.getPlayer().getArgentJ() + Integer.parseInt(change[1]));
-			break;
-		case "orientation":
-			// A faire un jour
-			break;
-		case "jourFerie":
-			Jour.addJourFerie(new Date(change[1]));
-			break;
-		case "mensuel":
-			Engine.getPlayer().setGainParMois(Engine.getPlayer().getGainParMois() + Integer.parseInt(change[1]));
-			break;
-		case "statObjet":
-			float[] attributs=new float[8];
-			if(change[1]=="upgrade")
-			{
-				for(int i=0;i<8;i++)
-				{
-					attributs[i]=Float.parseFloat( change[i+3] );
-				}
-			}else if(change[1]=="bonus")
-			{
-				for(int i=0;i<7;i++)
-				{
-					attributs[i]=Float.parseFloat( change[i+3] );
-				}
+		if (this.accesObjet != null) {
+			for (int i = 0; i < this.accesObjet.size(); i++) {
+				this.accesObjet.get(i).appliquer();
 			}
-			ListeObjets.trouveObjet(change[2]).setAttributs(attributs);
-			break;
 		}
-
+		if (this.accesPlayer!= null) {
+			for (int i = 0; i < this.accesPlayer.size(); i++) {
+				this.accesPlayer.get(i).appliquer();
+			}
+		}
 	}
 
 	public String toString() {
