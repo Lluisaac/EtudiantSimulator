@@ -20,10 +20,8 @@ public class Event {
 	private ArrayList<ModificateurObjet> accesObjet;
 	private ModificateurPlayer accesPlayer;
 
-	public Event(String nom, String resume, String archetype, Date date, int occurence,
-			ArrayList<ModificateurEvent> accesEvent, ArrayList<ModificateurObjet> accesObjet,
-			ModificateurPlayer accesPlayer)// Noel,Paque,anniversaire
-											// du
+	public Event(String nom, String resume, String archetype, Date date, int occurence)// Noel,Paque,anniversaire
+	// du
 	// joueur,JAPD,../
 	{
 		this.nom = nom;
@@ -31,28 +29,26 @@ public class Event {
 		this.date = date;
 		this.resume = resume;
 		this.archetype = archetype;
-		this.accesEvent = accesEvent;
-		this.accesObjet = accesObjet;
-		this.accesPlayer = accesPlayer;
 		this.probabilite = -1; // Infini
 	}
 
-	public Event(String nom, String resume, String archetype, int occurence, int probabilite,
-			ArrayList<ModificateurEvent> accesEvent, ArrayList<ModificateurObjet> accesObjet,
-			ModificateurPlayer accesPlayer) // tout le reste
+	public Event(String nom, String resume, String archetype, int occurence, int probabilite) // tout
+																								// le
+																								// reste
 	{
 		this.nom = nom;
 		this.setOccurence(occurence);
 		this.resume = resume;
 		this.archetype = archetype;
-		this.accesEvent = accesEvent;
-		this.accesObjet = accesObjet;
-		this.accesPlayer = accesPlayer;
 		this.probabilite = probabilite;
 		this.date = null;
 	}
 
 	public void executer() {
+		if (this.getOccurence() != -1) {
+			this.setOccurence(this.getOccurence() - 1);
+		}
+		
 		if (this.accesEvent != null) {
 			for (int i = 0; i < this.accesEvent.size(); i++) {
 				this.accesEvent.get(i).appliquer();
@@ -60,7 +56,6 @@ public class Event {
 		}
 		if (this.accesObjet != null) {
 			for (int i = 0; i < this.accesObjet.size(); i++) {
-				System.out.println("test2");
 
 				this.accesObjet.get(i).appliquer();
 			}
@@ -92,7 +87,7 @@ public class Event {
 	}
 
 	public int getProbabilite() {
-		return probabilite;
+		return this.occurence == -1 ? probabilite : this.probabilite * this.occurence;
 	}
 
 	public void setProbabilite(int probabilite) {
@@ -117,6 +112,30 @@ public class Event {
 
 	public int getOccurence() {
 		return occurence;
+	}
+	
+	public ArrayList<ModificateurEvent> getAccesEvent() {
+		return accesEvent;
+	}
+
+	public void setAccesEvent(ArrayList<ModificateurEvent> accesEvent) {
+		this.accesEvent = accesEvent;
+	}
+
+	public ArrayList<ModificateurObjet> getAccesObjet() {
+		return accesObjet;
+	}
+
+	public void setAccesObjet(ArrayList<ModificateurObjet> accesObjet) {
+		this.accesObjet = accesObjet;
+	}
+
+	public ModificateurPlayer getAccesPlayer() {
+		return accesPlayer;
+	}
+
+	public void setAccesPlayer(ModificateurPlayer accesPlayer) {
+		this.accesPlayer = accesPlayer;
 	}
 
 	public void setOccurence(int occurence) {

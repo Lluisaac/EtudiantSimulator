@@ -23,9 +23,6 @@ public class ModificateurObjet { // L'ordre est à respecter
 	}
 
 	public void appliquer() {
-		for (int i = 0; i < this.attributs.length; i++) {
-			System.out.println(this.attributs[i] + " ");
-		}
 		ListeObjets.trouveObjet(this.nom).setAttributs(attributs);
 	}
 

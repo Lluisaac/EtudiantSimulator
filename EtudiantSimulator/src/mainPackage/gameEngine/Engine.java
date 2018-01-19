@@ -216,7 +216,9 @@ public class Engine {
 	}
 
 	private static void faireEvent() {
+		ListEvent.createTampon();
 		Event choisi = ListEvent.choisisEvent();
+		
 		if (choisi != null) {
 			ListEvent.afficherEvent(choisi);
 		} else {

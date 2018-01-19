@@ -13,9 +13,6 @@ public class Main {
 
 		DesignTask.setBestLookAndFeelAvailable();
 
-		Controller.start();
-		
-		System.out.println("Yoan tu suces");
-		
+		Controller.start();		
 	}
 }

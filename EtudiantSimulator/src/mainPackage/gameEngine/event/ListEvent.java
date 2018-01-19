@@ -61,13 +61,11 @@ public class ListEvent {
 
 			if (!contentTab2[3].equals("")) {
 				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]),
-						Integer.parseInt(contentTab2[4]), ModificateurEvent.createArrayFromString(contentTab2[7]),
-						ModificateurObjet.createArrayFromString(contentTab2[8]), new ModificateurPlayer(contentTab2[9]));
+						Integer.parseInt(contentTab2[4]));
 				tempDate.add(newEvent);
 			} else if (!contentTab2[5].equals("")) {
 				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], Integer.parseInt(contentTab2[4]),
-						Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]), 
-						ModificateurObjet.createArrayFromString(contentTab2[8]), new ModificateurPlayer(contentTab2[9]));
+						Integer.parseInt(contentTab2[5]));
 				temp.add(newEvent);
 			}
 
@@ -76,21 +74,41 @@ public class ListEvent {
 				int[] tabJoursRestants = { Integer.parseInt(contentTab3[0]), Integer.parseInt(contentTab3[1]) };
 				newEvent.setJoursRestantsProbaAjoutee(tabJoursRestants);
 			}
+			
+			if (!contentTab2[7].equals("") && newEvent != null) {
+				newEvent.setAccesEvent(ModificateurEvent.createArrayFromString(contentTab2[7]));
+			}
+			
+			if (!contentTab2[8].equals("") && newEvent != null) {
+				newEvent.setAccesObjet(ModificateurObjet.createArrayFromString(contentTab2[8]));
+			}
+			
+			if (!contentTab2[9].equals("") && newEvent != null) {
+				newEvent.setAccesPlayer(new ModificateurPlayer(contentTab2[9]));
+			}
 		}
 
 		ListEvent.fromListToArray(temp, tempDate);
 		ListEvent.createTampon();
 	}
 
-	private static void createTampon() {
+	public static void createTampon() {
 		// nom;description;archetype;date;occurence;probabilite;joursrestants;accesEvent;accesObjet;accesPlayer
 		ListEvent.listeEvent[ListEvent.listeEvent.length - 1] = new Event("Blank", "Blank", "Blank", -1,
-				ListEvent.sommeProbas() * 3, null, null, null);
+				(ListEvent.sommeProbasSansTampon() * 4) + 1);
+	}
+
+	private static int sommeProbasSansTampon() {
+		int val = 0;
+		for (int i = 0; i < ListEvent.listeEvent.length - 1; i++) {
+			val += ListEvent.listeEvent[i].getProbabilite();
+		}
+		return val;
 	}
 
 	private static int sommeProbas() {
 		int val = 0;
-		for (int i = 0; i < ListEvent.listeEvent.length - 1; i++) {
+		for (int i = 0; i < ListEvent.listeEvent.length; i++) {
 			val += ListEvent.listeEvent[i].getProbabilite();
 		}
 		return val;
@@ -114,13 +132,13 @@ public class ListEvent {
 	{
 
 		for (int i = 0; i < ListEvent.listeEventDate.length; i++) {
-			if (ListEvent.listeEventDate[i].getNom() == nom) {
+			if (ListEvent.listeEventDate[i].getNom().equals(nom)) {
 				return ListEvent.listeEventDate[i];
 			}
 		}
 
 		for (int i = 0; i < ListEvent.listeEvent.length; i++) {
-			if (ListEvent.listeEvent[i].getNom() == nom) {
+			if (ListEvent.listeEvent[i].getNom().equals(nom)) {
 				return ListEvent.listeEvent[i];
 			}
 		}
@@ -128,24 +146,16 @@ public class ListEvent {
 		return null; // L'evenement n'existe pas
 	}
 
-	public static int probaTotal() // Renvoie la somme des proba de tous les
-									// events
-	{
-		int total = 0;
-		for (int i = 0; i < ListEvent.listeEvent.length; i++) {
-			total = total + ListEvent.listeEvent[i].getProbabilite();
-		}
-		return total;
-	}
-
 	public static Event choisisEvent() // Prend l'evenement pour le jour meme
 	{
 		Event evenementChoisi = null;
 		int proba = 0;
-
+		
 		Random rand = new Random();
-		int nbrAlea = rand.nextInt(probaTotal());
+		int nbrAlea = rand.nextInt(sommeProbas()!=0?sommeProbas():1);
 
+		System.out.println(nbrAlea + "\n" + sommeProbas() + "\n" + ListEvent.staticToString());
+		
 		for (int i = 0; nbrAlea >= proba; i++) {
 			if (ListEvent.listeEvent[i].getOccurence() != 0) {
 				proba += ListEvent.listeEvent[i].getProbabilite();
@@ -165,12 +175,8 @@ public class ListEvent {
 				}
 			}
 		}
-
-		if (evenementChoisi.getOccurence() != -1) {
-			evenementChoisi.setOccurence(evenementChoisi.getOccurence() - 1);
-		}
-
-		if (evenementChoisi.getNom() != "Blank") {
+		
+		if (!(evenementChoisi.getNom().equals("Blank"))) {
 			evenementChoisi.executer();
 			return evenementChoisi;
 		} else {

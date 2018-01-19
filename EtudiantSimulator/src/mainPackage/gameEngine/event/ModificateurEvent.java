@@ -25,7 +25,7 @@ public class ModificateurEvent {
 		
 		//Le string doit être séparé par |
 		
-		String[] contentTab = modif.split("\\|");
+		String[] contentTab = modif.split("\\|", -1);
 		
 		this.nom = contentTab[0];
 		
@@ -46,7 +46,7 @@ public class ModificateurEvent {
 		temp.setOccurence(temp.getOccurence() + this.occurence);
 		temp.setProbabilite(temp.getProbabilite() + this.proba);
 		
-		if (!(this.date == null)) {
+		if (this.date != null) {
 			if (this.proba == 0) {
 				temp.setDate(this.date);
 			} else {
