@@ -22,8 +22,8 @@ public class ListEvent {
 		// Séparation pour chaque Sous-attribut (tableau, liste...): _
 		// Séparation auxilière pour chaque sous-sous-attribut: |
 
-		// nom;description;archetype;date;occurence;probabilite;joursrestants;acces;
-		// PCCassé;Votre PC est cassé;broken;;-1;5;;GoReparateur_5/1/1_0_15;
+		// nom;description;archetype;date;occurence;probabilite;joursrestants;accesEvent;accesObjet;accesPlayer
+		// PCCassé;Votre PC est cassé;broken;;-1;5;;GoReparateur_5/1/1_0_15;Ordinateur
 		// L'evenement PCCassé peut arriver une infinité de fois, a une
 		// probabilité de 5 et va augmenter de 15 la probabilité de GoReparateur
 		// pendant 4 jours.
@@ -61,12 +61,12 @@ public class ListEvent {
 			if (!contentTab2[3].equals("")) {
 				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]),
 						Integer.parseInt(contentTab2[4]), ModificateurEvent.createArrayFromString(contentTab2[7]),
-						contentTab2[8].split("_"));
+						ModificateurObjet.createArrayFromString(contentTab2[8]),ModificateurPlayer.createArrayFromString(contentTab2[9]));
 				tempDate.add(newEvent);
 			} else if (!contentTab2[5].equals("")) {
 				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], Integer.parseInt(contentTab2[4]),
-						Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]),
-						contentTab2[8].split("_"));
+						Integer.parseInt(contentTab2[5]), ModificateurEvent.createArrayFromString(contentTab2[7]), 
+						ModificateurObjet.createArrayFromString(contentTab2[8]),ModificateurPlayer.createArrayFromString(contentTab2[9]));
 				temp.add(newEvent);
 			} else {
 				newEvent = new Event();
@@ -85,7 +85,7 @@ public class ListEvent {
 
 	private static void createTampon() {
 		ListEvent.listeEvent[ListEvent.listeEvent.length - 1] = new Event("Blank", "Blank", "Blank", -1,
-				ListEvent.sommeProbas() * 3, null, null);
+				ListEvent.sommeProbas() * 3, null, null,null);
 	}
 
 	private static int sommeProbas() {
