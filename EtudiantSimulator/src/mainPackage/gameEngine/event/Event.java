@@ -22,7 +22,7 @@ public class Event {
 
 	public Event(String nom, String resume, String archetype, Date date, int occurence,
 			ArrayList<ModificateurEvent> accesEvent, ArrayList<ModificateurObjet> accesObjet,
-			ModificateurPlayer accesPlayer)// Noel,Paque,anniverssaire
+			ModificateurPlayer accesPlayer)// Noel,Paque,anniversaire
 											// du
 	// joueur,JAPD,../
 	{
@@ -39,9 +39,7 @@ public class Event {
 
 	public Event(String nom, String resume, String archetype, int occurence, int probabilite,
 			ArrayList<ModificateurEvent> accesEvent, ArrayList<ModificateurObjet> accesObjet,
-			ModificateurPlayer accesPlayer)// Noel,Paque,anniverssaire // tous
-											// le
-											// reste
+			ModificateurPlayer accesPlayer) // tout le reste
 	{
 		this.nom = nom;
 		this.setOccurence(occurence);
@@ -62,6 +60,8 @@ public class Event {
 		}
 		if (this.accesObjet != null) {
 			for (int i = 0; i < this.accesObjet.size(); i++) {
+				System.out.println("test2");
+
 				this.accesObjet.get(i).appliquer();
 			}
 		}

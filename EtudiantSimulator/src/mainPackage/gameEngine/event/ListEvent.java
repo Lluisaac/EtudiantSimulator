@@ -24,7 +24,7 @@ public class ListEvent {
 		// Séparation auxilière pour chaque sous-sous-sous-attribut: #
 
 		// nom;description;archetype;date;occurence;probabilite;joursrestants;accesEvent;accesObjet;accesPlayer
-		// PCCassé;Votre PC est cassé;broken;;-1;5;;GoReparateur_5/1/1_0_15|ElectricteProblemes_5/1/1_0_15;Ordinateur_800#0#0#0#0#0#0#0;;
+		// PCCassé;Votre PC est cassé;broken;;-1;5;;GoReparateur|5/1/1|0|15_ElectricteProblemes|5/1/1|0|15;Ordinateur|800#0#0#0#0#0#0#0;;
 		// L'evenement PCCassé peut arriver une infinité de fois, a une
 		// probabilité de 5 et va augmenter de 15 la probabilité de GoReparateur
 		// pendant 4 jours.
@@ -83,8 +83,9 @@ public class ListEvent {
 	}
 
 	private static void createTampon() {
+		// nom;description;archetype;date;occurence;probabilite;joursrestants;accesEvent;accesObjet;accesPlayer
 		ListEvent.listeEvent[ListEvent.listeEvent.length - 1] = new Event("Blank", "Blank", "Blank", -1,
-				ListEvent.sommeProbas() * 3, null, null,null);
+				ListEvent.sommeProbas() * 3, null, null, null);
 	}
 
 	private static int sommeProbas() {

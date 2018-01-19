@@ -39,7 +39,7 @@ public class Engine {
 	public static void createEngine(boolean newGame, Filiere filiaire) {
 
 		if (newGame) {
-			player = new Player(filiaire, true);
+			player = new Player(filiaire, false);
 			ListeObjets.genererListe();
 			journee = new Jour();
 		} else {
@@ -232,6 +232,7 @@ public class Engine {
 		}
 
 		eventFini = false;
+		window.actualiserBesoins();
 	}
 
 	private static void restart() {

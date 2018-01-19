@@ -19,7 +19,7 @@ public class ModificateurPlayer {// L'ordre est à respecter
 	private int loyer;
 
 	ModificateurPlayer(String modif) {
-		String[] contentTab = modif.split("|");
+		String[] contentTab = modif.split("_");
 
 		this.argent = Float.parseFloat(contentTab[0]);
 		this.savoir = Float.parseFloat(contentTab[1]);
