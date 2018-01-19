@@ -2,10 +2,7 @@ package mainPackage.gameEngine.event;
 
 import java.util.ArrayList;
 
-import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
-import mainPackage.gameEngine.jour.Jour;
-import mainPackage.gameEngine.objetsMarket.ListeObjets;
 
 public class Event {
 
@@ -21,21 +18,12 @@ public class Event {
 															// quetes
 	private ArrayList<ModificateurEvent> accesEvent;
 	private ArrayList<ModificateurObjet> accesObjet;
-	private ArrayList<ModificateurPlayer> accesPlayer;
-	
-
-	public Event() {
-		this.accesEvent = new ArrayList<ModificateurEvent>();
-		this.accesPlayer = new ArrayList<ModificateurPlayer>();
-		this.accesObjet = new ArrayList<ModificateurObjet>();
-		this.probabilite = 0;
-		this.occurence = 0;
-	}
+	private ModificateurPlayer accesPlayer;
 
 	public Event(String nom, String resume, String archetype, Date date, int occurence,
-			ArrayList<ModificateurEvent> accesEvent,ArrayList<ModificateurObjet> accesObjet,
-			ArrayList<ModificateurPlayer> accesPlayer)// Noel,Paque,anniverssaire
-																			// du
+			ArrayList<ModificateurEvent> accesEvent, ArrayList<ModificateurObjet> accesObjet,
+			ModificateurPlayer accesPlayer)// Noel,Paque,anniverssaire
+											// du
 	// joueur,JAPD,../
 	{
 		this.nom = nom;
@@ -50,10 +38,10 @@ public class Event {
 	}
 
 	public Event(String nom, String resume, String archetype, int occurence, int probabilite,
-			ArrayList<ModificateurEvent> accesEvent,ArrayList<ModificateurObjet> accesObjet,
-			ArrayList<ModificateurPlayer> accesPlayer)// Noel,Paque,anniverssaire // tous
-																			// le
-																			// reste
+			ArrayList<ModificateurEvent> accesEvent, ArrayList<ModificateurObjet> accesObjet,
+			ModificateurPlayer accesPlayer)// Noel,Paque,anniverssaire // tous
+											// le
+											// reste
 	{
 		this.nom = nom;
 		this.setOccurence(occurence);
@@ -77,10 +65,9 @@ public class Event {
 				this.accesObjet.get(i).appliquer();
 			}
 		}
-		if (this.accesPlayer!= null) {
-			for (int i = 0; i < this.accesPlayer.size(); i++) {
-				this.accesPlayer.get(i).appliquer();
-			}
+		if (this.accesPlayer != null) {
+			this.accesPlayer.appliquer();
+
 		}
 	}
 
