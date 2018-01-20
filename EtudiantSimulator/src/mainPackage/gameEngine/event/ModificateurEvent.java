@@ -2,7 +2,6 @@ package mainPackage.gameEngine.event;
 
 import java.util.ArrayList;
 
-import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
 
 public class ModificateurEvent { 
