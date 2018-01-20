@@ -86,6 +86,10 @@ public class ListEvent {
 			if (!contentTab2[9].equals("") && newEvent != null) {
 				newEvent.setAccesPlayer(new ModificateurPlayer(contentTab2[9]));
 			}
+			
+			if (!contentTab2[10].equals("") && newEvent != null) {
+				newEvent.setHas2Options(contentTab2[10]);
+			}
 		}
 
 		ListEvent.fromListToArray(temp, tempDate);
@@ -130,7 +134,7 @@ public class ListEvent {
 	public static Event trouverEvent(String nom)// Trouve un event a partir de
 												// son nom
 	{
-
+		
 		for (int i = 0; i < ListEvent.listeEventDate.length; i++) {
 			if (ListEvent.listeEventDate[i].getNom().equals(nom)) {
 				return ListEvent.listeEventDate[i];
@@ -153,8 +157,6 @@ public class ListEvent {
 		
 		Random rand = new Random();
 		int nbrAlea = rand.nextInt(sommeProbas()!=0?sommeProbas():1);
-
-		System.out.println(nbrAlea + "\n" + sommeProbas() + "\n" + ListEvent.staticToString());
 		
 		for (int i = 0; nbrAlea >= proba; i++) {
 			if (ListEvent.listeEvent[i].getOccurence() != 0) {
@@ -165,19 +167,15 @@ public class ListEvent {
 			}
 		}
 
-		for (int i = 0; i < listeEventDate.length || i < listeEvent.length; i++) {
-			if (ListEvent.listeEvent[i].getOccurence() != 0) {
-				if (i < listeEventDate.length && listeEventDate[i].getDate() == Engine.journee.getDate()) {
+		for (int i = 0; i < listeEventDate.length; i++) {
+				if (listeEventDate[i].getDate().equals(Engine.journee.getDate())) {
 					evenementChoisi = listeEventDate[i];
 				}
-				if (i < listeEvent.length && listeEvent[i].getDate() == Engine.journee.getDate()) {
-					evenementChoisi = listeEvent[i];
-				}
-			}
 		}
 		
+		System.out.println(evenementChoisi);
+		
 		if (!(evenementChoisi.getNom().equals("Blank"))) {
-			evenementChoisi.executer();
 			return evenementChoisi;
 		} else {
 			return null;
@@ -257,6 +255,6 @@ public class ListEvent {
 	}
 
 	public static void afficherEvent(Event event) {
-		Engine.eventDialog = new EventDialog(event.getNom(), event.getResume(), event.getArchetype());
+		Engine.eventDialog = new EventDialog(event, event.isHas2Options());
 	}
 }

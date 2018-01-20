@@ -39,7 +39,7 @@ public class MenuWindow extends JDialog implements ActionListener {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		// this.setIconImage(logoIcon.getImage());
-
+		this.buttonContinuer.setEnabled(false);
 		buildDialog();
 	}
 

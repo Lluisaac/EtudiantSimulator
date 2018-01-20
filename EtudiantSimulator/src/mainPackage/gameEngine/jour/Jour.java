@@ -11,9 +11,9 @@ public class Jour {
 
 	private Date date;
 
-	private int tempsLibreJ; // Temps libre d'aujourd'hui
+	private int tempsLibre; // Temps libre d'aujourd'hui
 
-	private int tempsLibre; // Temps libre a modifier pour chaque jour
+	private int tempsLibreJ; // Temps libre a modifier pour chaque jour
 
 	private int buffer;
 
@@ -21,8 +21,8 @@ public class Jour {
 
 	public Jour() {
 		this.date = new Date();
-		this.tempsLibreJ = 0;
 		this.tempsLibre = 0;
+		this.tempsLibreJ = 0;
 		this.buffer = 0;
 		genererJoursFeries();
 	}
@@ -34,7 +34,7 @@ public class Jour {
 			genererJoursFeries();
 		}
 		this.buffer = jourPrecedent.buffer;
-		this.tempsLibre = jourPrecedent.tempsLibre;
+		this.tempsLibreJ = jourPrecedent.tempsLibreJ;
 
 	}
 
@@ -130,16 +130,16 @@ public class Jour {
 
 	public int getTempsLibreJ() {
 
-		return this.tempsLibreJ;
+		return this.tempsLibre;
 	}
 
 	public void setTempsLibreJ(int i) {
 
-		this.tempsLibreJ = i;
+		this.tempsLibre = i;
 
-		if (this.tempsLibreJ < 0) {
-			this.setBuffer(this.tempsLibreJ);
-			this.tempsLibreJ = 0;
+		if (this.tempsLibre < 0) {
+			this.setBuffer(this.tempsLibre);
+			this.tempsLibre = 0;
 		}
 
 	}
@@ -151,9 +151,9 @@ public class Jour {
 
 	public void setTempsLibreJ(Player player, float i) {
 
-		this.tempsLibreJ = 60
+		this.tempsLibre = 60
 				* (24 - (this.getTempsDodo(player, i) + this.getTempsTransport(player) + this.getTempsTravail(player)))
-				+ this.buffer + this.tempsLibreJ;
+				+ this.buffer + this.tempsLibre;
 	}
 
 	public int getTempsTravail(Player player) {
@@ -214,11 +214,11 @@ public class Jour {
 	}
 
 	public void setTempsLibre(int i) {
-		this.tempsLibre = i;
+		this.tempsLibreJ = i;
 
 	}
 
 	public float getTempsLibre() {
-		return this.tempsLibre;
+		return this.tempsLibreJ;
 	}
 }

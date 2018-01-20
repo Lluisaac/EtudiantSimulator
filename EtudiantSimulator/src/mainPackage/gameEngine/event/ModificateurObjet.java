@@ -8,8 +8,9 @@ public class ModificateurObjet { // L'ordre est à respecter
 
 	private String nom;
 	private float[] attributs;
+	private boolean dispo;
 
-	ModificateurObjet(String modif) {
+	public ModificateurObjet(String modif) {
 		String[] contentTab = modif.split("\\|");
 		String[] contentTab2 = contentTab[1].split("#");
 		
@@ -19,11 +20,13 @@ public class ModificateurObjet { // L'ordre est à respecter
 		for (int i = 0; i < contentTab2.length; i++) {
 			this.attributs[i] = Float.parseFloat(contentTab2[i]);
 		}
+		this.dispo = Boolean.parseBoolean(contentTab[2]);
 
 	}
 
 	public void appliquer() {
 		ListeObjets.trouveObjet(this.nom).setAttributs(attributs);
+		ListeObjets.trouveObjet(this.nom).setDebloque(this.dispo);
 	}
 
 	public static ArrayList<ModificateurObjet> createArrayFromString(String liste) {

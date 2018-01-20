@@ -17,6 +17,9 @@ public class ModificateurPlayer {// L'ordre est à respecter
 
 	private int gainParMois;
 	private int loyer;
+	
+	private int tempsLibre;
+	private int tempsLibreJ;
 
 	public ModificateurPlayer(String modif) {
 		String[] contentTab = modif.split("_");
@@ -35,6 +38,9 @@ public class ModificateurPlayer {// L'ordre est à respecter
 
 		this.gainParMois = Integer.parseInt(contentTab[10]);
 		this.loyer = Integer.parseInt(contentTab[11]);
+
+		this.tempsLibre = Integer.parseInt(contentTab[12]);
+		this.tempsLibreJ = Integer.parseInt(contentTab[13]);
 	}
 
 	public void appliquer() {
@@ -52,5 +58,8 @@ public class ModificateurPlayer {// L'ordre est à respecter
 
 		Engine.getPlayer().setGainParMois(this.gainParMois + Engine.getPlayer().getGainParMois());
 		Engine.getPlayer().setLoyer(this.loyer + Engine.getPlayer().getLoyer());
+		
+		Engine.journee.setBuffer((int) (Engine.journee.getBuffer() - this.tempsLibre));
+		Engine.journee.setTempsLibre((int) (Engine.journee.getTempsLibre() + this.tempsLibreJ));
 	}
 }

@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import mainPackage.gameEngine.Engine;
+import mainPackage.gameEngine.event.Event;
 
 @SuppressWarnings("serial")
 public class EventDialog extends JDialog {
@@ -27,42 +28,52 @@ public class EventDialog extends JDialog {
 	private JPanel panelImage = new JPanel();
 	private JPanel panelButton = new JPanel();
 	private JPanel panelResume = new JPanel();
-	
+
 	private JLabel labelImage = new JLabel();
 	private JLabel labelResume = new JLabel();
-	
-	private JButton button1 = new JButton("Oui");
+
+	private JButton button1 = new JButton("Ok");
 	private JButton button2 = new JButton("Non");
-	
+
+	private Event event;
+
 	public EventDialog() {
 		this.setLayout(new BorderLayout());
-		this.panelImage.setLayout(new GridLayout(1,1));
-		
+		this.panelImage.setLayout(new GridLayout(1, 1));
+
 		this.panelImage.add(labelImage);
-		
+
 		this.panelResume.add(labelResume);
 		this.labelResume.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		this.panelButton.add(button1);
-		this.panelButton.add(button2);
-		
+
 		this.add(this.panelImage, BorderLayout.NORTH);
 		this.add(this.panelResume, BorderLayout.CENTER);
 		this.add(this.panelButton, BorderLayout.SOUTH);
-		
+
 		this.setSize(300, 300);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		
-		this.button1.addActionListener(new ItemActionChange());
-		this.button2.addActionListener(new ItemActionChange());
+
+		this.button1.addActionListener(new ItemActionChangeOui());
 	}
-	
+
+	public EventDialog(Event event, boolean has2Options) {
+		this(event.getNom(), event.getResume(), event.getArchetype());
+		this.event = event;
+		if (has2Options) {
+			this.button1.setText("Oui");
+			this.panelButton.add(button2);
+			this.button2.addActionListener(new ItemActionChangeNon());
+		}
+	}
+
 	public EventDialog(String nom, String resume, String archetype) {
 		this();
 		this.setTitle(nom);
-		
+
 		BufferedImage myPicture;
 
 		try {
@@ -77,41 +88,59 @@ public class EventDialog extends JDialog {
 			graphics2D.dispose();
 
 			myPicture = scaledImage;
-			
+
 			this.labelImage.setIcon(new ImageIcon(myPicture));
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		this.labelResume.setText("<html><div style='text-align: center;'><h3>" + sautLigne(resume) + "</div></html>");
 	}
-	
+
 	public String sautLigne(String str) {
 		String string = "";
-		
+
 		String[] tab = str.split(" ");
 		int taille = 0;
-		
+
 		for (int i = 0; i < tab.length; i++) {
 			taille += tab[i].length() + 1;
-			if (taille < 38) {
+			if (taille < 38 && !tab[i].equals("&")) {
 				string += tab[i] + " ";
 			} else {
+				if (!tab[i].equals("&")) {
+					i--;
+				}
 				string += "<br>";
-				i--;
 				taille = 0;
 			}
 		}
-		
+
 		return string;
 	}
-	
-	class ItemActionChange implements ActionListener {
 
+	class ItemActionChangeOui implements ActionListener {
+
+
+		public void actionPerformed(ActionEvent e) {
+			event.executer();
+			Engine.eventFini = true;
+			Engine.eventDialog.dispose();
+			if (event.getOccurence() != -1) {
+				event.setOccurence(event.getOccurence() - 1);
+			}
+		}
+	}
+
+	class ItemActionChangeNon implements ActionListener {
+		
 		public void actionPerformed(ActionEvent e) {
 			Engine.eventFini = true;
 			Engine.eventDialog.dispose();
+			if (event.getOccurence() != -1) {
+				event.setOccurence(event.getOccurence() - 1);
+			}
 		}
 	}
 

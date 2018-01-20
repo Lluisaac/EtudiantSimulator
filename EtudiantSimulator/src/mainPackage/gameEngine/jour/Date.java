@@ -1,41 +1,34 @@
 package mainPackage.gameEngine.jour;
 
+import mainPackage.gameEngine.Engine;
+
 public class Date {
 
 	private String date;
 
 	public Date() {
-		date = "00/01/01";
+		date = "0/1/1";
 	}
 
 	public Date(int j, int m, int a) {
-		if (j < 10) {
-			date = "0" + j + "/";
-		} else {
-			date = j + "/";
-		}
-
-		if (m < 10) {
-			date += "0" + m + "/";
-		} else {
-			date += m + "/";
-		}
-
-		if (a < 10) {
-			date += "0" + a;
-		} else {
-			date += a;
-		}
+		date = j + "/" + m + "/" + a;
 	}
 
 	public Date(Date date) {
 		this.date = date.date.toString();
 	}
-	
+
 	public Date(String date) {
-		this.date = date;
+		this(Engine.journee.getDate());
+
+		if (date.contains("+")) {
+			date = date.substring(1);
+			this.addDate(new Date(date));
+		} else {
+			this.date = date;
+		}
 	}
-	
+
 	public String toString() {
 		return this.date;
 	}
@@ -89,29 +82,21 @@ public class Date {
 		// i >= 0
 		this.setAnnee(this.getAnnee() + i);
 	}
-	
-	
+
 	public boolean superieurDate(Date date)
 	// V�rifie que la date objet soit superieur a la date parametre
 	{
-		if(this.getAnnee() > date.getAnnee())
-		{
+		if (this.getAnnee() > date.getAnnee()) {
 			return true;
-		}
-		else if(this.getMois() > date.getMois())
-		{
+		} else if (this.getMois() > date.getMois()) {
 			return true;
-		}
-		else if(this.getJour() > date.getJour())
-		{
+		} else if (this.getJour() > date.getJour()) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
-	
+
 	public int differenceDate(Date date) {
 		int val = 0;
 		Date temp = new Date(this);
@@ -127,7 +112,7 @@ public class Date {
 				val++;
 			}
 		}
-		
+
 		return val;
 	}
 
@@ -152,7 +137,7 @@ public class Date {
 	private void setJour(int i) {
 		String[] temp = date.split("/");
 		if (i < 0) {
-			this.setDate("0" + i + "/" + temp[1] + "/" + temp[2]);
+			this.setDate(i + "/" + temp[1] + "/" + temp[2]);
 		} else {
 			this.setDate(i + "/" + temp[1] + "/" + temp[2]);
 		}
@@ -161,7 +146,7 @@ public class Date {
 	private void setMois(int i) {
 		String[] temp = date.split("/");
 		if (i < 0) {
-			this.setDate(temp[0] + "/" + "0" + i + "/" + temp[2]);
+			this.setDate(temp[0] + "/" + i + "/" + temp[2]);
 		} else {
 			this.setDate(temp[0] + "/" + i + "/" + temp[2]);
 		}
@@ -170,15 +155,19 @@ public class Date {
 	private void setAnnee(int i) {
 		String[] temp = date.split("/");
 		if (i < 0) {
-			this.setDate(temp[0] + "/" + temp[1] + "/" + "0" + i);
+			this.setDate(temp[0] + "/" + temp[1] + "/" + i);
 		} else {
 			this.setDate(temp[0] + "/" + temp[1] + "/" + i);
 		}
 	}
-	
+
 	public boolean equals(Date date) {
 		return this.getDate().equals(date.getDate());
 	}
-	
 
+	public void addDate(Date date) {
+		this.addJour(date.getJour());
+		this.addMois(date.getMois());
+		this.addAnnee(date.getAnnee());
+	}
 }

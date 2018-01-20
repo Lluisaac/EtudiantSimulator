@@ -19,6 +19,8 @@ public class Event {
 	private ArrayList<ModificateurEvent> accesEvent;
 	private ArrayList<ModificateurObjet> accesObjet;
 	private ModificateurPlayer accesPlayer;
+	
+	private boolean has2Options;
 
 	public Event(String nom, String resume, String archetype, Date date, int occurence)// Noel,Paque,anniversaire
 	// du
@@ -45,21 +47,19 @@ public class Event {
 	}
 
 	public void executer() {
-		if (this.getOccurence() != -1) {
-			this.setOccurence(this.getOccurence() - 1);
-		}
-		
 		if (this.accesEvent != null) {
 			for (int i = 0; i < this.accesEvent.size(); i++) {
 				this.accesEvent.get(i).appliquer();
 			}
 		}
+		
 		if (this.accesObjet != null) {
 			for (int i = 0; i < this.accesObjet.size(); i++) {
 
 				this.accesObjet.get(i).appliquer();
 			}
 		}
+		
 		if (this.accesPlayer != null) {
 			this.accesPlayer.appliquer();
 
@@ -67,7 +67,14 @@ public class Event {
 	}
 
 	public String toString() {
-		return nom + ";" + resume + ";" + archetype + ";" + ";" + occurence + ";" + probabilite + ";";
+		String str = nom + ";" + resume + ";" + archetype + ";";
+		
+		if  (this.date != null) {
+			str += this.date.toString();
+		}
+		
+		str += ";" + occurence + ";" + probabilite + ";";
+		return str;
 	}
 
 	public String getResume() {
@@ -87,7 +94,7 @@ public class Event {
 	}
 
 	public int getProbabilite() {
-		return this.occurence == -1 ? probabilite : this.probabilite * this.occurence;
+		return this.occurence < 0 ? this.occurence == -1 ? probabilite : 0 : this.probabilite * this.occurence;
 	}
 
 	public void setProbabilite(int probabilite) {
@@ -113,7 +120,7 @@ public class Event {
 	public int getOccurence() {
 		return occurence;
 	}
-	
+
 	public ArrayList<ModificateurEvent> getAccesEvent() {
 		return accesEvent;
 	}
@@ -155,5 +162,17 @@ public class Event {
 		String[] tabString = texte.split("_");
 		joursRestants[0] = Integer.parseInt(tabString[0]);
 		joursRestants[1] = Integer.parseInt(tabString[1]);
+	}
+
+	public boolean isHas2Options() {
+		return has2Options;
+	}
+
+	public void setHas2Options(String contentTab2) {
+		this.setHas2Options(Boolean.parseBoolean(contentTab2));
+	}
+	
+	public void setHas2Options(boolean has2Options) {
+		this.has2Options = has2Options;
 	}
 }

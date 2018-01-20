@@ -1,2 +1,8 @@
-Salut;Yoann tu suces;Passion;;-1;100;;Bonjour||1|0;Ordinateur|200#0#0#0#0#2#-60#840_Ordinateur|200#0#0#0#0#2#-60#840;2000_0_0_0_0_0_0_0_0_0_0_0_0;
-Bonjour;Yoann tu te fais enculer;Passion;;0;50000;;;;;
+Ami trouve chat;Un de vos amis proches a des chats supplementaire. Souhaitez-vous le prendre?;Amis;;1;75;;Chat trouve||-4|0|_Chat obtenu|+1/0/0|1|0|;;;true;
+Chat trouve;Vous rentrez chez vous et voyez un chat trop mignon, vous decidez de le garder!;Chance;;1;25;;Ami trouve chat||-4|0|_Chat perdu||1|0_Le chat est mort||1|5_Caca party||-1|0_Promener le chat||-1|0;Litiere|10#1#0#0#0#0#5#280|true;0_0_0_0_10_0_0_0_0_1_0_0_0_-30;false;
+Chat obtenu;TADADADADA vous avez un chat!Et en plus il est trop kawaii;Passion;0/0/0;0;;;Chat perdu||1|0_Le chat est mort||1|0_Caca party||-1|0_Promener le chat||-1|0;Litiere|10#1#0#0#0#0#5#280|true;0_0_0_0_10_0_0_0_0_1_0_0_0_-30;false;
+Chat perdu;Hooooo moooon dieuuuu, mais ou se trouve mon chat si mignon que je ne peux resister a le caresser toute la journee?Le chercher..?;Peur;;0;5;;Retrouver le chat||1|0_Caca party||-4|0_Promener le chat||-4|0_Le chat est mort||-4|0;Litiere|10#1#0#0#0#0#5#280|false;0_0_0_0_0_0_0_0_0_-1_0_0_0_-30;false;
+Retrouver le chat;Youpi! Mon chat est enfin entre mes bras.Mais que se passe-t-il, il ne bouge plus! Il est MORT!!!;Mort;;0;1;;;;0_0_0_0_-20_0_0_0_0_0_0_0_0_60;false;
+Le chat est mort;Hooooo noooon, il est mort. Tanpis;Mort;;0;5;;Caca party||-4|0_Promener le chat||-4|0_Chat perdu||-4|0;Litiere|10#1#0#0#0#0#5#280|false;0_0_0_0_-20_0_0_0_0_-1_0_0_0_30;false;
+Promener le chat;Viens mon mignon petit chat, on se balade?;Soleil;;0;50;;Promener le chat|7/1/1|0|-50_Caca party|7/1/1|0|-20_Chat perdu|1/1/1|0|20;;0_0_0_0_0_0_0_0_0_0_0_0_30_0;true;
+Caca party;Hooooo noooon mon chat ch*e partout, il faut tout nettoyer!!!;Maladie;;0;25;;Promener le chat|7/1/1|0|25;;0_0_0_0_-5_0_0_0_0_0_0_0_20_0;false;
