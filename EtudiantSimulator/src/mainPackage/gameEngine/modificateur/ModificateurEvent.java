@@ -1,7 +1,9 @@
-package mainPackage.gameEngine.event;
+package mainPackage.gameEngine.modificateur;
 
 import java.util.ArrayList;
 
+import mainPackage.gameEngine.event.Event;
+import mainPackage.gameEngine.event.ListEvent;
 import mainPackage.gameEngine.jour.Date;
 
 public class ModificateurEvent { 
@@ -54,8 +56,6 @@ public class ModificateurEvent {
 				temp.setJoursRestantsProbaAjoutee(tab);
 			}
 		}
-		//System.out.println(ListEvent.staticToString());
-		//System.out.println(Engine.journee.getDate());
 	}
 	
 	public static ArrayList<ModificateurEvent> createArrayFromString(String liste) {

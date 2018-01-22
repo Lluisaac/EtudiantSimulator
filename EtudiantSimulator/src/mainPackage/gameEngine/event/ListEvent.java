@@ -8,6 +8,10 @@ import java.util.Random;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
+import mainPackage.gameEngine.modificateur.ModificateurEvent;
+import mainPackage.gameEngine.modificateur.ModificateurGeneral;
+import mainPackage.gameEngine.modificateur.ModificateurObjet;
+import mainPackage.gameEngine.modificateur.ModificateurPlayer;
 import mainPackage.graphicsEngine.dialog.EventDialog;
 
 public class ListEvent {
@@ -19,6 +23,7 @@ public class ListEvent {
 		// Syntaxe:
 		// Séparation pour chaque event: \n
 		// Séparation pour chaque attribut: ;
+		// Dans le cas ou l'entre ; est le accesGeneral, chaque trio de modifieurs sera séparé par @, et entre eux, par _ normalement
 		// Séparation pour chaque Sous-attribut (tableau, liste...): _
 		// Séparation auxilière pour chaque sous-sous-attribut: |
 		// Séparation auxilière pour chaque sous-sous-sous-attribut: #
@@ -76,19 +81,19 @@ public class ListEvent {
 			}
 			
 			if (!contentTab2[7].equals("") && newEvent != null) {
-				newEvent.setAccesEvent(ModificateurEvent.createArrayFromString(contentTab2[7]));
+				newEvent.setDefaultEvent(ModificateurEvent.createArrayFromString(contentTab2[7]));
 			}
 			
 			if (!contentTab2[8].equals("") && newEvent != null) {
-				newEvent.setAccesObjet(ModificateurObjet.createArrayFromString(contentTab2[8]));
+				newEvent.setDefaultObjet(ModificateurObjet.createArrayFromString(contentTab2[8]));
 			}
 			
 			if (!contentTab2[9].equals("") && newEvent != null) {
-				newEvent.setAccesPlayer(new ModificateurPlayer(contentTab2[9]));
+				newEvent.setDefaultPlayer(new ModificateurPlayer(contentTab2[9]));
 			}
 			
 			if (!contentTab2[10].equals("") && newEvent != null) {
-				newEvent.setHas2Options(contentTab2[10]);
+				newEvent.setAccesChoix(ModificateurGeneral.createArrayFromString(contentTab2[10]));
 			}
 		}
 
@@ -173,8 +178,6 @@ public class ListEvent {
 				}
 		}
 		
-		System.out.println(evenementChoisi);
-		
 		if (!(evenementChoisi.getNom().equals("Blank"))) {
 			return evenementChoisi;
 		} else {
@@ -255,6 +258,6 @@ public class ListEvent {
 	}
 
 	public static void afficherEvent(Event event) {
-		Engine.eventDialog = new EventDialog(event, event.isHas2Options());
+		Engine.eventDialog = new EventDialog(event);
 	}
 }

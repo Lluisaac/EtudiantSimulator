@@ -1,4 +1,4 @@
-package mainPackage.gameEngine.event;
+package mainPackage.gameEngine.modificateur;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,6 @@ public class ModificateurObjet { // L'ordre est à respecter
 			this.attributs[i] = Float.parseFloat(contentTab2[i]);
 		}
 		this.dispo = Boolean.parseBoolean(contentTab[2]);
-
 	}
 
 	public void appliquer() {

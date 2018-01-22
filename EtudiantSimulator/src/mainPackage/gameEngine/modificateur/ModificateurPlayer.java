@@ -1,4 +1,4 @@
-package mainPackage.gameEngine.event;
+package mainPackage.gameEngine.modificateur;
 
 import mainPackage.gameEngine.Engine;
 

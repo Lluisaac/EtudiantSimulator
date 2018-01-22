@@ -3,6 +3,10 @@ package mainPackage.gameEngine.event;
 import java.util.ArrayList;
 
 import mainPackage.gameEngine.jour.Date;
+import mainPackage.gameEngine.modificateur.ModificateurEvent;
+import mainPackage.gameEngine.modificateur.ModificateurGeneral;
+import mainPackage.gameEngine.modificateur.ModificateurObjet;
+import mainPackage.gameEngine.modificateur.ModificateurPlayer;
 
 public class Event {
 
@@ -16,11 +20,11 @@ public class Event {
 	private String archetype;
 	private int[] joursRestantsProbaAjoutee = new int[2];// Utile que pour les
 															// quetes
-	private ArrayList<ModificateurEvent> accesEvent;
-	private ArrayList<ModificateurObjet> accesObjet;
-	private ModificateurPlayer accesPlayer;
-	
-	private boolean has2Options;
+	private ArrayList<ModificateurEvent> defaultEvent;
+	private ArrayList<ModificateurObjet> defaultObjet;
+	private ModificateurPlayer defaultPlayer;
+
+	private ArrayList<ModificateurGeneral> accesChoix;
 
 	public Event(String nom, String resume, String archetype, Date date, int occurence)// Noel,Paque,anniversaire
 	// du
@@ -46,33 +50,39 @@ public class Event {
 		this.date = null;
 	}
 
-	public void executer() {
-		if (this.accesEvent != null) {
-			for (int i = 0; i < this.accesEvent.size(); i++) {
-				this.accesEvent.get(i).appliquer();
+	public void executer(int i) {
+		if(this.accesChoix.get(i).getNom().contains("noDefault_")) {
+			this.executerDefault();
+		}
+		this.accesChoix.get(i).appliquer();
+	}
+
+	public void executerDefault() {
+		if (this.defaultEvent != null) {
+			for (int i = 0; i < this.defaultEvent.size(); i++) {
+				this.defaultEvent.get(i).appliquer();
 			}
 		}
-		
-		if (this.accesObjet != null) {
-			for (int i = 0; i < this.accesObjet.size(); i++) {
 
-				this.accesObjet.get(i).appliquer();
+		if (this.defaultObjet != null) {
+			for (int i = 0; i < this.defaultObjet.size(); i++) {
+
+				this.defaultObjet.get(i).appliquer();
 			}
 		}
-		
-		if (this.accesPlayer != null) {
-			this.accesPlayer.appliquer();
 
+		if (this.defaultPlayer != null) {
+			this.defaultPlayer.appliquer();
 		}
 	}
 
 	public String toString() {
 		String str = nom + ";" + resume + ";" + archetype + ";";
-		
-		if  (this.date != null) {
+
+		if (this.date != null) {
 			str += this.date.toString();
 		}
-		
+
 		str += ";" + occurence + ";" + probabilite + ";";
 		return str;
 	}
@@ -102,7 +112,7 @@ public class Event {
 	}
 
 	public ArrayList<ModificateurEvent> getAcces() {
-		return accesEvent;
+		return defaultEvent;
 	}
 
 	public Date getDate() {
@@ -121,28 +131,28 @@ public class Event {
 		return occurence;
 	}
 
-	public ArrayList<ModificateurEvent> getAccesEvent() {
-		return accesEvent;
+	public ArrayList<ModificateurEvent> getDefaultEvent() {
+		return defaultEvent;
 	}
 
-	public void setAccesEvent(ArrayList<ModificateurEvent> accesEvent) {
-		this.accesEvent = accesEvent;
+	public void setDefaultEvent(ArrayList<ModificateurEvent> defaultEvent) {
+		this.defaultEvent = defaultEvent;
 	}
 
-	public ArrayList<ModificateurObjet> getAccesObjet() {
-		return accesObjet;
+	public ArrayList<ModificateurObjet> getDefaultObjet() {
+		return defaultObjet;
 	}
 
-	public void setAccesObjet(ArrayList<ModificateurObjet> accesObjet) {
-		this.accesObjet = accesObjet;
+	public void setDefaultObjet(ArrayList<ModificateurObjet> defaultObjet) {
+		this.defaultObjet = defaultObjet;
 	}
 
-	public ModificateurPlayer getAccesPlayer() {
-		return accesPlayer;
+	public ModificateurPlayer getDefaultPlayer() {
+		return defaultPlayer;
 	}
 
-	public void setAccesPlayer(ModificateurPlayer accesPlayer) {
-		this.accesPlayer = accesPlayer;
+	public void setDefaultPlayer(ModificateurPlayer defaultPlayer) {
+		this.defaultPlayer = defaultPlayer;
 	}
 
 	public void setOccurence(int occurence) {
@@ -157,22 +167,15 @@ public class Event {
 		this.joursRestantsProbaAjoutee = joursRestantsProbaAjoutee;
 	}
 
-	public void setJoursRestantsProbaAjoutee(String texte) {
-		int[] joursRestants = new int[2];
-		String[] tabString = texte.split("_");
-		joursRestants[0] = Integer.parseInt(tabString[0]);
-		joursRestants[1] = Integer.parseInt(tabString[1]);
+	public ArrayList<ModificateurGeneral> getAccesChoix() {
+		return accesChoix;
 	}
 
-	public boolean isHas2Options() {
-		return has2Options;
+	public void setAccesChoix(ArrayList<ModificateurGeneral> accesChoix) {
+		this.accesChoix = accesChoix;
 	}
 
-	public void setHas2Options(String contentTab2) {
-		this.setHas2Options(Boolean.parseBoolean(contentTab2));
-	}
-	
-	public void setHas2Options(boolean has2Options) {
-		this.has2Options = has2Options;
+	public int getSizeAccesChoix() {
+		return this.accesChoix.size();
 	}
 }

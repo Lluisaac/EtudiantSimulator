@@ -10,14 +10,15 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.event.Event;
@@ -32,8 +33,9 @@ public class EventDialog extends JDialog {
 	private JLabel labelImage = new JLabel();
 	private JLabel labelResume = new JLabel();
 
-	private JButton button1 = new JButton("Ok");
-	private JButton button2 = new JButton("Non");
+	private JButton button1;
+
+	private ArrayList<JButton> buttons;
 
 	private Event event;
 
@@ -53,20 +55,28 @@ public class EventDialog extends JDialog {
 		this.add(this.panelButton, BorderLayout.SOUTH);
 
 		this.setSize(300, 300);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 
-		this.button1.addActionListener(new ItemActionChangeOui());
 	}
 
-	public EventDialog(Event event, boolean has2Options) {
+	public EventDialog(Event event) {
 		this(event.getNom(), event.getResume(), event.getArchetype());
 		this.event = event;
-		if (has2Options) {
-			this.button1.setText("Oui");
-			this.panelButton.add(button2);
-			this.button2.addActionListener(new ItemActionChangeNon());
+
+		if (event.getSizeAccesChoix() == 0) {
+			this.button1 = new JButton("Ok");
+			this.button1.addActionListener(new ItemActionChange());
+		} else {
+			for (int i = 0; i < event.getSizeAccesChoix(); i++) {
+				if (!event.getAccesChoix().get(i).getNom().contains("noDefault_")) {
+					this.buttons.add(new JButton(event.getAccesChoix().get(i).getNom()));
+				} else {
+					this.buttons.add(new JButton(event.getAccesChoix().get(i).getNom().substring(10)));
+				}
+				this.button1.addActionListener(new ItemActionChange());
+			}
 		}
 	}
 
@@ -120,28 +130,25 @@ public class EventDialog extends JDialog {
 		return string;
 	}
 
-	class ItemActionChangeOui implements ActionListener {
-
+	class ItemActionChange implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			event.executer();
-			Engine.eventFini = true;
-			Engine.eventDialog.dispose();
+
+			if (e.getSource() == button1) {
+				event.executerDefault();
+			} else {
+				for (int i = 0; i < buttons.size(); i++) {
+					if (e.getSource() == buttons.get(i)) {
+						event.executer(i);
+					}
+				}
+			}
+
 			if (event.getOccurence() != -1) {
 				event.setOccurence(event.getOccurence() - 1);
 			}
-		}
-	}
-
-	class ItemActionChangeNon implements ActionListener {
-		
-		public void actionPerformed(ActionEvent e) {
 			Engine.eventFini = true;
 			Engine.eventDialog.dispose();
-			if (event.getOccurence() != -1) {
-				event.setOccurence(event.getOccurence() - 1);
-			}
 		}
 	}
-
 }

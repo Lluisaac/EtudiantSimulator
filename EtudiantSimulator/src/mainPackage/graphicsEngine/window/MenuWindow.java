@@ -21,7 +21,7 @@ public class MenuWindow extends JDialog implements ActionListener {
 	private int isNewGame = -1;
 
 	private JLabel labelTitre = new JLabel("Etudiant Simulator");
-	private JLabel labelVersion = new JLabel("Version Alpha 1.0");
+	private JLabel labelVersion = new JLabel("Version Alpha 1.1");
 	private JLabel labelCredit1 = new JLabel("Programmé par Louis Parent, Isaac LLuis et Kevin Villaroya");
 	private JLabel labelCredit2 = new JLabel("Une idée originale de Isaac LLuis et Kevin Villaroya\n");
 	private JLabel labelCredit3 = new JLabel("Images par Elisa Juin");
