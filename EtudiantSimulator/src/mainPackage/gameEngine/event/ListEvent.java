@@ -94,6 +94,8 @@ public class ListEvent {
 			
 			if (!contentTab2[10].equals("") && newEvent != null) {
 				newEvent.setAccesChoix(ModificateurGeneral.createArrayFromString(contentTab2[10]));
+			} else {
+				newEvent.setAccesChoix(new ArrayList<ModificateurGeneral>());
 			}
 		}
 

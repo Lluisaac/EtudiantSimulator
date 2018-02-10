@@ -1,16 +1,20 @@
 
 package mainPackage.gameEngine.objetsMarket;
 
+import java.util.ArrayList;
+
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
+import mainPackage.gameEngine.modificateur.ModificateurEvent;
+import mainPackage.gameEngine.modificateur.ModificateurObjet;
 import mainPackage.gameEngine.player.Player;
 import mainPackage.graphicsEngine.window.MainWindow;
 
 @SuppressWarnings("unused")
 public class ObjetUpgrade extends ObjetGeneral {
 	
-	public ObjetUpgrade(String nom, float[] attribut, boolean debloque) {
-		super(nom, attribut, debloque);
+	public ObjetUpgrade(String nom, float[] attribut, boolean debloque, ArrayList<ModificateurEvent> modifEvent, ArrayList<ModificateurObjet> modifObjet) {
+		super(nom, attribut, debloque, modifEvent, modifObjet);
 		String[] titres = {"Prix", "Argent J", "Savoir J", "Faim J", "Fatigue J", "Bonheur J", "Tmps Libre", "Durabilit�"};
 		this.setTitres(titres);
 	}
@@ -32,6 +36,8 @@ public class ObjetUpgrade extends ObjetGeneral {
 			this.setEndOfPurchaseDate(newDate);
 			this.setDebloque(false);
 		}
+		
+		super.executerModificateur();
 	}
 
 	public void refreshDebloque() {

@@ -1,16 +1,20 @@
 
 package mainPackage.gameEngine.objetsMarket;
 
+import java.util.ArrayList;
+
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
+import mainPackage.gameEngine.modificateur.ModificateurEvent;
+import mainPackage.gameEngine.modificateur.ModificateurObjet;
 import mainPackage.gameEngine.player.Player;
 import mainPackage.graphicsEngine.window.MainWindow;
 
 @SuppressWarnings("unused")
 public class ObjetBonus extends ObjetGeneral {
 
-	public ObjetBonus(String nom, float[] attribut, boolean debloque) {
-		super(nom, attribut, debloque);
+	public ObjetBonus(String nom, float[] attribut, boolean debloque, ArrayList<ModificateurEvent> modifEvent, ArrayList<ModificateurObjet> modifObjet) {
+		super(nom, attribut, debloque, modifEvent, modifObjet);
 		String[] titres = { "Prix", "Savoir", "Faim", "Fatigue", "Bonheur", "Tmps Perdu", "Durabilit�" };
 		this.setTitres(titres);
 	}

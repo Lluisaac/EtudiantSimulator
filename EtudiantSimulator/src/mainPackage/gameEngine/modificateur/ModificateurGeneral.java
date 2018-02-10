@@ -43,11 +43,13 @@ public class ModificateurGeneral {
 		if (this.accesPlayer != null) {
 			this.accesPlayer.appliquer();
 		}
+		
+		
 	}
 
 	public static ArrayList<ModificateurGeneral> createArrayFromString(String liste) {
 		// Va créer chaque modifGeneral pour en faire une array list, chaque
-		// modifGeneral doit etre séparé par _
+		// modifGeneral doit etre séparé par ^
 
 		if (liste.equals("")) {
 			return null;
@@ -58,11 +60,12 @@ public class ModificateurGeneral {
 		String[] contentTab = liste.split("@");
 
 		for (int i = 0; i < contentTab.length; i++) {
-			String[] modificateurs = contentTab[i].split("_");
+			String[] modificateurs = contentTab[i].split("\\^", -1);
+			
 			modifListe.add(
 					new ModificateurGeneral(modificateurs[0], ModificateurEvent.createArrayFromString(modificateurs[1]),
 							ModificateurObjet.createArrayFromString(modificateurs[2]),
-							new ModificateurPlayer(modificateurs[3])));
+							!modificateurs[3].equals("") ? new ModificateurPlayer(modificateurs[3]) : null));
 		}
 
 		return modifListe;

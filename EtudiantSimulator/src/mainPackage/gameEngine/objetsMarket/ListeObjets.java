@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
+import mainPackage.gameEngine.modificateur.ModificateurEvent;
+import mainPackage.gameEngine.modificateur.ModificateurObjet;
 
 public class ListeObjets {
 
@@ -96,9 +98,9 @@ public class ListeObjets {
 			debloque=objetsInfo[3].equals("true");
 			
 			if (objetsInfo[0].equals("Upgrade")) {
-				ListeObjets.listeObjets.add(new ObjetUpgrade(objetsInfo[1], attributs,debloque));
+				ListeObjets.listeObjets.add(new ObjetUpgrade(objetsInfo[1], attributs,debloque, ModificateurEvent.createArrayFromString(objetsInfo[4]), ModificateurObjet.createArrayFromString(objetsInfo[5])));
 			} else {
-				ListeObjets.listeObjets.add(new ObjetBonus(objetsInfo[1], attributs,debloque ));
+				ListeObjets.listeObjets.add(new ObjetBonus(objetsInfo[1], attributs,debloque, ModificateurEvent.createArrayFromString(objetsInfo[4]), ModificateurObjet.createArrayFromString(objetsInfo[5])));
 			}
 		}
 	}

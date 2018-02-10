@@ -6,23 +6,29 @@ import java.util.ArrayList;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
+import mainPackage.gameEngine.modificateur.ModificateurEvent;
+import mainPackage.gameEngine.modificateur.ModificateurObjet;
 import mainPackage.gameEngine.player.Player;
 
 public abstract class ObjetGeneral {
 
 	private String nom;
 	protected float[] attributs;
+	private ArrayList<ModificateurEvent> modifEvent;
+	private ArrayList<ModificateurObjet> modifObjet;
 
 	private String[] titres;
 	private Date endOfPurchaseDate;
 	
 	private boolean debloque;
 
-	public ObjetGeneral(String nom, float[] attribut, boolean debloque) {
+	public ObjetGeneral(String nom, float[] attribut, boolean debloque, ArrayList<ModificateurEvent> modifEvent, ArrayList<ModificateurObjet> modifObjet) {
 		this.nom = nom;
 		this.attributs = attribut;
 		this.endOfPurchaseDate = new Date();
 		this.debloque=debloque;
+		this.modifEvent = modifEvent;
+		this.modifObjet = modifObjet;
 	}
 	
 	public boolean equals(ObjetGeneral objet) {
@@ -92,5 +98,15 @@ public abstract class ObjetGeneral {
 		}
 		
 		return r;
+	}
+
+	public void executerModificateur() {
+		for (int i = 0; i < this.modifEvent.size(); i++) {
+			this.modifEvent.get(i).appliquer();
+		}
+		
+		for (int i = 0; i < this.modifObjet.size(); i++) {
+			this.modifObjet.get(i).appliquer();
+		}
 	}
 }

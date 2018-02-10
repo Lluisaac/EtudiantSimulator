@@ -48,11 +48,10 @@ public class EventDialog extends JDialog {
 		this.panelResume.add(labelResume);
 		this.labelResume.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		this.panelButton.add(button1);
-
 		this.add(this.panelImage, BorderLayout.NORTH);
 		this.add(this.panelResume, BorderLayout.CENTER);
 		this.add(this.panelButton, BorderLayout.SOUTH);
+		this.buttons = new ArrayList<JButton>();
 
 		this.setSize(300, 300);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -67,17 +66,30 @@ public class EventDialog extends JDialog {
 
 		if (event.getSizeAccesChoix() == 0) {
 			this.button1 = new JButton("Ok");
+			this.panelButton.add(button1);
 			this.button1.addActionListener(new ItemActionChange());
+			this.panelButton.repaint();
+			this.panelButton.revalidate();
 		} else {
 			for (int i = 0; i < event.getSizeAccesChoix(); i++) {
-				if (!event.getAccesChoix().get(i).getNom().contains("noDefault_")) {
+				if (!event.getAccesChoix().get(i).getNom().contains("noDefault")) {
 					this.buttons.add(new JButton(event.getAccesChoix().get(i).getNom()));
 				} else {
-					this.buttons.add(new JButton(event.getAccesChoix().get(i).getNom().substring(10)));
+					this.buttons.add(new JButton(event.getAccesChoix().get(i).getNom().substring(9)));
 				}
-				this.button1.addActionListener(new ItemActionChange());
+				this.buttons.get(this.buttons.size() - 1).addActionListener(new ItemActionChange());
 			}
 		}
+		
+		this.afficherButtons();
+	}
+
+	private void afficherButtons() {
+		for (int i = 0; i < this.buttons.size(); i++) {
+			this.panelButton.add(this.buttons.get(i));
+		}
+		this.panelButton.repaint();
+		this.panelButton.revalidate();
 	}
 
 	public EventDialog(String nom, String resume, String archetype) {
