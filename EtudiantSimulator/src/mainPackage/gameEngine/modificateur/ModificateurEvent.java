@@ -28,7 +28,6 @@ public class ModificateurEvent {
 		//Le string doit être séparé par |
 		
 		String[] contentTab = modif.split("\\|", -1);
-		
 		this.nom = contentTab[0];
 		
 		if (!contentTab[1].equals("")) {
@@ -61,15 +60,15 @@ public class ModificateurEvent {
 	public static ArrayList<ModificateurEvent> createArrayFromString(String liste) {
 		//Va créer chaque modifEvent pour en faire une array list, chaque modifEvent doit etre séparé par _
 		
-		if (liste.equals("")) {
+		if (liste.trim().equals("")) {
 			return null;
 		}
-		
 		ArrayList<ModificateurEvent> modifListe = new ArrayList<ModificateurEvent>();
 		
 		String[] contentTab = liste.split("_");
 		
 		for (int i = 0; i < contentTab.length; i++) {
+			
 			modifListe.add(new ModificateurEvent(contentTab[i]));
 		}
 		
