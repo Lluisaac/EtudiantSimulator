@@ -7,8 +7,6 @@ Retrouver le chat;Youpi! Mon chat est enfin entre mes bras.Mais que se passe-t-i
 Le chat est mort;Hooooo noooon, il est mort. Tanpis;Mort;;0;5;;Caca party||-4|0_Promener le chat||-4|0_Chat perdu||-4|0;Litiere|10#1#0#0#0#0#5#280|false|;0_0_0_0_-20_0_0_0_0_-1_0_0_0_30;;
 Promener le chat;Viens mon mignon petit chat, on se balade?;Soleil;;0;50;;Promener le chat|7/1/1|0|-50_Caca party|7/1/1|0|-20_Chat perdu|1/1/1|0|20;;0_0_0_0_0_0_0_0_0_0_0_0_30_0;;
 Caca party;Hooooo noooon mon chat ch*e partout, il faut tout nettoyer!!!;Maladie;;0;25;;Promener le chat|7/1/1|0|25;;0_0_0_0_-5_0_0_0_0_0_0_0_20_0;;
-Yoann Suce;Yoann suce vachement bien!;Passion;;-1;10;;;;50_0_0_0_0_0_0_0_0_0_0_0_0_0;;
-Arthur Suce;Arthur a une technique linguistique tres efficace!;Passion;;-1;10;;;;50_0_0_0_0_0_0_0_0_0_0_0_0_0;;
 Mort de Grand-Mere;Votre Grand-Mere est morte, tout cela est triste, mais... HERITAAAAAGE;Mort;;2;1;;;;200_0_0_0_-20_0_0_0_0_0_0_0_0_0;;
 Intervention de sdf;Un sdf vous interpelle dans la rue, il vous demande de 5 euros contre une carte au tresor, acceptez-vous?;Argent;;1;5;;;;-5_0_0_0_0_0_0_0_0_0_0_0_120_0;;
 Incendie;Un incendie se declare chez vous! Vite, appeller les pompiers!;Feu;;1;5;;;;-100_0_0_20_0_0_0_0_0_0_0_0_360_0;;
