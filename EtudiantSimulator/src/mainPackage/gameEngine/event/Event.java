@@ -2,6 +2,10 @@ package mainPackage.gameEngine.event;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import mainPackage.gameEngine.jour.Date;
 import mainPackage.gameEngine.modificateur.ModificateurEvent;
 import mainPackage.gameEngine.modificateur.ModificateurGeneral;
@@ -12,12 +16,12 @@ public class Event {
 
 	// Plusieurs type de Event, ce qui ont une proba de infinie sur une date, et
 	// le reste.
-	private String resume;// Une explication de l'event
 	private String nom;
+	private String resume;// Une explication de l'event
+	private String archetype;
 	private Date date;
 	private int occurence;// Signifie non valide
 	private int probabilite;
-	private String archetype;
 	private int[] joursRestantsProbaAjoutee = new int[2];// Utile que pour les
 															// quetes
 	private ArrayList<ModificateurEvent> defaultEvent;
@@ -26,28 +30,55 @@ public class Event {
 
 	private ArrayList<ModificateurGeneral> accesChoix;
 
-	public Event(String nom, String resume, String archetype, Date date, int occurence)// Noel,Paque,anniversaire
-	// du
-	// joueur,JAPD,../
-	{
-		this.nom = nom;
-		this.setOccurence(occurence);
-		this.date = date;
-		this.resume = resume;
-		this.archetype = archetype;
-		this.probabilite = -1; // Infini
-	}
-
-	public Event(String nom, String resume, String archetype, int occurence, int probabilite) // tout
-																								// le
-																								// reste
-	{
+	public Event(String nom, String resume, String archetype, int occurence, int probabilite) {
 		this.nom = nom;
 		this.setOccurence(occurence);
 		this.resume = resume;
 		this.archetype = archetype;
 		this.probabilite = probabilite;
-		this.date = null;
+	}
+
+	public Event(Node item) {
+		NamedNodeMap attributs = item.getAttributes();
+		this.setNom(attributs.getNamedItem("nom").getTextContent());
+		this.setResume(attributs.getNamedItem("description").getTextContent());
+		this.setArchetype(attributs.getNamedItem("archetype").getTextContent());
+		
+		if (attributs.getNamedItem("date") != null) {
+			this.setDate(attributs.getNamedItem("date").getTextContent());
+		}
+		
+		if (attributs.getNamedItem("occurence") != null) {
+			this.setOccurence(Integer.parseInt(attributs.getNamedItem("occurence").getTextContent()));
+		}
+		
+		if (attributs.getNamedItem("probabilite") != null) {
+			this.setProbabilite(Integer.parseInt(attributs.getNamedItem("probabilite").getTextContent()));
+		}
+		
+		NodeList dansEvent = item.getChildNodes();
+		int compteur = 2;
+		
+		if (dansEvent.item(0).getLocalName().equals("joursRestantsProbaAjoutee") && dansEvent.getLength() > 0) {
+			this.joursRestantsProbaAjoutee[0] = Integer.parseInt(item.getFirstChild().getAttributes().getNamedItem("jRestants").getTextContent());
+			this.joursRestantsProbaAjoutee[0] = Integer.parseInt(item.getFirstChild().getAttributes().getNamedItem("probaAjoutee").getTextContent());
+			
+			if (dansEvent.item(1).getLocalName().equals("default") && dansEvent.getLength() > 1) {
+				Event.genererDefault(dansEvent.item(1));
+			} else {
+				compteur = 1;
+			}
+		} else if (dansEvent.item(0).getLocalName().equals("default")) {
+			Event.genererDefault(dansEvent.item(0));
+		} else {
+			compteur = 0;
+		}
+	}
+
+	private static void genererDefault(Node item) {
+		NodeList dansDefault = item.getChildNodes();
+		
+		//TODO genrer les default
 	}
 
 	public void executer(int i) {
@@ -90,6 +121,10 @@ public class Event {
 	public String getResume() {
 		return resume;
 	}
+	
+	public void setResume(String resume) {
+		this.resume = resume;
+	}
 
 	public String getNom() {
 		return nom;
@@ -103,6 +138,10 @@ public class Event {
 		return archetype;
 	}
 
+	public void setArchetype(String archetype) {
+		this.archetype = archetype;
+	}
+	
 	public int getProbabilite() {
 		return this.occurence < 0 ? this.occurence == -1 ? probabilite : 0 : this.probabilite * this.occurence;
 	}
@@ -177,5 +216,9 @@ public class Event {
 
 	public int getSizeAccesChoix() {
 		return this.accesChoix.size();
+	}
+
+	public boolean hasDate() {
+		return this.date == null;
 	}
 }

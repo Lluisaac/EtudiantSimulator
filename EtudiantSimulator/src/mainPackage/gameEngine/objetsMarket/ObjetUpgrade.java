@@ -15,7 +15,7 @@ public class ObjetUpgrade extends ObjetGeneral {
 	
 	public ObjetUpgrade(String nom, float[] attribut, boolean debloque, ArrayList<ModificateurEvent> modifEvent, ArrayList<ModificateurObjet> modifObjet) {
 		super(nom, attribut, debloque, modifEvent, modifObjet);
-		String[] titres = {"Prix", "Argent J", "Savoir J", "Faim J", "Fatigue J", "Bonheur J", "Tmps Libre", "Durabilit�"};
+		String[] titres = {"Prix", "Argent J", "Savoir J", "Faim J", "Fatigue J", "Bonheur J", "Tmps Libre", "Durabilite"};
 		this.setTitres(titres);
 	}
 

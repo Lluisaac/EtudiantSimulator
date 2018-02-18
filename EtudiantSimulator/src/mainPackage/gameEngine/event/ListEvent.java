@@ -1,17 +1,19 @@
 package mainPackage.gameEngine.event;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
-import mainPackage.gameEngine.modificateur.ModificateurEvent;
-import mainPackage.gameEngine.modificateur.ModificateurGeneral;
-import mainPackage.gameEngine.modificateur.ModificateurObjet;
-import mainPackage.gameEngine.modificateur.ModificateurPlayer;
 import mainPackage.graphicsEngine.dialog.EventDialog;
 
 public class ListEvent {
@@ -19,92 +21,69 @@ public class ListEvent {
 	private static Event[] listeEventDate;
 	private static Event[] listeEvent;
 
-	public static void mettreListEvent() {
-		// Syntaxe:
-		// Séparation pour chaque event: \n
-		// Séparation pour chaque attribut: ;
-		// Dans le cas ou l'entre ; est le accesGeneral, chaque trio de modifieurs sera séparé par @, et entre eux, par _ normalement
-		// Séparation pour chaque Sous-attribut (tableau, liste...): _
-		// Séparation auxilière pour chaque sous-sous-attribut: |
-		// Séparation auxilière pour chaque sous-sous-sous-attribut: #
-
-		// nom;description;archetype;date;occurence;probabilite;joursrestants;accesEvent;accesObjet;accesPlayer
-		// PCCassé;Votre PC est cassé;broken;;-1;5;;GoReparateur|5/1/1|0|15_ElectricteProblemes|5/1/1|0|15;Ordinateur|800#0#0#0#0#0#0#0;;
-		// L'evenement PCCassé peut arriver une infinité de fois, a une
-		// probabilité de 5 et va augmenter de 15 la probabilité de GoReparateur
-		// pendant 4 jours.
-
-		FileInputStream file;
-		String content = "";
-
-		try {
-			file = new FileInputStream("listes\\events.etsim");
-
-			byte[] buffer = new byte[8];
-
-			while (file.read(buffer) >= 0) {
-				for (byte byt : buffer) {
-					content += (char) byt;
-				}
-			}
-
-			file.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	public static void mettreListEvent() throws SAXException, IOException, ParserConfigurationException {
+		Element listEvents = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File("listes\\events.xml")).getDocumentElement();
+		
+		NodeList events = listEvents.getChildNodes();
+		
+		ArrayList<Event> listeEventsTemp = new ArrayList<Event>();
+		
+		for (int i = 0; i < events.getLength(); i++) {
+			listeEventsTemp.add(new Event(events.item(i)));
 		}
-
-		String[] contentTab1 = content.split("\n");
-
-		ArrayList<Event> temp = new ArrayList<Event>();
-		ArrayList<Event> tempDate = new ArrayList<Event>();
-
-		for (int i = 0; i < contentTab1.length; i++) {
-			String[] contentTab2 = contentTab1[i].split(";", -1);
-			Event newEvent = null;
-
-			if (!contentTab2[3].equals("")) {
-				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], new Date(contentTab2[3]),
-						Integer.parseInt(contentTab2[4]));
-				tempDate.add(newEvent);
-			} else if (!contentTab2[5].equals("")) {
-				newEvent = new Event(contentTab2[0], contentTab2[1], contentTab2[2], Integer.parseInt(contentTab2[4]),
-						Integer.parseInt(contentTab2[5]));
-				temp.add(newEvent);
-			}
-
-			if (!contentTab2[6].equals("") && newEvent != null) {
-				String[] contentTab3 = contentTab2[6].split("_");
-				int[] tabJoursRestants = { Integer.parseInt(contentTab3[0]), Integer.parseInt(contentTab3[1]) };
-				newEvent.setJoursRestantsProbaAjoutee(tabJoursRestants);
-			}
-			
-			if (!contentTab2[7].equals("") && newEvent != null) {
-				newEvent.setDefaultEvent(ModificateurEvent.createArrayFromString(contentTab2[7]));
-			}
-			
-			if (!contentTab2[8].equals("") && newEvent != null) {
-				newEvent.setDefaultObjet(ModificateurObjet.createArrayFromString(contentTab2[8]));
-			}
-			
-			if (!contentTab2[9].equals("") && newEvent != null) {
-				newEvent.setDefaultPlayer(new ModificateurPlayer(contentTab2[9]));
-			}
-			
-			if (!contentTab2[10].equals("") && newEvent != null) {
-				newEvent.setAccesChoix(ModificateurGeneral.createArrayFromString(contentTab2[10]));
-			} else {
-				newEvent.setAccesChoix(new ArrayList<ModificateurGeneral>());
-			}
-		}
-
-		ListEvent.fromListToArray(temp, tempDate);
+		
+		ListEvent.listeEventDate = ListEvent.toTabDate(listeEventsTemp);
+		ListEvent.listeEvent = ListEvent.toTab(listeEventsTemp);
+		
 		ListEvent.createTampon();
 	}
 
+	private static Event[] toTab(ArrayList<Event> listeEventsTemp) {
+		Event[] liste = new Event[ListEvent.countSansDate(listeEventsTemp) + 1];
+		
+		int compteur = 0;
+		
+		for (int i = 0; i < listeEventsTemp.size(); i++) {
+			if (!listeEventsTemp.get(i).hasDate()) {
+				liste[compteur] = listeEventsTemp.get(i);
+				compteur++;
+			}
+		}
+		
+		return liste;
+	}
+
+	private static int countSansDate(ArrayList<Event> listeEventsTemp) {
+		int compteur = 0;
+		
+		for (int i = 0; i < listeEventsTemp.size(); i++) {
+			if (!listeEventsTemp.get(i).hasDate()) {
+				compteur++;
+			}
+		}
+		return compteur;
+	}
+
+	private static Event[] toTabDate(ArrayList<Event> listeEventsTemp) {
+		Event[] liste = new Event[ListEvent.countAvecDate(listeEventsTemp)];
+		
+		int compteur = 0;
+		
+		for (int i = 0; i < listeEventsTemp.size(); i++) {
+			if (listeEventsTemp.get(i).hasDate()) {
+				liste[compteur] = listeEventsTemp.get(i);
+				compteur++;
+			}
+		}
+		
+		return liste;
+	}
+	
+	private static int countAvecDate(ArrayList<Event> listeEventsTemp) {
+		return listeEventsTemp.size() - ListEvent.countSansDate(listeEventsTemp);
+	}
+
 	public static void createTampon() {
-		// nom;description;archetype;date;occurence;probabilite;joursrestants;accesEvent;accesObjet;accesPlayer
 		ListEvent.listeEvent[ListEvent.listeEvent.length - 1] = new Event("Blank", "Blank", "Blank", -1,
 				(ListEvent.sommeProbasSansTampon() * 4) + 1);
 	}
@@ -125,23 +104,10 @@ public class ListEvent {
 		return val;
 	}
 
-	public static void fromListToArray(ArrayList<Event> liste, ArrayList<Event> listeDate) {
-		ListEvent.listeEvent = new Event[liste.size() + 1];
-		ListEvent.listeEventDate = new Event[listeDate.size()];
-
-		for (int i = 0; i < liste.size(); i++) {
-			ListEvent.listeEvent[i] = liste.get(i);
-		}
-
-		for (int i = 0; i < listeDate.size(); i++) {
-			ListEvent.listeEventDate[i] = listeDate.get(i);
-		}
-	}
-
 	public static Event trouverEvent(String nom)// Trouve un event a partir de
 												// son nom
 	{
-		
+
 		for (int i = 0; i < ListEvent.listeEventDate.length; i++) {
 			if (ListEvent.listeEventDate[i].getNom().equals(nom)) {
 				return ListEvent.listeEventDate[i];
@@ -161,10 +127,10 @@ public class ListEvent {
 	{
 		Event evenementChoisi = null;
 		int proba = 0;
-		
+
 		Random rand = new Random();
-		int nbrAlea = rand.nextInt(sommeProbas()!=0?sommeProbas():1);
-		
+		int nbrAlea = rand.nextInt(sommeProbas() != 0 ? sommeProbas() : 1);
+
 		for (int i = 0; nbrAlea >= proba; i++) {
 			if (ListEvent.listeEvent[i].getOccurence() != 0) {
 				proba += ListEvent.listeEvent[i].getProbabilite();
@@ -175,11 +141,11 @@ public class ListEvent {
 		}
 
 		for (int i = 0; i < listeEventDate.length; i++) {
-				if (listeEventDate[i].getDate().equals(Engine.journee.getDate())) {
-					evenementChoisi = listeEventDate[i];
-				}
+			if (listeEventDate[i].getDate().equals(Engine.journee.getDate())) {
+				evenementChoisi = listeEventDate[i];
+			}
 		}
-		
+
 		if (!(evenementChoisi.getNom().equals("Blank"))) {
 			return evenementChoisi;
 		} else {

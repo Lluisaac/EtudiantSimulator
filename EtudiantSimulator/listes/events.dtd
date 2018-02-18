@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!ELEMENT ListEvents (Event*)>
+	<!ELEMENT Event (joursRestantsProbaAjoutee?,default?,choix*)>
+		<!ELEMENT default (modifEvent?, modifObjet?, modifPlayer?)>
+			<!ELEMENT choix (modifEvent?, modifObjet?, modifPlayer?)>
+				<!ELEMENT modifEvent (eventM+)>
+				<!ELEMENT modifObjet (objet+)>
+					<!ELEMENT objet (upgrade|bonus)>
+
+<!ELEMENT joursRestantsProbaAjoutee EMPTY>
+<!ELEMENT modifPlayer EMPTY>
+<!ELEMENT eventM EMPTY>
+<!ELEMENT upgrade EMPTY>
+<!ELEMENT bonus EMPTY>
+
+<!ATTLIST Event nom CDATA #REQUIRED>
+<!ATTLIST Event description CDATA #REQUIRED>
+
+
+<!ATTLIST Event archetype CDATA  "Icone">
+<!ATTLIST Event date CDATA #IMPLIED>
+<!ATTLIST Event occurence CDATA  "0">
+<!ATTLIST Event probabilite CDATA  "0">
+
+<!ATTLIST joursRestantsProbaAjoutee jRestants CDATA #REQUIRED>
+<!ATTLIST joursRestantsProbaAjoutee probaAjoutee CDATA #REQUIRED>
+
+<!ATTLIST eventM nom CDATA #REQUIRED>
+
+<!ATTLIST eventM date CDATA #IMPLIED>
+<!ATTLIST eventM occurence CDATA  "0">
+<!ATTLIST eventM probabilite CDATA  "0">
+
+<!ATTLIST objet nom CDATA #REQUIRED>
+<!ATTLIST objet dispo CDATA #REQUIRED>
+
+<!ATTLIST objet cout CDATA #IMPLIED>
+<!ATTLIST objet durabilite CDATA #IMPLIED>
+
+<!ATTLIST upgrade argentJ CDATA #IMPLIED>
+<!ATTLIST upgrade savoirJ CDATA #IMPLIED>
+<!ATTLIST upgrade faimJ CDATA #IMPLIED>
+<!ATTLIST upgrade fatigueJ CDATA #IMPLIED>
+<!ATTLIST upgrade bonheurJ CDATA #IMPLIED>
+<!ATTLIST upgrade tempsLibreJ CDATA #IMPLIED>
+
+<!ATTLIST bonus savoir CDATA #IMPLIED>
+<!ATTLIST bonus faim CDATA #IMPLIED>
+<!ATTLIST bonus fatigue CDATA #IMPLIED>
+<!ATTLIST bonus bonheur CDATA #IMPLIED>
+<!ATTLIST bonus tempsLibre CDATA #IMPLIED>
+
+<!ATTLIST modifPlayer argent CDATA #IMPLIED>
+<!ATTLIST modifPlayer savoir CDATA #IMPLIED>
+<!ATTLIST modifPlayer faim CDATA #IMPLIED>
+<!ATTLIST modifPlayer fatigue CDATA #IMPLIED>
+<!ATTLIST modifPlayer bonheur CDATA #IMPLIED>
+<!ATTLIST modifPlayer argentJ CDATA #IMPLIED>
+<!ATTLIST modifPlayer savoirJ CDATA #IMPLIED>
+<!ATTLIST modifPlayer faimJ CDATA #IMPLIED>
+<!ATTLIST modifPlayer fatigueJ CDATA #IMPLIED>
+<!ATTLIST modifPlayer bonheurJ CDATA #IMPLIED>
+<!ATTLIST modifPlayer gainParMois CDATA #IMPLIED>
+<!ATTLIST modifPlayer loyer CDATA #IMPLIED>
+<!ATTLIST modifPlayer tempsLibre CDATA #IMPLIED>
+<!ATTLIST modifPlayer tempsLibreJ CDATA #IMPLIED>
+
+<!ATTLIST choix nom CDATA #REQUIRED>
+<!ATTLIST choix noDefault CDATA "false">

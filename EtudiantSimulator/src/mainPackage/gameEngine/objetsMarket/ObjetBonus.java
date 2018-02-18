@@ -15,7 +15,7 @@ public class ObjetBonus extends ObjetGeneral {
 
 	public ObjetBonus(String nom, float[] attribut, boolean debloque, ArrayList<ModificateurEvent> modifEvent, ArrayList<ModificateurObjet> modifObjet) {
 		super(nom, attribut, debloque, modifEvent, modifObjet);
-		String[] titres = { "Prix", "Savoir", "Faim", "Fatigue", "Bonheur", "Tmps Perdu", "Durabilit�" };
+		String[] titres = { "Prix", "Savoir", "Faim", "Fatigue", "Bonheur", "Tmps Perdu", "Durabilite" };
 		this.setTitres(titres);
 	}
 
