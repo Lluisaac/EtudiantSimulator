@@ -43,7 +43,11 @@ public class Engine {
 
 		if (newGame) {
 			player = new Player(filiaire, false);
-			ListeObjets.genererListe();
+			try {
+				ListeObjets.genererListe();
+			} catch (SAXException | IOException | ParserConfigurationException e) {
+				e.printStackTrace();
+			}
 			journee = new Jour();
 		} else {
 			loadGame();

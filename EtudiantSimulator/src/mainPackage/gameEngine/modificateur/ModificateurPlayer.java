@@ -1,5 +1,8 @@
 package mainPackage.gameEngine.modificateur;
 
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+
 import mainPackage.gameEngine.Engine;
 
 public class ModificateurPlayer {// L'ordre est à respecter
@@ -17,30 +20,59 @@ public class ModificateurPlayer {// L'ordre est à respecter
 
 	private int gainParMois;
 	private int loyer;
-	
+
 	private int tempsLibre;
 	private int tempsLibreJ;
 
-	public ModificateurPlayer(String modif) {
-		String[] contentTab = modif.split("_");
+	public ModificateurPlayer(Node item) {
+		NamedNodeMap attributs = item.getAttributes();
 
-		this.argent = Float.parseFloat(contentTab[0]);
-		this.savoir = Float.parseFloat(contentTab[1]);
-		this.faim = Float.parseFloat(contentTab[2]);
-		this.fatigue = Float.parseFloat(contentTab[3]);
-		this.bonheur = Float.parseFloat(contentTab[4]);
-
-		this.argentJ = Integer.parseInt(contentTab[5]);
-		this.savoirJ = Integer.parseInt(contentTab[6]);
-		this.faimJ = Integer.parseInt(contentTab[7]);
-		this.fatigueJ = Integer.parseInt(contentTab[8]);
-		this.bonheurJ = Integer.parseInt(contentTab[9]);
-
-		this.gainParMois = Integer.parseInt(contentTab[10]);
-		this.loyer = Integer.parseInt(contentTab[11]);
-
-		this.tempsLibre = Integer.parseInt(contentTab[12]);
-		this.tempsLibreJ = Integer.parseInt(contentTab[13]);
+		for (int i = 0; i < attributs.getLength(); i++) {
+			switch (attributs.item(i).getNodeName()) {
+			case "argent":
+				this.argent = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "savoir":
+				this.savoir = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "faim":
+				this.faim = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "fatigue":
+				this.fatigue = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "bonheur":
+				this.bonheur = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "argentJ":
+				this.argentJ = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "savoirJ":
+				this.savoirJ = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "faimJ":
+				this.faimJ = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "fatigueJ":
+				this.fatigueJ = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "bonheurJ":
+				this.bonheurJ = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "gainParMois":
+				this.gainParMois = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "loyer":
+				this.loyer = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "tempsLibre":
+				this.tempsLibre = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			case "tempsLibreJ":
+				this.tempsLibreJ = Integer.parseInt(attributs.item(i).getNodeValue());
+				break;
+			}
+		}
 	}
 
 	public void appliquer() {
@@ -58,7 +90,7 @@ public class ModificateurPlayer {// L'ordre est à respecter
 
 		Engine.getPlayer().setGainParMois(this.gainParMois + Engine.getPlayer().getGainParMois());
 		Engine.getPlayer().setLoyer(this.loyer + Engine.getPlayer().getLoyer());
-		
+
 		Engine.journee.setBuffer((int) (Engine.journee.getBuffer() - this.tempsLibre));
 		Engine.journee.setTempsLibre((int) (Engine.journee.getTempsLibre() + this.tempsLibreJ));
 	}

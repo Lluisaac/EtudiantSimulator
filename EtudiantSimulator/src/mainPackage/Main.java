@@ -13,6 +13,6 @@ public class Main {
 
 		DesignTask.setBestLookAndFeelAvailable();
 
-		Controller.start();		
+		Controller.start();
 	}
 }

@@ -4,6 +4,8 @@ package mainPackage.gameEngine.objetsMarket;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.Node;
+
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
 import mainPackage.gameEngine.modificateur.ModificateurEvent;
@@ -29,6 +31,10 @@ public abstract class ObjetGeneral {
 		this.debloque=debloque;
 		this.modifEvent = modifEvent;
 		this.modifObjet = modifObjet;
+	}
+	
+	public ObjetGeneral(Node item) {
+		
 	}
 	
 	public boolean equals(ObjetGeneral objet) {

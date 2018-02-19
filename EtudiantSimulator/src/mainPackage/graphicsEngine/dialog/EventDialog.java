@@ -72,11 +72,7 @@ public class EventDialog extends JDialog {
 			this.panelButton.revalidate();
 		} else {
 			for (int i = 0; i < event.getSizeAccesChoix(); i++) {
-				if (!event.getAccesChoix().get(i).getNom().contains("noDefault")) {
-					this.buttons.add(new JButton(event.getAccesChoix().get(i).getNom()));
-				} else {
-					this.buttons.add(new JButton(event.getAccesChoix().get(i).getNom().substring(9)));
-				}
+				this.buttons.add(new JButton(event.getAccesChoix().get(i).getNom()));
 				this.buttons.get(this.buttons.size() - 1).addActionListener(new ItemActionChange());
 			}
 		}

@@ -36,21 +36,22 @@
 <!ATTLIST objet nom CDATA #REQUIRED>
 <!ATTLIST objet dispo CDATA #REQUIRED>
 
-<!ATTLIST objet cout CDATA #IMPLIED>
-<!ATTLIST objet durabilite CDATA #IMPLIED>
-
+<!ATTLIST upgrade cout CDATA #IMPLIED>
 <!ATTLIST upgrade argentJ CDATA #IMPLIED>
 <!ATTLIST upgrade savoirJ CDATA #IMPLIED>
 <!ATTLIST upgrade faimJ CDATA #IMPLIED>
 <!ATTLIST upgrade fatigueJ CDATA #IMPLIED>
 <!ATTLIST upgrade bonheurJ CDATA #IMPLIED>
 <!ATTLIST upgrade tempsLibreJ CDATA #IMPLIED>
+<!ATTLIST upgrade durabilite CDATA #IMPLIED>
 
+<!ATTLIST bonus cout CDATA #IMPLIED>
 <!ATTLIST bonus savoir CDATA #IMPLIED>
 <!ATTLIST bonus faim CDATA #IMPLIED>
 <!ATTLIST bonus fatigue CDATA #IMPLIED>
 <!ATTLIST bonus bonheur CDATA #IMPLIED>
 <!ATTLIST bonus tempsLibre CDATA #IMPLIED>
+<!ATTLIST bonus durabilite CDATA #IMPLIED>
 
 <!ATTLIST modifPlayer argent CDATA #IMPLIED>
 <!ATTLIST modifPlayer savoir CDATA #IMPLIED>

@@ -8,8 +8,8 @@
 				<eventM nom="" date="" occurence="" probabilite=""/>
 			</modifEvent>
 			<modifObjet>
-				<objet nom="" dispo="" cout="" durabilite="">
-					<upgrade argentJ="" savoirJ="" faimJ="" fatigueJ="" bonheurJ="" tempsLibreJ=""/>
+				<objet nom="" dispo="">
+					<upgrade argentJ="" savoirJ="" faimJ="" fatigueJ="" bonheurJ="" tempsLibreJ=""  cout="" durabilite=""/>
 				</objet>
 			</modifObjet>
 			<modifPlayer argent="" savoir="" faim="" fatigue="" bonheur="" argentJ="" savoirJ="" faimJ="" fatigueJ="" bonheurJ="" gainParMois="" loyer="" tempsLibre="" tempsLibreJ=""/>
@@ -19,8 +19,8 @@
 				<eventM nom="" date="" occurence="" probabilite=""/>
 			</modifEvent>
 			<modifObjet>
-				<objet nom="" dispo="" cout="" durabilite="">
-					<bonus savoir="" faim="" fatigue="" bonheur="" tempsLibre=""/>
+				<objet nom="" dispo="" >
+					<bonus savoir="" faim="" fatigue="" bonheur="" tempsLibre="" cout="" durabilite=""/>
 				</objet>
 			</modifObjet>
 			<modifPlayer argent="" savoir="" faim="" fatigue="" bonheur="" argentJ="" savoirJ="" faimJ="" fatigueJ="" bonheurJ="" gainParMois="" loyer="" tempsLibre="" tempsLibreJ=""/>

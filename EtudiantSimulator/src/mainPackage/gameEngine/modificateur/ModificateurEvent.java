@@ -2,6 +2,10 @@ package mainPackage.gameEngine.modificateur;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import mainPackage.gameEngine.event.Event;
 import mainPackage.gameEngine.event.ListEvent;
 import mainPackage.gameEngine.jour.Date;
@@ -16,31 +20,19 @@ public class ModificateurEvent {
 	
 	private int proba;
 	
-	public ModificateurEvent(String modif) {
+	public ModificateurEvent(Node item) {
+		NamedNodeMap attributs = item.getAttributes();
 		
-		//L'acces sera sous cette syntaxe:
-		//nom,date,occurence,proba
-		//Le nom pour trouver l'event
-		//La date pour créer un event daté
-		//l'occurence et la proba pour l'augmenter si l'on veut (mettre une incrémentation), doit forcément au moins valoir quelque chose
-		//Si c'est les deux, ce sera parce que c'est une incrémentation de proba pendant une durée limitée
+		this.nom = attributs.getNamedItem("nom").getNodeValue();
 		
-		//Le string doit être séparé par |
-		
-		String[] contentTab = modif.split("\\|", -1);
-		this.nom = contentTab[0];
-		
-		if (!contentTab[1].equals("")) {
-			this.date = contentTab[1];
-		} else {
-			this.date = null;
+		if (attributs.getNamedItem("date") != null) {
+			this.date = attributs.getNamedItem("date").getNodeValue();
 		}
 		
-		this.occurence = Integer.parseInt(contentTab[2]);
-		
-		this.proba = Integer.parseInt(contentTab[3]);
+		this.occurence = Integer.parseInt(attributs.getNamedItem("occurence").getNodeValue());
+		this.proba = Integer.parseInt(attributs.getNamedItem("proba").getNodeValue());
 	}
-	
+
 	public void appliquer() {
 		Event temp = ListEvent.trouverEvent(this.nom);
 		
@@ -56,23 +48,17 @@ public class ModificateurEvent {
 			}
 		}
 	}
-	
-	public static ArrayList<ModificateurEvent> createArrayFromString(String liste) {
-		//Va créer chaque modifEvent pour en faire une array list, chaque modifEvent doit etre séparé par _
-		
-		if (liste.trim().equals("")) {
-			return null;
+
+	public static ArrayList<ModificateurEvent> fromNodeToArray(Node item) {
+		NodeList events = item.getChildNodes();
+		ArrayList<ModificateurEvent> liste = new ArrayList<ModificateurEvent>();
+
+		for (int i = 0; i < events.getLength(); i++) {
+			liste.add(new ModificateurEvent(events.item(i)));
 		}
-		ArrayList<ModificateurEvent> modifListe = new ArrayList<ModificateurEvent>();
+
+		return liste;
 		
-		String[] contentTab = liste.split("_");
-		
-		for (int i = 0; i < contentTab.length; i++) {
-			
-			modifListe.add(new ModificateurEvent(contentTab[i]));
-		}
-		
-		return modifListe;
 	}
 	
 

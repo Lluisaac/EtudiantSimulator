@@ -1,24 +1,22 @@
 package mainPackage.gameEngine.objetsMarket;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import mainPackage.gameEngine.Engine;
-import mainPackage.gameEngine.jour.Date;
-import mainPackage.gameEngine.modificateur.ModificateurEvent;
-import mainPackage.gameEngine.modificateur.ModificateurObjet;
 
 public class ListeObjets {
 
 	private static ArrayList<ObjetGeneral> listeObjets = new ArrayList<ObjetGeneral>();
 
-	public static ArrayList<ObjetGeneral> getListeObjets() {
-
-		return listeObjets;
-	}
-	
 	public static void refreshListeObjets() {
 		for (int i = 0; i < ListeObjets.getListeObjets().size(); i++) {
 			ListeObjets.getListeObjets().get(i).refreshDebloque();
@@ -26,10 +24,24 @@ public class ListeObjets {
 		Engine.getWindow().actualiserMagasin();
 	}
 	
+	public static void genererListe() throws SAXException, IOException, ParserConfigurationException {
+		Element listObjets = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File("listes\\objets.xml")).getDocumentElement();
+		
+		NodeList objets = listObjets.getChildNodes();
+		
+		for (int i = 0; i < objets.getLength(); i++) {
+			if (objets.item(i).getFirstChild().getNodeName().equals("upgrade")) {
+				ListeObjets.listeObjets.add(new ObjetUpgrade(objets.item(i)));
+			} else {
+				ListeObjets.listeObjets.add(new ObjetBonus(objets.item(i)));
+			}
+		}
+	}
+
 	public static ArrayList<ObjetGeneral> getlisteObjetsDebloques() {
-		
+
 		ArrayList<ObjetGeneral> temp = new ArrayList<ObjetGeneral>();
-		
+
 		for (int i = 0; i < ListeObjets.listeObjets.size(); i++) {
 			if (ListeObjets.listeObjets.get(i).isDebloque()) {
 				temp.add(ListeObjets.listeObjets.get(i));
@@ -38,6 +50,10 @@ public class ListeObjets {
 		return temp;
 	}
 
+	public static ArrayList<ObjetGeneral> getListeObjets() {
+		return listeObjets;
+	}
+	
 	public static void setlisteObjets(ArrayList<ObjetGeneral> listeObjets) {
 
 		ListeObjets.listeObjets = listeObjets;
@@ -46,90 +62,35 @@ public class ListeObjets {
 	public static ObjetGeneral getObjetGeneral(int i) {
 		return listeObjets.get(i);
 	}
-	
+
 	public static String staticToString() {
 		String r = "";
-		
+
 		for (int i = 0; i < ListeObjets.listeObjets.size(); i++) {
 			if (!ListeObjets.listeObjets.get(i).isDebloque() && ListeObjets.listeObjets.get(i) != null) {
-				r+= ListeObjets.listeObjets.get(i).getNom() + "," + ListeObjets.listeObjets.get(i).getEndOfPurchaseDate().toString() + ";";
+				r += ListeObjets.listeObjets.get(i).getNom() + ","
+						+ ListeObjets.listeObjets.get(i).getEndOfPurchaseDate().toString() + ";";
 			}
 		}
 		return r;
 	}
 
-	public static void genererListe() {
-		FileInputStream file;
-		String content = "";
-
-		try {
-			file = new FileInputStream("listes\\objets.etsim");
-
-			byte[] buffer = new byte[8];
-
-			while (file.read(buffer) >= 0) {
-				for (byte byt : buffer) {
-					content += (char) byt;
-				}
-			}
-
-			file.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		String[] contentTab = content.split("\n");
-
-		for (int i = 0; i < contentTab.length-1; i++) {
-
-			String[] objetsInfo = contentTab[i].split(";");
-
-			String[] listeAttributs = objetsInfo[2].split("\\,");
-			float[] attributs = new float[listeAttributs.length];
-
-			for (int j = 0; j < listeAttributs.length; j++) {
-				attributs[j] = Float.parseFloat(listeAttributs[j]);
-			}
-			
-			Boolean debloque;
-			
-			debloque=objetsInfo[3].equals("true");
-			
-			if (objetsInfo[0].equals("Upgrade")) {
-				ListeObjets.listeObjets.add(new ObjetUpgrade(objetsInfo[1], attributs,debloque, ModificateurEvent.createArrayFromString(objetsInfo[4]), ModificateurObjet.createArrayFromString(objetsInfo[5])));
-			} else {
-				ListeObjets.listeObjets.add(new ObjetBonus(objetsInfo[1], attributs,debloque, ModificateurEvent.createArrayFromString(objetsInfo[4]), ModificateurObjet.createArrayFromString(objetsInfo[5])));
-			}
-		}
-	}
-
 	public static void genererListe(String save) {
-		ListeObjets.genererListe();
-		String[] val = save.split(";");
-		
-		for (int i = 0; i < val.length; i++) {
-			String[] val2 = val[i].split("\\,");
-			for (int j = 0; j < ListeObjets.listeObjets.size(); j++) {
-				
-				if (ListeObjets.listeObjets.get(j).getNom().equals(val2[0])) {			
-					ListeObjets.listeObjets.get(j).setEndOfPurchaseDate(new Date(val2[1]));
-				}
-			}
-		}
+		throw new SecurityException("This save is deprecated");
 	}
 
 	public static void resetListe() {
 		ListeObjets.listeObjets = new ArrayList<ObjetGeneral>();
-		ListeObjets.genererListe();	
+		try {
+			ListeObjets.genererListe();
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static ObjetGeneral trouveObjet(String nom) {
-		for(int i=0;i<listeObjets.size();i++)
-		{
-			if(nom.equals(listeObjets.get(i).getNom()))
-			{
+		for (int i = 0; i < listeObjets.size(); i++) {
+			if (nom.equals(listeObjets.get(i).getNom())) {
 				return listeObjets.get(i);
 			}
 		}

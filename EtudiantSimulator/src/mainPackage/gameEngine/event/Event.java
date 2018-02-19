@@ -64,25 +64,42 @@ public class Event {
 			this.joursRestantsProbaAjoutee[0] = Integer.parseInt(item.getFirstChild().getAttributes().getNamedItem("probaAjoutee").getTextContent());
 			
 			if (dansEvent.item(1).getLocalName().equals("default") && dansEvent.getLength() > 1) {
-				Event.genererDefault(dansEvent.item(1));
+				this.genererDefault(dansEvent.item(1));
 			} else {
 				compteur = 1;
 			}
 		} else if (dansEvent.item(0).getLocalName().equals("default")) {
-			Event.genererDefault(dansEvent.item(0));
+			this.genererDefault(dansEvent.item(0));
 		} else {
 			compteur = 0;
 		}
+		
+		this.accesChoix = ModificateurGeneral.fromNodesToArray(compteur, dansEvent);
+		//TODO
+		// faire les choix correctement
+		// faire les objets en XML
 	}
 
-	private static void genererDefault(Node item) {
+	private void genererDefault(Node item) {
 		NodeList dansDefault = item.getChildNodes();
 		
-		//TODO genrer les default
+		for (int i = 0; i < dansDefault.getLength(); i++) {
+			switch (dansDefault.item(i).getNodeName()) {
+			case "modifEvent":
+				this.defaultEvent = ModificateurEvent.fromNodeToArray(dansDefault.item(i));
+				break;
+			case "modifObjet":
+				this.defaultObjet = ModificateurObjet.fromNodeToArray(dansDefault.item(i));
+				break;
+			case "modifPlayer":
+				this.defaultPlayer = new ModificateurPlayer(dansDefault.item(i));
+				break;
+			}
+		}
 	}
 
 	public void executer(int i) {
-		if(!this.accesChoix.get(i).getNom().contains("noDefault")) {
+		if(!this.accesChoix.get(i).isNoDefault()) {
 			this.executerDefault();
 		}
 		this.accesChoix.get(i).appliquer();
