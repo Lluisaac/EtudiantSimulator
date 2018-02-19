@@ -36,6 +36,12 @@ public class ListeObjets {
 				ListeObjets.listeObjets.add(new ObjetBonus(objets.item(i)));
 			}
 		}
+		
+		//TODO Finir les objets: ajouter les modifiers dans le xml et dans le code
+		
+		//TODO
+		// Pour plus tard: faire que les modifieurs objets puissent modifier les 
+		//modifieursEvent et modifieurObjet contenus dans les objets
 	}
 
 	public static ArrayList<ObjetGeneral> getlisteObjetsDebloques() {
