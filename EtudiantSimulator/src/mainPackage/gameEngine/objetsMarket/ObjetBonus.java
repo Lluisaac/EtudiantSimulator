@@ -1,33 +1,48 @@
 
 package mainPackage.gameEngine.objetsMarket;
 
-import java.util.ArrayList;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
-import mainPackage.gameEngine.modificateur.ModificateurEvent;
-import mainPackage.gameEngine.modificateur.ModificateurObjet;
-import mainPackage.gameEngine.player.Player;
-import mainPackage.graphicsEngine.window.MainWindow;
 
 @SuppressWarnings("unused")
 public class ObjetBonus extends ObjetGeneral {
 
-	public ObjetBonus(String nom, float[] attribut, boolean debloque, ArrayList<ModificateurEvent> modifEvent, ArrayList<ModificateurObjet> modifObjet) {
-		super(nom, attribut, debloque, modifEvent, modifObjet);
-		String[] titres = { "Prix", "Savoir", "Faim", "Fatigue", "Bonheur", "Tmps Perdu", "Durabilite" };
+	public ObjetBonus(Node item) {
+		super(item);
+		this.attributs = new float[7];
+
+		NamedNodeMap attributs = item.getFirstChild().getAttributes();
+
+		this.attributs[0] = Float.parseFloat(attributs.getNamedItem("cout").getNodeValue());
+		this.attributs[1] = Float.parseFloat(attributs.getNamedItem("savoir").getNodeValue());
+		this.attributs[2] = Float.parseFloat(attributs.getNamedItem("faim").getNodeValue());
+		this.attributs[3] = Float.parseFloat(attributs.getNamedItem("fatigue").getNodeValue());
+		this.attributs[4] = Float.parseFloat(attributs.getNamedItem("bonheur").getNodeValue());
+		this.attributs[5] = Float.parseFloat(attributs.getNamedItem("tempsLibre").getNodeValue());
+		this.attributs[6] = Float.parseFloat(attributs.getNamedItem("durabilite").getNodeValue());
+
+		String[] titres = {"Prix:", "savoir", "faim", "fatigue", "bonheur", "tempsLibre",
+				"durabilite"};
+
 		this.setTitres(titres);
+	}
+	
+	@Override
+	public void acheter() {
+		this.appliquer();
 	}
 
 	@Override
-	public void affectation(Player player) {
+	public void appliquer() {
 		if ((!this.getEndOfPurchaseDate().superieurDate(Engine.journee.getDate()) && this.isDebloque())) {
-		// V�rifie que PurchaseDate soit d�pass� ou �gal a la date de validit�
-			player.setArgent(player.getArgent() - this.attributs[0]);
-			player.setSavoir(player.getSavoir() + this.attributs[1]);
-			player.setFaim(player.getFaim() + this.attributs[2]);
-			player.setFatigue(player.getFatigue() + this.attributs[3]);
-			player.setBonheur(player.getBonheur() + this.attributs[4]);
+			Engine.getPlayer().setArgent(Engine.getPlayer().getArgent() - this.attributs[0]);
+			Engine.getPlayer().setSavoir(Engine.getPlayer().getSavoir() + this.attributs[1]);
+			Engine.getPlayer().setFaim(Engine.getPlayer().getFaim() + this.attributs[2]);
+			Engine.getPlayer().setFatigue(Engine.getPlayer().getFatigue() + this.attributs[3]);
+			Engine.getPlayer().setBonheur(Engine.getPlayer().getBonheur() + this.attributs[4]);
 			
 			Engine.journee.setBuffer((int) (Engine.journee.getBuffer() - this.attributs[5]));
 			
@@ -35,6 +50,7 @@ public class ObjetBonus extends ObjetGeneral {
 			newDate.addJour(Math.round(this.attributs[6]));
 			this.setEndOfPurchaseDate(newDate);
 			this.setDebloque(false);
+			super.appliquerModif();
 		}
 	}
 

@@ -1,32 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ListEvents SYSTEM "events.dtd">
 <ListEvents>
-	<Event nom="" description="" archetype="" date="" occurence="" probabilite="">
-		<joursRestantsProbaAjoutee jRestants="" probaAjoutee="" />
+	<Event nom="Casse" description="cest un test" archetype="Mort" occurence="-1" probabilite="15">
+		<default>
+			<modifPlayer argent="50"/>
+		</default>
+	</Event>
+	<Event nom="Machin" description="cest un test" archetype="Passion" occurence="-1" probabilite="5">
 		<default>
 			<modifEvent>
-				<eventM nom="" date="" occurence="" probabilite=""/>
+				<eventM nom="Casse" probabilite="-5"/>
 			</modifEvent>
-			<modifObjet>
-				<objet nom="" dispo="">
-					<upgrade argentJ="" savoirJ="" faimJ="" fatigueJ="" bonheurJ="" tempsLibreJ=""  cout="" durabilite=""/>
-				</objet>
-			</modifObjet>
-			<modifPlayer argent="" savoir="" faim="" fatigue="" bonheur="" argentJ="" savoirJ="" faimJ="" fatigueJ="" bonheurJ="" gainParMois="" loyer="" tempsLibre="" tempsLibreJ=""/>
 		</default>
-		<choix nom="" noDefault="">
-			<modifEvent>
-				<eventM nom="" date="" occurence="" probabilite=""/>
-			</modifEvent>
-			<modifObjet>
-				<objet nom="" dispo="" >
-					<bonus savoir="" faim="" fatigue="" bonheur="" tempsLibre="" cout="" durabilite=""/>
-				</objet>
-			</modifObjet>
-			<modifPlayer argent="" savoir="" faim="" fatigue="" bonheur="" argentJ="" savoirJ="" faimJ="" fatigueJ="" bonheurJ="" gainParMois="" loyer="" tempsLibre="" tempsLibreJ=""/>
-		</choix>
-		<choix nom="" noDefault="">
-			<modifPlayer argent="" savoir="" faim="" fatigue="" bonheur="" argentJ="" savoirJ="" faimJ="" fatigueJ="" bonheurJ="" gainParMois="" loyer="" tempsLibre="" tempsLibreJ=""/>
-		</choix>
 	</Event>
 </ListEvents>

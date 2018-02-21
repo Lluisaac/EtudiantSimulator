@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!ELEMENT Objet (upgrade|bonus)>
+<!ELEMENT Objet ((upgrade|bonus),(modifEvent?,modifObjet?))>
+<!ELEMENT modifEvent (eventM+)>
+<!ELEMENT modifObjet (Objet+)>
 <!ELEMENT upgrade EMPTY>
 <!ELEMENT bonus EMPTY>
 
 <!ATTLIST Objet nom CDATA #REQUIRED>
 <!ATTLIST Objet dispo CDATA #REQUIRED>
 
-<!ATTLIST upgrade cout CDATA #IMPLIED>
-<!ATTLIST upgrade argentJ CDATA #IMPLIED>
-<!ATTLIST upgrade savoirJ CDATA #IMPLIED>
-<!ATTLIST upgrade faimJ CDATA #IMPLIED>
-<!ATTLIST upgrade fatigueJ CDATA #IMPLIED>
-<!ATTLIST upgrade bonheurJ CDATA #IMPLIED>
-<!ATTLIST upgrade tempsLibreJ CDATA #IMPLIED>
-<!ATTLIST upgrade durabilite CDATA #IMPLIED>
+<!ATTLIST eventM nom CDATA #REQUIRED>
 
-<!ATTLIST bonus cout CDATA #IMPLIED>
-<!ATTLIST bonus savoir CDATA #IMPLIED>
-<!ATTLIST bonus faim CDATA #IMPLIED>
-<!ATTLIST bonus fatigue CDATA #IMPLIED>
-<!ATTLIST bonus bonheur CDATA #IMPLIED>
-<!ATTLIST bonus tempsLibre CDATA #IMPLIED>
-<!ATTLIST bonus durabilite CDATA #IMPLIED>
+<!ATTLIST eventM date CDATA #IMPLIED>
+<!ATTLIST eventM occurence CDATA  "0">
+<!ATTLIST eventM probabilite CDATA  "0">
+
+<!ATTLIST upgrade cout CDATA "0">
+<!ATTLIST upgrade argentJ CDATA "0">
+<!ATTLIST upgrade savoirJ CDATA "0">
+<!ATTLIST upgrade faimJ CDATA "0">
+<!ATTLIST upgrade fatigueJ CDATA "0">
+<!ATTLIST upgrade bonheurJ CDATA "0">
+<!ATTLIST upgrade tempsLibreJ CDATA "0">
+<!ATTLIST upgrade durabilite CDATA "0">
+
+<!ATTLIST bonus cout CDATA "0">
+<!ATTLIST bonus savoir CDATA "0">
+<!ATTLIST bonus faim CDATA "0">
+<!ATTLIST bonus fatigue CDATA "0">
+<!ATTLIST bonus bonheur CDATA "0">
+<!ATTLIST bonus tempsLibre CDATA "0">
+<!ATTLIST bonus durabilite CDATA "0">

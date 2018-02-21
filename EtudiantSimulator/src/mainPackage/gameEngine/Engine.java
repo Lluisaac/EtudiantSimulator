@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -63,7 +65,7 @@ public class Engine {
 
 		window.reinitialiserCalendrier();
 		Engine.saveGame();
-		
+
 		try {
 			ListEvent.mettreListEvent();
 		} catch (SAXException | IOException | ParserConfigurationException e) {
@@ -95,12 +97,15 @@ public class Engine {
 
 			window.actualiserBesoins();
 
-			jeuFini = journee.declencherJour(window);
+			jeuFini = journee.declencherJour();
 
 			Engine.faireEvent();
 
 			window.mettreJour();
+			
 			ListeObjets.refreshListeObjets();
+			ListeObjets.appliquerUpgrade();
+			
 			window.creerContenuJour();
 		}
 	}
@@ -216,9 +221,10 @@ public class Engine {
 		if (player.getFaim() > 100) {
 			player.setFaim(100);
 		}
-		if (journee.getTempsLibreJ() < 0) {
-			journee.setTempsLibreJ(0);
+		if (journee.getTempsLibre() < 0) {
+			journee.setTempsLibre(0);
 		}
+		
 		ListEvent.regulateur();
 	}
 
@@ -297,6 +303,20 @@ public class Engine {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static String parseXML(String string) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(string));
+		
+		String texte = new String(encoded);
+		texte = texte.replaceAll("(\\r|\\n)", "");
+		texte = texte.replaceAll(">(\\s*+)<", "><");
+		
+		FileOutputStream file = new FileOutputStream("listes\\temp.xml");
+		file.write(texte.getBytes());
+		file.close();
+		
+		return "listes\\temp.xml";
 	}
 
 	private static void loadGame() {

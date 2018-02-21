@@ -99,22 +99,22 @@ public class Jour {
 				|| (this.getJour() > 14 && (this.getMois() == 2 || this.getMois() == 9));
 	}
 
-	public boolean declencherJour(MainWindow mainWindow) {
+	public boolean declencherJour() {
 
 		if (this.date.getJour() % 14 == 1) {
-			mainWindow.mettreIcone("misc\\calendar.gif");
+			Engine.getWindow().mettreIcone("misc\\calendar.gif");
 		} else if (this.getJour() % 14 == 0) {
-			mainWindow.mettreIcone("misc\\checklist.gif");
-			mainWindow.activerButtonSuivant();
-			mainWindow.setValider(false);
-			mainWindow.actualiserMagasin();
+			Engine.getWindow().mettreIcone("misc\\checklist.gif");
+			Engine.getWindow().activerButtonSuivant();
+			Engine.getWindow().setValider(false);
+			Engine.getWindow().actualiserMagasin();
 			Engine.saveGame();
 		}
 
 		if (this.getJour() == 28) {
 			Engine.getPlayer().paimentEtGainsMois();
 		}
-
+		
 		return false;
 	}
 
@@ -128,12 +128,12 @@ public class Jour {
 		return this.date.getJour();
 	}
 
-	public int getTempsLibreJ() {
+	public int getTempsLibre() {
 
 		return this.tempsLibre;
 	}
 
-	public void setTempsLibreJ(int i) {
+	public void setTempsLibre(int i) {
 
 		this.tempsLibre = i;
 
@@ -149,7 +149,7 @@ public class Jour {
 		return this.date.getAnnee();
 	}
 
-	public void setTempsLibreJ(Player player, float i) {
+	public void setTempsLibre(Player player, float i) {
 
 		this.tempsLibre = 60
 				* (24 - (this.getTempsDodo(player, i) + this.getTempsTransport(player) + this.getTempsTravail(player)))
@@ -213,12 +213,12 @@ public class Jour {
 		this.buffer = buffer;
 	}
 
-	public void setTempsLibre(int i) {
+	public void setTempsLibreJ(int i) {
 		this.tempsLibreJ = i;
 
 	}
 
-	public float getTempsLibre() {
+	public float getTempsLibreJ() {
 		return this.tempsLibreJ;
 	}
 }

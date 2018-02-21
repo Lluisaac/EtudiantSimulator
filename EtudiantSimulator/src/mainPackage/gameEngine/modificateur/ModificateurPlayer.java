@@ -92,6 +92,6 @@ public class ModificateurPlayer {// L'ordre est à respecter
 		Engine.getPlayer().setLoyer(this.loyer + Engine.getPlayer().getLoyer());
 
 		Engine.journee.setBuffer((int) (Engine.journee.getBuffer() - this.tempsLibre));
-		Engine.journee.setTempsLibre((int) (Engine.journee.getTempsLibre() + this.tempsLibreJ));
+		Engine.journee.setTempsLibreJ((int) (Engine.journee.getTempsLibreJ() + this.tempsLibreJ));
 	}
 }

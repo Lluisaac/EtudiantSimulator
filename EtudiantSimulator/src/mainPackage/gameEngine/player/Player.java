@@ -5,6 +5,7 @@ import java.util.Random;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.filiere.Filiere;
+import mainPackage.gameEngine.objetsMarket.ListeObjets;
 
 public class Player {
 
@@ -230,27 +231,33 @@ public class Player {
 
 		float temp = this.argentJ - (180 * modif) / 1400;
 		this.argent += temp;
+		
+		temp += ListeObjets.getUpgradeArgent();
+		
 		return temp;
 	}
 
 	public float modifierFatigue(float modif) {
 
 		float temp = this.fatigueJ;
-		Engine.journee.setTempsLibreJ(this, modif);
+		Engine.journee.setTempsLibre(this, modif);
 
 		if (modif < 50) {
 			temp += (8 * ((modif * 2) / 100)) * -1.875;
 		} else if (modif == 50) {
 			temp += -15;
 		} else {
-			temp += -15 - 1.875 * ((Engine.journee.getTempsLibreJ() / 60) * (2 * ((modif - 50) / 100)));
+			temp += -15 - 1.875 * ((Engine.journee.getTempsLibre() / 60) * (2 * ((modif - 50) / 100)));
 		}
 		this.fatigue += temp;
+		
+		temp += ListeObjets.getUpgradeFatigue();
+		
 		return temp;
 	}
 
 	public float modifierSavoir(float modif) {
-		float temp = this.savoirJ + ((Engine.journee.getTempsLibreJ() * (modif / 100)) / 30)
+		float temp = this.savoirJ + ((Engine.journee.getTempsLibre() * (modif / 100)) / 30)
 				+ (Engine.journee.getTempsTravail(this) * 3);
 
 		if (this.fatigue > 50 && this.fatigue <= 80) {
@@ -260,6 +267,9 @@ public class Player {
 		}
 
 		this.savoir += temp;
+		
+		temp += ListeObjets.getUpgradeSavoir();
+		
 		return temp;
 	}
 
@@ -267,12 +277,15 @@ public class Player {
 
 		float temp = this.faimJ + (8 * modif) / 100;
 		this.faim += temp;
+		
+		temp += ListeObjets.getUpgradeFaim();
+		
 		return temp;
 	}
 
 	public float modifierBonheur(float modif) {
 
-		float temp = this.bonheurJ + (Engine.journee.getTempsLibreJ() * (1 - modif / 100)) / 120 - 2;
+		float temp = this.bonheurJ + (Engine.journee.getTempsLibre() * (1 - modif / 100)) / 120 - 2;
 
 		if (this.argent < 0) {
 			temp -= 2;
@@ -280,6 +293,9 @@ public class Player {
 			temp -= 1;
 		}
 		this.bonheur += temp;
+		
+		temp += ListeObjets.getUpgradeBonheur();
+		
 		return temp;
 	}
 

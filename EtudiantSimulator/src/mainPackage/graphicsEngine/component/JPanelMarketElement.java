@@ -14,7 +14,6 @@ import javax.swing.border.EtchedBorder;
 
 import mainPackage.gameEngine.objetsMarket.ListeObjets;
 import mainPackage.gameEngine.objetsMarket.ObjetGeneral;
-import mainPackage.gameEngine.player.Player;
 
 @SuppressWarnings({ "serial" })
 public class JPanelMarketElement extends JPanel implements ActionListener {
@@ -23,12 +22,9 @@ public class JPanelMarketElement extends JPanel implements ActionListener {
 	private ArrayList<JLabel> listeLabelAttributs = new ArrayList<JLabel>();
 	private JButton buttonAcheter = new JButton();
 	private ObjetGeneral objG;
-	private Player player;
 
-	public JPanelMarketElement(ObjetGeneral objG, Player player) {
+	public JPanelMarketElement(ObjetGeneral objG) {
 		this.objG = objG;
-		this.player = player;
-
 		Box box = Box.createVerticalBox();
 
 		labelNom.setText(objG.getNom() + ":");
@@ -51,7 +47,7 @@ public class JPanelMarketElement extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == this.buttonAcheter) {
-			this.objG.affectation(this.player);
+			this.objG.acheter();
 			ListeObjets.refreshListeObjets();
 		}
 	}

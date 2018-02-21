@@ -40,49 +40,52 @@ public class Event {
 
 	public Event(Node item) {
 		NamedNodeMap attributs = item.getAttributes();
+
 		this.setNom(attributs.getNamedItem("nom").getTextContent());
 		this.setResume(attributs.getNamedItem("description").getTextContent());
 		this.setArchetype(attributs.getNamedItem("archetype").getTextContent());
-		
+
 		if (attributs.getNamedItem("date") != null) {
 			this.setDate(attributs.getNamedItem("date").getTextContent());
 		}
-		
+
 		if (attributs.getNamedItem("occurence") != null) {
 			this.setOccurence(Integer.parseInt(attributs.getNamedItem("occurence").getTextContent()));
 		}
-		
+
 		if (attributs.getNamedItem("probabilite") != null) {
 			this.setProbabilite(Integer.parseInt(attributs.getNamedItem("probabilite").getTextContent()));
 		}
-		
+
 		NodeList dansEvent = item.getChildNodes();
 		int compteur = 2;
 		
-		if (dansEvent.item(0).getLocalName().equals("joursRestantsProbaAjoutee") && dansEvent.getLength() > 0) {
-			this.joursRestantsProbaAjoutee[0] = Integer.parseInt(item.getFirstChild().getAttributes().getNamedItem("jRestants").getTextContent());
-			this.joursRestantsProbaAjoutee[0] = Integer.parseInt(item.getFirstChild().getAttributes().getNamedItem("probaAjoutee").getTextContent());
-			
-			if (dansEvent.item(1).getLocalName().equals("default") && dansEvent.getLength() > 1) {
-				this.genererDefault(dansEvent.item(1));
-			} else {
+		if (dansEvent.getLength() > 0) {
+			if (dansEvent.item(0).getNodeName().equals("joursRestantsProbaAjoutee")) {
+				this.joursRestantsProbaAjoutee[0] = Integer
+						.parseInt(item.getFirstChild().getAttributes().getNamedItem("jRestants").getTextContent());
+				this.joursRestantsProbaAjoutee[0] = Integer
+						.parseInt(item.getFirstChild().getAttributes().getNamedItem("probaAjoutee").getTextContent());
+
+				if (dansEvent.item(1).getNodeName().equals("default") && dansEvent.getLength() > 1) {
+					this.genererDefault(dansEvent.item(1));
+				} else {
+					compteur = 1;
+				}
+			} else if (dansEvent.item(0).getNodeName().equals("default")) {
+				this.genererDefault(dansEvent.item(0));
 				compteur = 1;
+			} else {
+				compteur = 0;
 			}
-		} else if (dansEvent.item(0).getLocalName().equals("default")) {
-			this.genererDefault(dansEvent.item(0));
-		} else {
-			compteur = 0;
 		}
-		
+
 		this.accesChoix = ModificateurGeneral.fromNodesToArray(compteur, dansEvent);
-		//TODO
-		// faire les choix correctement
-		// faire les objets en XML
 	}
 
 	private void genererDefault(Node item) {
 		NodeList dansDefault = item.getChildNodes();
-		
+
 		for (int i = 0; i < dansDefault.getLength(); i++) {
 			switch (dansDefault.item(i).getNodeName()) {
 			case "modifEvent":
@@ -99,7 +102,7 @@ public class Event {
 	}
 
 	public void executer(int i) {
-		if(!this.accesChoix.get(i).isNoDefault()) {
+		if (!this.accesChoix.get(i).isNoDefault()) {
 			this.executerDefault();
 		}
 		this.accesChoix.get(i).appliquer();
@@ -138,7 +141,7 @@ public class Event {
 	public String getResume() {
 		return resume;
 	}
-	
+
 	public void setResume(String resume) {
 		this.resume = resume;
 	}
@@ -158,13 +161,13 @@ public class Event {
 	public void setArchetype(String archetype) {
 		this.archetype = archetype;
 	}
-	
+
 	public int getProbabilite() {
 		return this.occurence < 0 ? this.occurence == -1 ? probabilite : 0 : this.probabilite * this.occurence;
 	}
 
 	public void setProbabilite(int probabilite) {
-		this.probabilite = probabilite;
+		this.probabilite = probabilite >= 0 ? probabilite : 0;
 	}
 
 	public ArrayList<ModificateurEvent> getAcces() {
@@ -236,6 +239,6 @@ public class Event {
 	}
 
 	public boolean hasDate() {
-		return this.date == null;
+		return this.date != null;
 	}
 }

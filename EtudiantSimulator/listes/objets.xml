@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ListObjets SYSTEM "objets.dtd">
 <ListObjets>
-	<Objet nom="" dispo="">
-		<upgrade />
+	<Objet nom="Ordinateur" dispo="true">
+		<upgrade cout="800" bonheurJ="2" tempsLibreJ="-60" durabilite="840" />
+	</Objet>
+	<Objet nom="Velo" dispo="true">
+		<upgrade cout="100" tempsLibreJ="30" durabilite="840" />
+	</Objet>
+	<Objet nom="Carte TeC" dispo="true">
+		<upgrade cout="200" tempsLibreJ="60" durabilite="840" />
+	</Objet>
+	<Objet nom="Netflix" dispo="true">
+		<upgrade cout="15" bonheurJ="1" tempsLibreJ="-30" durabilite="28" />
+	</Objet>
+	<Objet nom="Litiere" dispo="false">
+		<upgrade cout="10" argentJ="-1" tempsLibreJ="5" durabilite="280" />
+	</Objet>
+	<Objet nom="JeuVideo" dispo="true">
+		<bonus cout="20" tempsLibre="360" durabilite="14" />
+	</Objet>
+	<Objet nom="Livre" dispo="true">
+		<bonus cout="10" savoir="10" tempsLibre="240" durabilite="14" />
+	</Objet>
+	<Objet nom="Festin" dispo="true">
+		<bonus cout="15" tempsLibre="30" durabilite="14" faim="5" bonheur="1"/>
+	</Objet>
+	<Objet nom="Somniferes" dispo="true">
+		<bonus cout="20" durabilite="14" fatigue="20"/>
+	</Objet>
+	<Objet nom="Comics" dispo="true">
+		<bonus cout="10" tempsLibre="60" durabilite="14" bonheur="1"/>
 	</Objet>
 </ListObjets>

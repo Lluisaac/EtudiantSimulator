@@ -292,7 +292,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		ArrayList<ObjetGeneral> temp = ListeObjets.getlisteObjetsDebloques();
 		if (temp.size() > 0) {
 			for (int i = 0; i < temp.size(); i++) {
-				this.panelMagasin.add(new JPanelMarketElement(temp.get(i), Engine.getPlayer()));
+				this.panelMagasin.add(new JPanelMarketElement(temp.get(i)));
 			}
 		}
 
@@ -396,8 +396,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowListener
 		this.labelArgent.setForeground(Color.GREEN);
 		this.labelFatigue.setForeground(Color.BLACK);
 		this.panelModifieur.cleanModifier();
-		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + "�");
-		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + "�");
+		this.panelModifieur.addModifieur("Gain par mois : " + Engine.getPlayer().getGainParMois() + " euros");
+		this.panelModifieur.addModifieur("Loyer: " + Engine.getPlayer().getLoyer() + " euros");
 	}
 
 	@Override

@@ -8,16 +8,23 @@ import org.w3c.dom.NodeList;
 
 import mainPackage.gameEngine.objetsMarket.ListeObjets;
 
-public class ModificateurObjet { // L'ordre est à respecter
+public class ModificateurObjet {
 
 	private String nom;
 	private float[] attributs;
-	private boolean dispo;
+	private int dispo;
+	
+	private ArrayList<ModificateurEvent> modifEvent;
+	private ArrayList<ModificateurObjet> modifObjet;
 
 	public ModificateurObjet(Node item) {
 		this.nom = item.getAttributes().getNamedItem("nom").getNodeValue();
-		this.dispo = Boolean.parseBoolean(item.getAttributes().getNamedItem("dispo").getNodeValue());
-
+		if (item.getAttributes().getNamedItem("dispo").getNodeValue().equals("default")) {
+			this.dispo = 2;
+		} else {
+			this.dispo = Boolean.parseBoolean(item.getAttributes().getNamedItem("dispo").getNodeValue()) ? 1 : 0;
+		}
+		
 		Node objet = item.getFirstChild();
 		NamedNodeMap attributs = objet.getAttributes();
 		if (objet.getNodeName().equals("upgrade")) {
@@ -81,12 +88,41 @@ public class ModificateurObjet { // L'ordre est à respecter
 				}
 			}
 		}
+		
+		NodeList modifs = item.getChildNodes();
+		
+		this.modifEvent = new ArrayList<ModificateurEvent>();
+		this.modifObjet = new ArrayList<ModificateurObjet>();
+		
+		for (int i = 1; i < modifs.getLength(); i++) {
+			switch (modifs.item(i).getNodeName()) {
+			case "modifEvent":
+				this.modifEvent = ModificateurEvent.fromNodeToArray(modifs.item(i));
+				break;
+			case "modifObjet":
+				this.modifObjet = ModificateurObjet.fromNodeToArray(modifs.item(i));
+				break;
+			}
+		}
 	}
-
 
 	public void appliquer() {
 		ListeObjets.trouveObjet(this.nom).setAttributs(attributs);
-		ListeObjets.trouveObjet(this.nom).setDebloque(this.dispo);
+		if (this.dispo != 2) {
+			ListeObjets.trouveObjet(this.nom).setDebloque(this.dispo == 1 ? true : false);
+		}
+		
+		this.appliquerModif();
+	}
+	
+	public void appliquerModif() {
+		for (int i = 0; i < this.modifEvent.size(); i++) {
+			this.modifEvent.get(i).appliquer();
+		}
+
+		for (int i = 0; i < this.modifObjet.size(); i++) {
+			this.modifObjet.get(i).appliquer();
+		}
 	}
 
 	public static ArrayList<ModificateurObjet> fromNodeToArray(Node item) {

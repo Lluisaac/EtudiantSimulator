@@ -1,6 +1,5 @@
 package mainPackage.gameEngine.objetsMarket;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,6 +15,8 @@ import mainPackage.gameEngine.Engine;
 public class ListeObjets {
 
 	private static ArrayList<ObjetGeneral> listeObjets = new ArrayList<ObjetGeneral>();
+	
+	private static ArrayList<ObjetUpgrade> upgrades = new ArrayList<ObjetUpgrade>();
 
 	public static void refreshListeObjets() {
 		for (int i = 0; i < ListeObjets.getListeObjets().size(); i++) {
@@ -25,23 +26,19 @@ public class ListeObjets {
 	}
 	
 	public static void genererListe() throws SAXException, IOException, ParserConfigurationException {
-		Element listObjets = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File("listes\\objets.xml")).getDocumentElement();
+		
+		Element listObjets = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(Engine.parseXML("listes\\objets.xml")).getDocumentElement();
 		
 		NodeList objets = listObjets.getChildNodes();
 		
 		for (int i = 0; i < objets.getLength(); i++) {
+			
 			if (objets.item(i).getFirstChild().getNodeName().equals("upgrade")) {
 				ListeObjets.listeObjets.add(new ObjetUpgrade(objets.item(i)));
 			} else {
 				ListeObjets.listeObjets.add(new ObjetBonus(objets.item(i)));
 			}
-		}
-		
-		//TODO Finir les objets: ajouter les modifiers dans le xml et dans le code
-		
-		//TODO
-		// Pour plus tard: faire que les modifieurs objets puissent modifier les 
-		//modifieursEvent et modifieurObjet contenus dans les objets
+		}		
 	}
 
 	public static ArrayList<ObjetGeneral> getlisteObjetsDebloques() {
@@ -93,7 +90,7 @@ public class ListeObjets {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static ObjetGeneral trouveObjet(String nom) {
 		for (int i = 0; i < listeObjets.size(); i++) {
 			if (nom.equals(listeObjets.get(i).getNom())) {
@@ -101,5 +98,59 @@ public class ListeObjets {
 			}
 		}
 		return null;
+	}
+	
+	public static void addUpgrade(ObjetUpgrade upg) {
+		ListeObjets.upgrades.add(upg);
+	}
+	
+	public static void removeUpgrade(ObjetUpgrade upg) {
+		ListeObjets.upgrades.remove(upg);
+	}
+	
+	public static void appliquerUpgrade() {
+		for (int i = 0; i < ListeObjets.upgrades.size(); i++) {
+			ListeObjets.upgrades.get(i).appliquer();
+		}
+	}
+	
+	public static float getUpgradeArgent() {
+		int com = 0;
+		for (int i = 0; i < ListeObjets.upgrades.size(); i++) {
+			com += ListeObjets.upgrades.get(i).getAttributs()[1];
+		}
+		return com;
+	}
+	
+	public static float getUpgradeSavoir() {
+		int com = 0;
+		for (int i = 0; i < ListeObjets.upgrades.size(); i++) {
+			com += ListeObjets.upgrades.get(i).getAttributs()[2];
+		}
+		return com;
+	}
+	
+	public static float getUpgradeFaim() {
+		int com = 0;
+		for (int i = 0; i < ListeObjets.upgrades.size(); i++) {
+			com += ListeObjets.upgrades.get(i).getAttributs()[3];
+		}
+		return com;
+	}
+	
+	public static float getUpgradeFatigue() {
+		int com = 0;
+		for (int i = 0; i < ListeObjets.upgrades.size(); i++) {
+			com += ListeObjets.upgrades.get(i).getAttributs()[4];
+		}
+		return com;
+	}
+
+	public static float getUpgradeBonheur() {
+		int com = 0;
+		for (int i = 0; i < ListeObjets.upgrades.size(); i++) {
+			com += ListeObjets.upgrades.get(i).getAttributs()[5];
+		}
+		return com;
 	}
 }

@@ -6,8 +6,9 @@
 		<!ELEMENT default (modifEvent?, modifObjet?, modifPlayer?)>
 			<!ELEMENT choix (modifEvent?, modifObjet?, modifPlayer?)>
 				<!ELEMENT modifEvent (eventM+)>
-				<!ELEMENT modifObjet (objet+)>
-					<!ELEMENT objet (upgrade|bonus)>
+				<!ELEMENT modifObjet (Objet+)>
+					<!ELEMENT Objet (upgrade|bonus)>
+					<!ELEMENT Objet (modifEvent?, modifObjet?)>
 
 <!ELEMENT joursRestantsProbaAjoutee EMPTY>
 <!ELEMENT modifPlayer EMPTY>
@@ -33,25 +34,25 @@
 <!ATTLIST eventM occurence CDATA  "0">
 <!ATTLIST eventM probabilite CDATA  "0">
 
-<!ATTLIST objet nom CDATA #REQUIRED>
-<!ATTLIST objet dispo CDATA #REQUIRED>
+<!ATTLIST Objet nom CDATA #REQUIRED>
+<!ATTLIST Objet dispo CDATA #REQUIRED>
 
-<!ATTLIST upgrade cout CDATA #IMPLIED>
-<!ATTLIST upgrade argentJ CDATA #IMPLIED>
-<!ATTLIST upgrade savoirJ CDATA #IMPLIED>
-<!ATTLIST upgrade faimJ CDATA #IMPLIED>
-<!ATTLIST upgrade fatigueJ CDATA #IMPLIED>
-<!ATTLIST upgrade bonheurJ CDATA #IMPLIED>
-<!ATTLIST upgrade tempsLibreJ CDATA #IMPLIED>
-<!ATTLIST upgrade durabilite CDATA #IMPLIED>
+<!ATTLIST upgrade cout CDATA "0">
+<!ATTLIST upgrade argentJ CDATA "0">
+<!ATTLIST upgrade savoirJ CDATA "0">
+<!ATTLIST upgrade faimJ CDATA "0">
+<!ATTLIST upgrade fatigueJ CDATA "0">
+<!ATTLIST upgrade bonheurJ CDATA "0">
+<!ATTLIST upgrade tempsLibreJ CDATA "0">
+<!ATTLIST upgrade durabilite CDATA "0">
 
-<!ATTLIST bonus cout CDATA #IMPLIED>
-<!ATTLIST bonus savoir CDATA #IMPLIED>
-<!ATTLIST bonus faim CDATA #IMPLIED>
-<!ATTLIST bonus fatigue CDATA #IMPLIED>
-<!ATTLIST bonus bonheur CDATA #IMPLIED>
-<!ATTLIST bonus tempsLibre CDATA #IMPLIED>
-<!ATTLIST bonus durabilite CDATA #IMPLIED>
+<!ATTLIST bonus cout CDATA "0">
+<!ATTLIST bonus savoir CDATA "0">
+<!ATTLIST bonus faim CDATA "0">
+<!ATTLIST bonus fatigue CDATA "0">
+<!ATTLIST bonus bonheur CDATA "0">
+<!ATTLIST bonus tempsLibre CDATA "0">
+<!ATTLIST bonus durabilite CDATA "0">
 
 <!ATTLIST modifPlayer argent CDATA #IMPLIED>
 <!ATTLIST modifPlayer savoir CDATA #IMPLIED>

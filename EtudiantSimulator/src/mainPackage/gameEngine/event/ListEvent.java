@@ -1,6 +1,5 @@
 package mainPackage.gameEngine.event;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,7 +21,7 @@ public class ListEvent {
 	private static Event[] listeEvent;
 
 	public static void mettreListEvent() throws SAXException, IOException, ParserConfigurationException {
-		Element listEvents = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File("listes\\events.xml")).getDocumentElement();
+		Element listEvents = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(Engine.parseXML("listes\\events.xml")).getDocumentElement();
 		
 		NodeList events = listEvents.getChildNodes();
 		
@@ -104,9 +103,8 @@ public class ListEvent {
 		return val;
 	}
 
-	public static Event trouverEvent(String nom)// Trouve un event a partir de
-												// son nom
-	{
+	// Trouve un event a partir de son nom
+	public static Event trouverEvent(String nom) {
 
 		for (int i = 0; i < ListEvent.listeEventDate.length; i++) {
 			if (ListEvent.listeEventDate[i].getNom().equals(nom)) {
@@ -226,6 +224,7 @@ public class ListEvent {
 	}
 
 	public static void afficherEvent(Event event) {
+		System.out.println(event.getProbabilite());
 		Engine.eventDialog = new EventDialog(event);
 	}
 }

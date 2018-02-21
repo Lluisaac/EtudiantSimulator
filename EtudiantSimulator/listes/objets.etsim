@@ -3,8 +3,13 @@ Upgrade;Velo;100,0,0,0,0,0,30,840;true;;;
 Upgrade;Carte TeC;200,0,0,0,0,0,60,280;true;;;
 Upgrade;Netflix;15,0,0,0,0,1,-30,28;true;;;
 Upgrade;Litiere;10,1,0,0,0,0,5,280;false;;;
+
 Bonus;JeuVideo;20,0,0,0,4,360,14;true;;;
+
 Bonus;Livre;5,10,0,0,0,240,14;true;;;
+
 Bonus;Festin;15,0,5,0,1,30,14;true;;;
+
 Bonus;Somniferes;20,0,20,0,0,0,14;true;;;
+
 Bonus;Comics;10,0,0,0,1,60,14;true;;;

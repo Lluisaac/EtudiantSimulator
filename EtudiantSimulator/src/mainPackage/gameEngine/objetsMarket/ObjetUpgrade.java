@@ -1,53 +1,65 @@
 
 package mainPackage.gameEngine.objetsMarket;
 
-import java.util.ArrayList;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
-import mainPackage.gameEngine.modificateur.ModificateurEvent;
-import mainPackage.gameEngine.modificateur.ModificateurObjet;
-import mainPackage.gameEngine.player.Player;
-import mainPackage.graphicsEngine.window.MainWindow;
 
-@SuppressWarnings("unused")
 public class ObjetUpgrade extends ObjetGeneral {
-	
-	public ObjetUpgrade(String nom, float[] attribut, boolean debloque, ArrayList<ModificateurEvent> modifEvent, ArrayList<ModificateurObjet> modifObjet) {
-		super(nom, attribut, debloque, modifEvent, modifObjet);
-		String[] titres = {"Prix", "Argent J", "Savoir J", "Faim J", "Fatigue J", "Bonheur J", "Tmps Libre", "Durabilite"};
+
+	public ObjetUpgrade(Node item) {
+		super(item);
+
+		this.attributs = new float[8];
+
+		NamedNodeMap attributs = item.getFirstChild().getAttributes();
+
+		this.attributs[0] = Float.parseFloat(attributs.getNamedItem("cout").getNodeValue());
+		this.attributs[1] = Float.parseFloat(attributs.getNamedItem("argentJ").getNodeValue());
+		this.attributs[2] = Float.parseFloat(attributs.getNamedItem("savoirJ").getNodeValue());
+		this.attributs[3] = Float.parseFloat(attributs.getNamedItem("faimJ").getNodeValue());
+		this.attributs[4] = Float.parseFloat(attributs.getNamedItem("fatigueJ").getNodeValue());
+		this.attributs[5] = Float.parseFloat(attributs.getNamedItem("bonheurJ").getNodeValue());
+		this.attributs[6] = Float.parseFloat(attributs.getNamedItem("tempsLibreJ").getNodeValue());
+		this.attributs[7] = Float.parseFloat(attributs.getNamedItem("durabilite").getNodeValue());
+
+		String[] titres = { "Prix", "argentJ", "savoirJ", "faimJ", "fatigueJ", "bonheurJ", "tempsLibreJ",
+				"durabilite" };
+
 		this.setTitres(titres);
+
 	}
 
 	@Override
-	public void affectation(Player player) {
-		if( (!this.getEndOfPurchaseDate().superieurDate(Engine.journee.getDate()) && this.isDebloque())) {
-			
-			player.setArgent(player.getArgent() - this.attributs[0]);
-			player.setArgentJ((int) (player.getArgentJ() + this.attributs[1]));
-			player.setSavoirJ((int) (player.getSavoirJ() + this.attributs[2]));
-			player.setFaimJ((int) (player.getFaimJ() + this.attributs[3]));
-			player.setFatigueJ((int) (player.getFatigueJ() + this.attributs[4]));
-			player.setBonheurJ((int) (player.getBonheurJ() + this.attributs[5]));
-			
-			Engine.journee.setTempsLibre((int) (Engine.journee.getTempsLibre() + this.attributs[6]));
-			Date newDate=new Date(Engine.journee.getDate());
-			newDate.addJour(Math.round(this.attributs[7]));
-			this.setEndOfPurchaseDate(newDate);
-			this.setDebloque(false);
-		}
-		
-		super.executerModificateur();
+	public void acheter() {
+		ListeObjets.addUpgrade(this);
+
+		Engine.getPlayer().setArgent(Engine.getPlayer().getArgent() - this.attributs[0]);
+
+		Date newDate = new Date(Engine.journee.getDate());
+		newDate.addJour(Math.round(this.attributs[7]));
+		this.setEndOfPurchaseDate(newDate);
+		this.setDebloque(false);
+		super.appliquerModif();
+	}
+
+	@Override
+	public void appliquer() {
+		Engine.getPlayer().setArgent((int) (Engine.getPlayer().getArgent() + this.attributs[1]));
+		Engine.getPlayer().setSavoir((int) (Engine.getPlayer().getSavoir() + this.attributs[2]));
+		Engine.getPlayer().setFaim((int) (Engine.getPlayer().getFaim() + this.attributs[3]));
+		Engine.getPlayer().setFatigue((int) (Engine.getPlayer().getFatigue() + this.attributs[4]));
+		Engine.getPlayer().setBonheur((int) (Engine.getPlayer().getBonheur() + this.attributs[5]));
+		Engine.journee.setBuffer((int) (Engine.journee.getBuffer() + this.attributs[6]));
+
 	}
 
 	public void refreshDebloque() {
-		if (Engine.journee.getDate().equals(this.getEndOfPurchaseDate())) {
+		if (this.getEndOfPurchaseDate().equals(Engine.journee.getDate())) {
 			this.setDebloque(true);
-			Engine.getPlayer().setArgentJ((int) (Engine.getPlayer().getArgentJ() - this.attributs[1]));
-			Engine.getPlayer().setSavoirJ((int) (Engine.getPlayer().getSavoirJ() - this.attributs[2]));
-			Engine.getPlayer().setFaimJ((int) (Engine.getPlayer().getFaimJ() - this.attributs[3]));
-			Engine.getPlayer().setFatigueJ((int) (Engine.getPlayer().getFatigueJ() - this.attributs[4]));
-			Engine.getPlayer().setBonheurJ((int) (Engine.getPlayer().getBonheurJ() - this.attributs[5]));
+			ListeObjets.removeUpgrade(this);
 		}
 	}
 }
