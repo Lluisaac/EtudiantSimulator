@@ -13,4 +13,17 @@
 			</modifEvent>
 		</default>
 	</Event>
+	<Event nom="Truc" description="test daté" archetype="Mort" occurence="-1" date="3/6/1">
+		<default>
+			<modifEvent>
+				<eventM nom="Machin">
+					<default>
+						<modifEvent>
+							<eventM nom="Casse" probabilite="5"/>
+						</modifEvent>
+					</default>
+				</eventM>
+			</modifEvent>
+		</default>
+	</Event>
 </ListEvents>

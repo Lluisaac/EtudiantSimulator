@@ -3,6 +3,9 @@
 <!ELEMENT Objet ((upgrade|bonus),(modifEvent?,modifObjet?))>
 <!ELEMENT modifEvent (eventM+)>
 <!ELEMENT modifObjet (Objet+)>
+<!ELEMENT eventM (default?,choix*)>
+<!ELEMENT default (modifEvent?, modifObjet?, modifPlayer?)>
+<!ELEMENT choix (modifEvent?, modifObjet?, modifPlayer?)>
 <!ELEMENT upgrade EMPTY>
 <!ELEMENT bonus EMPTY>
 
@@ -10,7 +13,6 @@
 <!ATTLIST Objet dispo CDATA #REQUIRED>
 
 <!ATTLIST eventM nom CDATA #REQUIRED>
-
 <!ATTLIST eventM date CDATA #IMPLIED>
 <!ATTLIST eventM occurence CDATA  "0">
 <!ATTLIST eventM probabilite CDATA  "0">
@@ -31,3 +33,6 @@
 <!ATTLIST bonus bonheur CDATA "0">
 <!ATTLIST bonus tempsLibre CDATA "0">
 <!ATTLIST bonus durabilite CDATA "0">
+
+<!ATTLIST choix nom CDATA #REQUIRED>
+<!ATTLIST choix noDefault CDATA "false">

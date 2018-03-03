@@ -2,17 +2,17 @@
 
 
 <!ELEMENT ListEvents (Event*)>
-	<!ELEMENT Event (joursRestantsProbaAjoutee?,default?,choix*)>
-		<!ELEMENT default (modifEvent?, modifObjet?, modifPlayer?)>
-			<!ELEMENT choix (modifEvent?, modifObjet?, modifPlayer?)>
-				<!ELEMENT modifEvent (eventM+)>
-				<!ELEMENT modifObjet (Objet+)>
-					<!ELEMENT Objet (upgrade|bonus)>
-					<!ELEMENT Objet (modifEvent?, modifObjet?)>
+<!ELEMENT Event (joursRestantsProbaAjoutee?,default?,choix*)>
+<!ELEMENT default (modifEvent?, modifObjet?, modifPlayer?)>
+<!ELEMENT choix (modifEvent?, modifObjet?, modifPlayer?)>
+<!ELEMENT modifEvent (eventM+)>
+<!ELEMENT modifObjet (Objet+)>
+<!ELEMENT Objet (upgrade|bonus)>
+<!ELEMENT Objet (modifEvent?, modifObjet?)>
+<!ELEMENT eventM (default?,choix*)>
 
 <!ELEMENT joursRestantsProbaAjoutee EMPTY>
 <!ELEMENT modifPlayer EMPTY>
-<!ELEMENT eventM EMPTY>
 <!ELEMENT upgrade EMPTY>
 <!ELEMENT bonus EMPTY>
 
@@ -29,7 +29,6 @@
 <!ATTLIST joursRestantsProbaAjoutee probaAjoutee CDATA #REQUIRED>
 
 <!ATTLIST eventM nom CDATA #REQUIRED>
-
 <!ATTLIST eventM date CDATA #IMPLIED>
 <!ATTLIST eventM occurence CDATA  "0">
 <!ATTLIST eventM probabilite CDATA  "0">

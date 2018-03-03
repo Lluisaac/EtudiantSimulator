@@ -46,7 +46,7 @@ public class Event {
 		this.setArchetype(attributs.getNamedItem("archetype").getTextContent());
 
 		if (attributs.getNamedItem("date") != null) {
-			this.setDate(attributs.getNamedItem("date").getTextContent());
+			this.date = new Date(attributs.getNamedItem("date").getTextContent());
 		}
 
 		if (attributs.getNamedItem("occurence") != null) {

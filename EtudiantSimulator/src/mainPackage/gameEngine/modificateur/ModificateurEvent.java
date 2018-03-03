@@ -20,9 +20,15 @@ public class ModificateurEvent {
 
 	private int proba;
 
+	private ArrayList<ModificateurEvent> defaultEvent;
+	private ArrayList<ModificateurObjet> defaultObjet;
+	private ModificateurPlayer defaultPlayer;
+
+	private ArrayList<ModificateurGeneral> accesChoix;
+
 	public ModificateurEvent(Node item) {
 		NamedNodeMap attributs = item.getAttributes();
-
+		
 		this.nom = attributs.getNamedItem("nom").getNodeValue();
 
 		if (attributs.getNamedItem("date") != null) {
@@ -31,6 +37,19 @@ public class ModificateurEvent {
 
 		this.occurence = Integer.parseInt(attributs.getNamedItem("occurence").getNodeValue());
 		this.proba = Integer.parseInt(attributs.getNamedItem("probabilite").getNodeValue());
+
+		NodeList dansEvent = item.getChildNodes();
+		int compteur = 1;
+
+		if (dansEvent.getLength() > 0) {
+			if (dansEvent.item(0).getNodeName().equals("default")) {
+				this.genererDefault(dansEvent.item(0));
+			} else {
+				compteur = 0;
+			}
+		}
+
+		this.accesChoix = ModificateurGeneral.fromNodesToArray(compteur, dansEvent);
 	}
 
 	public void appliquer() {
@@ -48,6 +67,30 @@ public class ModificateurEvent {
 					temp.setJoursRestantsProbaAjoutee(tab);
 				}
 			}
+
+			temp.setDefaultEvent(this.defaultEvent);
+			temp.setDefaultObjet(this.defaultObjet);
+			temp.setDefaultPlayer(this.defaultPlayer);
+
+			temp.setAccesChoix(this.accesChoix);
+		}
+	}
+
+	private void genererDefault(Node item) {
+		NodeList dansDefault = item.getChildNodes();
+
+		for (int i = 0; i < dansDefault.getLength(); i++) {
+			switch (dansDefault.item(i).getNodeName()) {
+			case "modifEvent":
+				this.defaultEvent = ModificateurEvent.fromNodeToArray(dansDefault.item(i));
+				break;
+			case "modifObjet":
+				this.defaultObjet = ModificateurObjet.fromNodeToArray(dansDefault.item(i));
+				break;
+			case "modifPlayer":
+				this.defaultPlayer = new ModificateurPlayer(dansDefault.item(i));
+				break;
+			}
 		}
 	}
 
@@ -60,7 +103,6 @@ public class ModificateurEvent {
 		}
 
 		return liste;
-
 	}
 
 }
