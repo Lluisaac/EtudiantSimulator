@@ -15,7 +15,7 @@ public class Controller
 
 		MenuWindow menuWindow = new MenuWindow(temp);
 		int selection = menuWindow.showDialog();
-
+			
 		switch (selection) {
 			case -1:
 				System.exit(0);

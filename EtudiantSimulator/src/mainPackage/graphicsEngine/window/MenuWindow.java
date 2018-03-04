@@ -6,6 +6,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -21,10 +27,8 @@ public class MenuWindow extends JDialog implements ActionListener {
 	private int isNewGame = -1;
 
 	private JLabel labelTitre = new JLabel("Etudiant Simulator");
-	private JLabel labelVersion = new JLabel("Version Alpha 1.1");
-	private JLabel labelCredit1 = new JLabel("Programmé par Louis Parent, Isaac LLuis et Kevin Villaroya");
-	private JLabel labelCredit2 = new JLabel("Une idée originale de Isaac LLuis et Kevin Villaroya\n");
-	private JLabel labelCredit3 = new JLabel("Images par Elisa Juin");
+	private JLabel labelVersion = new JLabel();
+	private ArrayList<JLabel> labelCredit = new ArrayList<JLabel>();
 
 	private JButton buttonContinuer = new JButton("Continuer");
 	private JButton buttonNouvellePartie = new JButton("Nouvelle Partie");
@@ -43,11 +47,20 @@ public class MenuWindow extends JDialog implements ActionListener {
 		buildDialog();
 	}
 
+	@SuppressWarnings("resource")
 	private void buildDialog() {
 
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-
+		
+		try {
+			this.labelVersion.setText(new Scanner(new URL("http://lirmalys.ovh/EtudiantSimulator/GameFiles/update.txt").openStream(), "UTF-8").useDelimiter("\\A").next());
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		this.labelVersion.setVerticalAlignment(SwingConstants.TOP);
 		this.labelVersion.setHorizontalAlignment(SwingConstants.LEFT);
 
@@ -88,29 +101,27 @@ public class MenuWindow extends JDialog implements ActionListener {
 		constraints.gridwidth = GridBagConstraints.REMAINDER;
 		this.add(boxButton, constraints);
 
-		// Ligne 4
-		constraints.gridx = 3;
-		constraints.gridy = 5;
-
-		constraints.gridheight = 1;
-		constraints.gridwidth = GridBagConstraints.REMAINDER;
-		this.add(labelCredit1, constraints);
+		String[] str = {};
 		
-		// Ligne 5
-		constraints.gridx = 5;
-		constraints.gridy = 7;
-
-		constraints.gridheight = 1;
-		constraints.gridwidth = GridBagConstraints.REMAINDER;
-		this.add(labelCredit2, constraints);
+		try {
+			str = new Scanner(new URL("http://lirmalys.ovh/EtudiantSimulator/GameFiles/credits.txt").openStream(), "UTF-8").useDelimiter("\\A").next().split("\n");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		// Ligne 6
-		constraints.gridx = 7;
-		constraints.gridy = 9;
-
-		constraints.gridheight = 1;
-		constraints.gridwidth = GridBagConstraints.REMAINDER;
-		this.add(labelCredit3, constraints);
+		for (int i = 0; i < str.length; i++) {
+			this.labelCredit.add(new JLabel(str[i]));
+			
+			constraints.gridx = 3 + (i * 2);
+			constraints.gridy = 5 + (i * 2);
+			
+			constraints.gridheight = 1;
+			
+			constraints.gridwidth = GridBagConstraints.REMAINDER;
+			this.add(labelCredit.get(i), constraints);
+		}
 	}
 
 	public int showDialog() {
