@@ -222,9 +222,4 @@ public class ListEvent {
 	public static void setListeEventDate(Event[] listeEventDate) {
 		ListEvent.listeEventDate = listeEventDate;
 	}
-
-	public static void afficherEvent(Event event) {
-		System.out.println(event.getProbabilite());
-		Engine.eventDialog = new EventDialog(event);
-	}
 }

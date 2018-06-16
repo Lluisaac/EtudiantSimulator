@@ -88,11 +88,12 @@ public class Date {
 	{
 		if (this.getAnnee() > date.getAnnee()) {
 			return true;
-		} else if (this.getMois() > date.getMois()) {
+		} else if (this.getMois() > date.getMois() && (this.getAnnee() == date.getAnnee())) {
 			return true;
-		} else if (this.getJour() > date.getJour()) {
+		} else if (this.getJour() > date.getJour() && (this.getAnnee() == date.getAnnee()) && (this.getMois() == date.getMois())) {
 			return true;
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
@@ -134,7 +135,7 @@ public class Date {
 	/*
 	 * A priori il ne faudra pas utiliser les m�thodes qui suivent.
 	 */
-	private void setJour(int i) {
+	public void setJour(int i) {
 		String[] temp = date.split("/");
 		if (i < 0) {
 			this.setDate(i + "/" + temp[1] + "/" + temp[2]);
@@ -143,7 +144,7 @@ public class Date {
 		}
 	}
 
-	private void setMois(int i) {
+	public void setMois(int i) {
 		String[] temp = date.split("/");
 		if (i < 0) {
 			this.setDate(temp[0] + "/" + i + "/" + temp[2]);
@@ -152,7 +153,7 @@ public class Date {
 		}
 	}
 
-	private void setAnnee(int i) {
+	public void setAnnee(int i) {
 		String[] temp = date.split("/");
 		if (i < 0) {
 			this.setDate(temp[0] + "/" + temp[1] + "/" + i);

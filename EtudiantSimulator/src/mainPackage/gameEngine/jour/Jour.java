@@ -5,7 +5,6 @@ import java.util.Random;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.player.Player;
-import mainPackage.graphicsEngine.window.MainWindow;
 
 public class Jour {
 
@@ -25,6 +24,10 @@ public class Jour {
 		this.tempsLibreJ = 0;
 		this.buffer = 0;
 		genererJoursFeries();
+	}
+	
+	public Jour(Date date) {
+		this.date = new Date(date);
 	}
 
 	public Jour(Jour jourPrecedent) {
@@ -63,6 +66,11 @@ public class Jour {
 		return r + ";";
 	}
 
+	public static boolean isJourEcole(Date date) {
+		Jour temp = new Jour(date);
+		return !(temp.isJourFerie() || temp.isJourVacances()) && !(date.getJour()%7==6  || date.getJour()%7==0);
+	}
+	
 	private boolean isJourFerie() {
 
 		boolean r = false;
@@ -92,6 +100,13 @@ public class Jour {
 		}
 		temp[Jour.listeJoursFeries.length] = date;
 	}
+	
+	private static boolean isJourVacances(Date date) {
+
+		Jour temp = new Jour(date);
+		
+		return temp.isJourVacances();
+	}
 
 	private boolean isJourVacances() {
 
@@ -100,17 +115,7 @@ public class Jour {
 	}
 
 	public boolean declencherJour() {
-
-		if (this.date.getJour() % 14 == 1) {
-			Engine.getWindow().mettreIcone("misc\\calendar.gif");
-		} else if (this.getJour() % 14 == 0) {
-			Engine.getWindow().mettreIcone("misc\\checklist.gif");
-			Engine.getWindow().activerButtonSuivant();
-			Engine.getWindow().setValider(false);
-			Engine.getWindow().actualiserMagasin();
-			Engine.saveGame();
-		}
-
+		
 		if (this.getJour() == 28) {
 			Engine.getPlayer().paimentEtGainsMois();
 		}

@@ -22,7 +22,6 @@ public class ListeObjets {
 		for (int i = 0; i < ListeObjets.getListeObjets().size(); i++) {
 			ListeObjets.getListeObjets().get(i).refreshDebloque();
 		}
-		Engine.getWindow().actualiserMagasin();
 	}
 	
 	public static void genererListe() throws SAXException, IOException, ParserConfigurationException {

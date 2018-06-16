@@ -156,7 +156,7 @@ public class EventDialog extends JDialog {
 				event.setOccurence(event.getOccurence() - 1);
 			}
 			Engine.eventFini = true;
-			Engine.eventDialog.dispose();
+			//Engine.eventDialog.dispose();
 		}
 	}
 }
