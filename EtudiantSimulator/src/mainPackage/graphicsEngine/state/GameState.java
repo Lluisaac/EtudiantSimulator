@@ -288,7 +288,7 @@ public class GameState extends BasicGameState {
 				date.setJour(j);
 				date.setMois(m);
 				date.setAnnee(Engine.journee.getAnnee());
-				if(Jour.isJourEcole(date))
+				if(Jour.isJourEcole(date) && m<11)
 				{
 					g.setColor(Color.green);
 				}else {
@@ -300,7 +300,6 @@ public class GameState extends BasicGameState {
 					y+=25;
 				}
 				g.drawRect(x, y, 21, 22);
-				System.out.println("x:" + x + " y: " + y + " date: " + date.getDate());
 				x+=25;
 			}
 			y=this.yPopup + 64 +(m/4)*219;
