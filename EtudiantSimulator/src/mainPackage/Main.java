@@ -4,7 +4,6 @@ import mainPackage.graphicsEngine.state.Option;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
@@ -29,6 +28,7 @@ public class Main
 				}
 				Option.fullscreen=Boolean.parseBoolean(inConfig.split("fullscreen:")[1].split("\r\n")[0]);
 				Option.volume=Float.parseFloat(inConfig.split("volume:")[1]);
+				config.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

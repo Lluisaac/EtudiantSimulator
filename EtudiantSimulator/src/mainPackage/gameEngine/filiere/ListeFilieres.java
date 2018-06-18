@@ -13,7 +13,6 @@ public class ListeFilieres {
 		getListeFilieres().add(new Filiere("DUT", 2, new int[] {7, 7, 7, 4, 6, 0, 0}, true));
 		getListeFilieres().add(new Filiere("BTS", 2, new int[] {8, 7, 5, 8, 7, 0, 0}, true));
 		getListeFilieres().add(new Filiere("Licence", 3, new int[] {3, 6, 4, 5, 4, 0, 0}, true));
-		getListeFilieres().add(new Filiere("trololo", 3, new int[] {3, 6, 4, 5, 4, 0, 0}, true));
 	}	
 	
 	public static ArrayList<Filiere> getListeFilieres() {
