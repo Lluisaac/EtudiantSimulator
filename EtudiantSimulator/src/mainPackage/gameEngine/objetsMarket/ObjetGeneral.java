@@ -36,6 +36,9 @@ public abstract class ObjetGeneral {
 			case "dispo":
 				this.debloque = Boolean.parseBoolean(attributs.item(i).getNodeValue());
 				break;
+			case "info":
+				this.resume = attributs.item(i).getNodeValue();
+				break;
 			}
 		}
 		
@@ -136,5 +139,9 @@ public abstract class ObjetGeneral {
 		for (int i = 0; i < this.modifObjet.size(); i++) {
 			this.modifObjet.get(i).appliquer();
 		}
+	}
+
+	public String getResume() {
+		return resume;
 	}
 }

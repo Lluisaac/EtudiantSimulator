@@ -96,6 +96,11 @@ public class ListeObjets {
 				return listeObjets.get(i);
 			}
 		}
+		for (int i = 0; i < listeObjets.size(); i++) {
+			if (nom.equals(listeObjets.get(i).getResume())) {
+				return listeObjets.get(i);
+			}
+		}
 		return null;
 	}
 	

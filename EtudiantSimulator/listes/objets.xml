@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ListObjets SYSTEM "objets.dtd">
 <ListObjets>
-	<Objet nom="Ordinateur" dispo="true">
+	<Objet nom="Ordinateur" dispo="true" info="Objet permettent de jouer au jeu-video">
 		<upgrade cout="800" bonheurJ="2" tempsLibreJ="-60" durabilite="839" />
 	</Objet>
-	<Objet nom="Velo" dispo="true">
+	<Objet nom="Velo" dispo="true" info="Moyen de transport permettant d'aller plus vite">
 		<upgrade cout="100" tempsLibreJ="30" durabilite="839" />
 	</Objet>
-	<Objet nom="Carte Tec" dispo="true">
+	<Objet nom="Carte Tec" dispo="true" info="Carte qui permet de prendre les transports en commun">
 		<upgrade cout="200" tempsLibreJ="60" durabilite="839" />
 	</Objet>
-	<Objet nom="Netflix" dispo="true">
+	<Objet nom="Netflix" dispo="true" info="Site regroupant de nombreuse oeuvres audio-visuelle">
 		<upgrade cout="15" bonheurJ="1" tempsLibreJ="-30" durabilite="27" />
 	</Objet>
-	<Objet nom="Litiere" dispo="false">
+	<Objet nom="Litiere" dispo="false" info="Toilette pour chats">
 		<upgrade cout="10" argentJ="-1" tempsLibreJ="5" durabilite="279" />
 	</Objet>
-	<Objet nom="Jeu Video" dispo="true">
+	<Objet nom="Jeu Video" dispo="true" info="Jeu video-ludique qui permet de passer un bon moment">
 		<bonus cout="20" tempsLibre="360" durabilite="13" />
 	</Objet>
-	<Objet nom="Livre" dispo="true">
+	<Objet nom="Livre" dispo="true" info = "Cette objet contient de nouvelles connaissances" >
 		<bonus cout="10" savoir="10" tempsLibre="240" durabilite="13" />
 	</Objet>
-	<Objet nom="Festin" dispo="true">
+	<Objet nom="Festin" dispo="true" info= "Un bon repas">
 		<bonus cout="15" tempsLibre="30" durabilite="13" faim="5" bonheur="1"/>
 	</Objet>
-	<Objet nom="Somniferes" dispo="true">
+	<Objet nom="Somniferes" dispo="true" info="Permet de passer une meilleur nuit">
 		<bonus cout="20" durabilite="13" fatigue="20"/>
 	</Objet>
-	<Objet nom="Comics" dispo="true">
+	<Objet nom="Comics" dispo="true" info="Un moyen rapide pour prendre du bon temps">
 		<bonus cout="10" tempsLibre="60" durabilite="13" bonheur="1"/>
 	</Objet>
 </ListObjets>

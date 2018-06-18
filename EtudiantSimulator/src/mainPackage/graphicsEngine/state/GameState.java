@@ -163,7 +163,15 @@ public class GameState extends BasicGameState {
 				placeObjectInMarket(g);
 				if(this.infoObjet!=null)
 				{
-					g.drawString(this.infoObjet, this.container.getWidth()/2, this.yPopup + this.popups[6].getHeight());
+					if(ListeObjets.trouveObjet(this.infoObjet).isDebloque())
+					{
+						g.setColor(Color.green);
+					}else
+					{
+						g.setColor(Color.red);
+					}
+					g.drawString(this.infoObjet, this.container.getWidth()/2 - (this.infoObjet.length()*8)/2, this.yPopup);
+					g.setColor(Color.black);
 				}
 			}
 			if (this.popupId == 0) {
@@ -451,7 +459,7 @@ public class GameState extends BasicGameState {
 
 		for (int i = (this.pageMarket - 1) * 10; i < (this.pageMarket) * 10 && i < objectsMarket.size(); i++) {
 			if (x > a && x < a + 150 && y > b && y < b + 150) {
-				resume = ListeObjets.trouveObjet(objectsMarket.get(i).getName()).getNom();
+				resume = ListeObjets.trouveObjet(objectsMarket.get(i).getName()).getResume();
 			}
 			a += 150;
 			if ((i + 1) % 5 == 0 && i != 0) {
