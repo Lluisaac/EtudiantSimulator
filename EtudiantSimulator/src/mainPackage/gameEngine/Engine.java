@@ -7,10 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Date;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -22,13 +19,7 @@ import mainPackage.gameEngine.filiere.ListeFilieres;
 import mainPackage.gameEngine.jour.Jour;
 import mainPackage.gameEngine.objetsMarket.ListeObjets;
 import mainPackage.gameEngine.player.Player;
-import mainPackage.graphicsEngine.StateGame;
-import mainPackage.graphicsEngine.dialog.EventDialog;
-import mainPackage.graphicsEngine.dialog.FiliaireDialog;
 import mainPackage.graphicsEngine.state.FinalState;
-import mainPackage.graphicsEngine.state.GameState;
-import mainPackage.graphicsEngine.window.MainWindow;
-
 public class Engine {
 
 	public static boolean jeuFini = false;

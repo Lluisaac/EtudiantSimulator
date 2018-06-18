@@ -13,7 +13,6 @@ import org.xml.sax.SAXException;
 
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
-import mainPackage.graphicsEngine.dialog.EventDialog;
 
 public class ListEvent {
 

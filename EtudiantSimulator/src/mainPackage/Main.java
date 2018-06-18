@@ -1,5 +1,4 @@
 package mainPackage;
-import mainPackage.graphicsEngine.design.DesignTask;
 import mainPackage.graphicsEngine.state.Option;
 
 import java.io.FileInputStream;
@@ -19,7 +18,6 @@ public class Main
 		// Nettoyage de la console
 		System.out.flush();
 		System.err.flush();
-		DesignTask.setBestLookAndFeelAvailable();
 		try 
 		{
 			try {

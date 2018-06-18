@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import mainPackage.graphicsEngine.dialog.FiliaireDialog;
 
 public class ListeFilieres {
 	
@@ -39,19 +38,5 @@ public class ListeFilieres {
 	
 	public static Filiere getFiliere(int i) {
 		return listeFilieres.get(i);
-	}
-	
-	public static Filiere askFiliere(JFrame actualFrame)
-	{
-		mettreFillieres();
-		int filiereID = -1;
-		Filiere filiere = null;
-		while (filiereID == -1) {
-			FiliaireDialog dialog = new FiliaireDialog(actualFrame);
-			filiereID = dialog.showDialog();
-		}
-		filiere = ListeFilieres.getListeFilDebloquees().get(filiereID);
-		
-		return filiere;
 	}
 }
