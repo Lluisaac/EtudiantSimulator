@@ -1,6 +1,7 @@
 
 package mainPackage.gameEngine.jour;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import mainPackage.gameEngine.Engine;
@@ -17,7 +18,8 @@ public class Jour {
 	private int buffer;
 
 	private static Date[] listeJoursFeries;
-
+	public static ArrayList<Date> listeJoursSecher;
+ 
 	public Jour() {
 		this.date = new Date();
 		this.tempsLibre = 0;

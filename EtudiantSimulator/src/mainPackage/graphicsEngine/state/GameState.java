@@ -31,6 +31,7 @@ public class GameState extends BasicGameState {
 	private Image boutonRouge;
 	private Image flecheGauche;
 	private Image flecheDroite;
+	private Image crossBar;
 	
 	private Image boutonEvent;
 
@@ -67,6 +68,7 @@ public class GameState extends BasicGameState {
 	String infoObjet=null;
 	private int jourActuel = 1;
 	float[] valeurSemainePrecedente;
+	int[] jourSecher;
 	String[] mois = { "Septembre", "Octobre", "Novembre", "Decembre", "Janvier", "Fevrier", "Mars", "Avril", "Mai",
 			"Juin", "Juillet", "Aout" };
 
@@ -88,7 +90,9 @@ public class GameState extends BasicGameState {
 		this.coordinatesObjectClickable = new int[7][2];
 		this.clickables = new Image[7];
 		this.archetypes = new ArrayList<Image>();
+		this.crossBar=new Image("assets/popup/cross.png");
 
+		this.jourSecher=new int[14];
 		this.clickables[0] = new Image("assets/elementClickable/diary.png");
 		int[] diaryCoord = { 1165, 272 };
 		this.coordinatesObjectClickable[0] = diaryCoord;
@@ -186,7 +190,7 @@ public class GameState extends BasicGameState {
 						Engine.modifierBonheur = Engine.getPlayer().modifierBonheur(this.bonheurP);
 						Engine.modifierSavoir = Engine.getPlayer().modifierSavoir(this.devoirsP);
 						remplirValeurSemainePrecedente(Engine.modifierSommeil, Engine.modifierArgent,
-								Engine.modifierNourriture, Engine.modifierBonheur, Engine.modifierSavoir);
+						Engine.modifierNourriture, Engine.modifierBonheur, Engine.modifierSavoir);
 						afficherContenuJour(g);
 						Engine.gameLoop();
 						if (Engine.journee.getJour() % 14 == 1) {
@@ -197,6 +201,7 @@ public class GameState extends BasicGameState {
 					}
 				}
 				afficherMois(g);
+				afficherCross(g);
 			}
 			if (this.popupId == 4) {
 				if(this.sliderAgenda==1)
@@ -452,7 +457,7 @@ public class GameState extends BasicGameState {
 		}
 	}
 	
-	public void clicOnObjectMarketInfo(int x, int y) {//TODO changer .getNom par .getInfo
+	public void clicOnObjectMarketInfo(int x, int y) {
 		int a = this.xSlider - 150 - 45;
 		int b = this.ySlider - 200 - 30;
 		String resume=null;
@@ -569,6 +574,56 @@ public class GameState extends BasicGameState {
 		}
 	}
 
+	private void afficherCross(Graphics g)
+	{
+		int a=this.xPopup+16;
+		int b=this.yPopup+89;
+		
+		for(int i=0;i<14;i++)
+		{
+			if(i==7)
+			{
+				b=b+215;
+				a=this.xPopup+16;
+			}
+			if(this.jourSecher[i]==1)
+			{
+				g.drawImage(this.crossBar, a, b);
+			}
+			a=a+110;
+		}		
+	}
+	
+	private void appuyerCalendrier(int x, int y) {
+		int a=this.xPopup+16;
+		int b=this.yPopup+89;
+		Date date = new Date();
+		
+		for(int i=0;i<14;i++)
+		{
+			if(i==7)
+			{
+				b=b+215;
+				a=this.xPopup+16;
+			}
+			if(x>a && x<a+107 &&  y>b && y<b+212)
+			{
+				date.setAnnee(Engine.journee.getAnnee());
+				date.setMois(Engine.journee.getMois());
+				date.setJour(Engine.journee.getJour() + i);
+				
+				if(this.jourSecher[i]==0 && Jour.isJourEcole(date))
+				{
+					this.jourSecher[i]=1;
+				}else
+				{
+					this.jourSecher[i]=0;
+				}
+			}
+			a=a+110;
+		}		
+	}
+	
 	@Override
 	public void mouseClicked(int button, int x, int y, int clickCount) {
 		if (button == 0) {
@@ -669,12 +724,13 @@ public class GameState extends BasicGameState {
 				}
 				if (this.popupId == 0) {
 					// Vérifie que ce soit le bouton validate pour afficher la semaine
+					appuyerCalendrier(x,y);
 					if (x > 530 + this.xPopup && x < 790 + this.xPopup && y > 530 + this.yPopup && y < 592 + this.yPopup
 							&& this.finSemaine) {
 						this.isValidate = !isValidate;// renvoie sur le render
 						this.jourActuel = 1;
 						if (this.isValidate) {
-							this.finSemaine = false;
+							this.finSemaine = false;	
 						}
 					}
 					if (Engine.faireAfficherEvent) {
