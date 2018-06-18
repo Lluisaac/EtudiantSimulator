@@ -64,6 +64,7 @@ public class GameState extends BasicGameState {
 
 	boolean isValidate = false;
 	boolean finSemaine = true;
+	String infoObjet=null;
 	private int jourActuel = 1;
 	float[] valeurSemainePrecedente;
 	String[] mois = { "Septembre", "Octobre", "Novembre", "Decembre", "Janvier", "Fevrier", "Mars", "Avril", "Mai",
@@ -160,6 +161,10 @@ public class GameState extends BasicGameState {
 			}
 			if (this.popupId == 6) {
 				placeObjectInMarket(g);
+				if(this.infoObjet!=null)
+				{
+					g.drawString(this.infoObjet, this.container.getWidth()/2, this.yPopup + this.popups[6].getHeight());
+				}
 			}
 			if (this.popupId == 0) {
 				if (Engine.faireAfficherEvent) {
@@ -438,6 +443,24 @@ public class GameState extends BasicGameState {
 			}
 		}
 	}
+	
+	public void clicOnObjectMarketInfo(int x, int y) {//TODO changer .getNom par .getInfo
+		int a = this.xSlider - 150 - 45;
+		int b = this.ySlider - 200 - 30;
+		String resume=null;
+
+		for (int i = (this.pageMarket - 1) * 10; i < (this.pageMarket) * 10 && i < objectsMarket.size(); i++) {
+			if (x > a && x < a + 150 && y > b && y < b + 150) {
+				resume = ListeObjets.trouveObjet(objectsMarket.get(i).getName()).getNom();
+			}
+			a += 150;
+			if ((i + 1) % 5 == 0 && i != 0) {
+				b += 200;
+				a = this.xSlider - 150 - 45;
+			}
+		}
+		this.infoObjet=resume;
+	}
 
 	int map(float x, float in_min, float in_max, float out_min, float out_max) {
 		return (int) ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
@@ -463,13 +486,13 @@ public class GameState extends BasicGameState {
 			x = this.xPopup + 20 + (i % 7) * 110;
 			y = this.yPopup + (i / 7) * 220 + 95;
 			g.drawString("sommeil", x, y );
-			g.drawString(":" + this.valeurSemainePrecedente[i * 5], x, y + 15);
+			g.drawString(":" + arrondit(this.valeurSemainePrecedente[i * 5]), x, y + 15);
 			g.drawString("nourriture", x, y + 35);
-			g.drawString(":" + this.valeurSemainePrecedente[i * 5 + 2], x, y + 50);
+			g.drawString(":" + arrondit(this.valeurSemainePrecedente[i * 5 + 2]), x, y + 50);
 			g.drawString("devoirs", x, y + 70);
-			g.drawString(":" + this.valeurSemainePrecedente[i * 5 + 4], x, y + 85);
+			g.drawString(":" + arrondit(this.valeurSemainePrecedente[i * 5 + 4]), x, y + 85);
 			g.drawString("bonheur", x, y + 105);
-			g.drawString(":" + this.valeurSemainePrecedente[i * 5 + 3], x, y + 120);
+			g.drawString(":" + arrondit(this.valeurSemainePrecedente[i * 5 + 3]), x, y + 120);
 			g.drawString("argent", x, y + 140);
 			g.drawString(":" + (float) ((int) (this.valeurSemainePrecedente[i * 5 + 1] * 100)) / 100, x, y + 155);
 		}
@@ -685,6 +708,10 @@ public class GameState extends BasicGameState {
 					}
 				}
 			}
+		}
+		if(button==1)
+		{
+			clicOnObjectMarketInfo(x, y);
 		}
 	}
 

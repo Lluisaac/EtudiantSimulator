@@ -15,6 +15,7 @@ import mainPackage.gameEngine.modificateur.ModificateurObjet;
 public abstract class ObjetGeneral {
 
 	private String nom;
+	private String resume;
 	protected float[] attributs;
 	private ArrayList<ModificateurEvent> modifEvent;
 	private ArrayList<ModificateurObjet> modifObjet;
@@ -26,7 +27,7 @@ public abstract class ObjetGeneral {
 
 	public ObjetGeneral(Node item) {
 		NamedNodeMap attributs = item.getAttributes();
-		
+
 		for (int i = 0; i < attributs.getLength(); i++) {
 			switch (attributs.item(i).getNodeName()) {
 			case "nom":
