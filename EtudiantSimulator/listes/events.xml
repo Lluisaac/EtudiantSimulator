@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ListEvents SYSTEM "events.dtd">
 <ListEvents>
-	<Event nom="Casse" description="ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" archetype="Mort" occurence="-1" probabilite="15">
+	<Event nom="Casse" description="ggggggggggggggggggggggggggggggggg" archetype="Mort" occurence="-1" probabilite="15">
 		<default>
 			<modifPlayer argent="50"/>
 		</default>
@@ -15,17 +15,42 @@
 			</modifEvent>
 		</default>
 	</Event>
-	<Event nom="Truc" description="test daté" archetype="Mort" occurence="-1" date="3/6/1">
+	<Event nom="Truc" description="test daté" archetype="Mort"
+		occurence="-1" date="3/6/1">
 		<default>
 			<modifEvent>
 				<eventM nom="Machin">
 					<default>
 						<modifEvent>
-							<eventM nom="Casse" probabilite="5"/>
+							<eventM nom="Casse" probabilite="5" />
 						</modifEvent>
 					</default>
 				</eventM>
 			</modifEvent>
 		</default>
+	</Event>
+	<Event nom="Sortir" description="Voulez-vous sortir dehors?"
+		archetype="Amis" occurence="-1" probabilite="8">
+		<default></default>
+		<choix nom=""></choix>
+		<choix nom=""></choix>
+	</Event>
+	<Event nom="Vous êtes en couple"
+		description="Bien joué ! Tu as enfin trouvé ta moitié !"
+		archetype="Copine" occurence="1" probabilite="0">
+		<default>
+			<modifPlayer argentJ="-10" bonheurJ="2"></modifPlayer></default>
+	</Event>
+	<Event nom="Coup de foudre"
+		description="Dès le premier regard, elle a été conquise par votre charme !"
+		archetype="Passion" occurence="1" probabilite="1">
+	</Event>
+	<Event nom="Cible repérée"
+		description="Vous avez trouvé l'objectif de votre dur labeur."
+		archetype="Copine" occurence="1" probabilite="0">
+	</Event>
+	<Event nom="Sortir avec"
+		description="Vous décidez d'aller partager un moment avec votre future conquête."
+		archetype="Copine" occurence="-1" probabilite="0">
 	</Event>
 </ListEvents>
