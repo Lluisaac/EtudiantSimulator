@@ -306,7 +306,11 @@ public class GameState extends BasicGameState {
 				date.setJour(j);
 				date.setMois(m);
 				date.setAnnee(Engine.journee.getAnnee());
-				if(Jour.isJourEcole(date) && m<11)
+				 if(Jour.isJourSecher(date))
+				{
+					g.setColor(Color.red);
+				}
+				 else if(Jour.isJourEcole(date) && m<11)
 				{
 					g.setColor(Color.green);
 				}else {
@@ -612,7 +616,7 @@ public class GameState extends BasicGameState {
 				date.setMois(Engine.journee.getMois());
 				date.setJour(Engine.journee.getJour() + i);
 				
-				if(this.jourSecher[i]==0 && Jour.isJourEcole(date))
+				if(this.jourSecher[i]==0 && Jour.isJourEcole(date) && !this.isValidate)
 				{
 					this.jourSecher[i]=1;
 				}else
@@ -622,6 +626,27 @@ public class GameState extends BasicGameState {
 			}
 			a=a+110;
 		}		
+	}
+	
+	void recupererJourSecher()
+	{
+		Date date = new Date();
+		for(int i=0;i<14;i++)
+		{
+			if(this.jourSecher[i]==1)
+			{
+				date.setJour(Engine.journee.getJour() + i);
+				date.setMois(Engine.journee.getMois());
+				date.setAnnee(Engine.journee.getAnnee());
+				System.out.println(date);//TODO probleme de l'arraylist
+				Jour.listeJoursSecher.add(date);
+				System.out.println(Jour.listeJoursSecher);
+			}
+		}
+		for(int i=0;i<14;i++)
+		{
+			this.jourSecher[i]=0;
+		}
 	}
 	
 	@Override
@@ -730,7 +755,8 @@ public class GameState extends BasicGameState {
 						this.isValidate = !isValidate;// renvoie sur le render
 						this.jourActuel = 1;
 						if (this.isValidate) {
-							this.finSemaine = false;	
+							this.finSemaine = false;
+							recupererJourSecher();
 						}
 					}
 					if (Engine.faireAfficherEvent) {

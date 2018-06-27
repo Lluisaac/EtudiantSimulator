@@ -18,7 +18,7 @@ public class Jour {
 	private int buffer;
 
 	private static Date[] listeJoursFeries;
-	public static ArrayList<Date> listeJoursSecher;
+	public static ArrayList<Date> listeJoursSecher=new ArrayList<Date>();
  
 	public Jour() {
 		this.date = new Date();
@@ -84,6 +84,18 @@ public class Jour {
 		}
 
 		return r;
+	}
+	
+	public static boolean isJourSecher(Date date)
+	{
+		for(int i=0;i<Jour.listeJoursSecher.size();i++)
+		{
+			if(date.equals(Jour.listeJoursSecher.get(i)))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void genererJoursFeries() {
