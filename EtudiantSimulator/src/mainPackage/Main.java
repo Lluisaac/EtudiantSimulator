@@ -17,6 +17,7 @@ public class Main
 		// Nettoyage de la console
 		System.out.flush();
 		System.err.flush();
+		disableWarning();
 		try 
 		{
 			try {
@@ -38,5 +39,10 @@ public class Main
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static void disableWarning() {
+	    System.err.close();
+	    System.setErr(System.out);
 	}
 }
