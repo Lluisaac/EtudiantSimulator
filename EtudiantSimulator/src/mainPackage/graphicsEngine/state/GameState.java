@@ -630,22 +630,17 @@ public class GameState extends BasicGameState {
 	
 	void recupererJourSecher()
 	{
-		Date date = new Date();
 		for(int i=0;i<14;i++)
 		{
 			if(this.jourSecher[i]==1)
 			{
+				Date date = new Date();
 				date.setJour(Engine.journee.getJour() + i);
 				date.setMois(Engine.journee.getMois());
 				date.setAnnee(Engine.journee.getAnnee());
-				System.out.println(date);//TODO probleme de l'arraylist
 				Jour.listeJoursSecher.add(date);
-				System.out.println(Jour.listeJoursSecher);
+				this.jourSecher[i]=0;
 			}
-		}
-		for(int i=0;i<14;i++)
-		{
-			this.jourSecher[i]=0;
 		}
 	}
 	

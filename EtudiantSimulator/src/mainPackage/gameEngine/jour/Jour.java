@@ -70,7 +70,7 @@ public class Jour {
 
 	public static boolean isJourEcole(Date date) {
 		Jour temp = new Jour(date);
-		return !(temp.isJourFerie() || temp.isJourVacances()) && !(date.getJour()%7==6  || date.getJour()%7==0);
+		return !isJourSecher(date) && !(temp.isJourFerie() || temp.isJourVacances()) && !(date.getJour()%7==6  || date.getJour()%7==0);
 	}
 	
 	private boolean isJourFerie() {
