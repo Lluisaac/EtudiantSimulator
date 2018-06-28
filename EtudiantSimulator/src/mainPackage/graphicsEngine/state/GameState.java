@@ -154,7 +154,7 @@ public class GameState extends BasicGameState {
 
 		for (int i = 0; i < this.clickables.length; i++) {
 			g.drawImage(this.clickables[i], this.coordinatesObjectClickable[i][0],
-					this.coordinatesObjectClickable[i][1]);
+			this.coordinatesObjectClickable[i][1]);
 		}
 
 		if (this.showingPopup) {

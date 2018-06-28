@@ -97,6 +97,18 @@ public class Jour {
 		}
 		return false;
 	}
+	
+	public boolean isJourSecher()
+	{
+		for(int i=0;i<Jour.listeJoursSecher.size();i++)
+		{
+			if(this.getDate().equals(Jour.listeJoursSecher.get(i)))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private void genererJoursFeries() {
 		Jour.listeJoursFeries = new Date[11];
@@ -175,9 +187,9 @@ public class Jour {
 				+ this.buffer + this.tempsLibre;
 	}
 
-	public int getTempsTravail(Player player) {
+	public int getTempsTravail(Player player) {//TODO
 
-		if (this.isJourFerie() || this.isJourVacances()) {
+		if (this.isJourFerie() || this.isJourVacances() || this.isJourSecher()) {
 			return 0;
 		} else {
 			return player.getFiliaire().getTempsTravail((this.getJour() - 1) % 7);
