@@ -45,7 +45,7 @@ public class Engine {
 	public static void createEngine(boolean newGame, Filiere filiaire) throws SAXException, IOException, ParserConfigurationException {
 
 		if (newGame) {
-			player = new Player(filiaire, false);
+			player = new Player(filiaire, true);
 			ListeObjets.genererListe();
 		} else {
 			loadGame();
@@ -79,27 +79,51 @@ public class Engine {
 	public static void verifierFinDeJeu() {
 
 		if (player.getFaim() <= 0) {
-			FinalState.finJeu("MortFaim","haha");
+			FinalState.finJeu("MortFaim","haha",true);
 		} else if (player.getFatigue() >= 100) {
-			FinalState.finJeu("MortFatigue","haha le noob de merde");
+			FinalState.finJeu("MortFatigue","haha le noob de merde",true);
 		} else if (player.getArgent() < (0 - player.getArgentDepart() - player.getLoyer())) { 
-			FinalState.finJeu("MortArgent","haha");
+			FinalState.finJeu("MortArgent","haha",true);
 		} else if (player.getBonheur() < 0) {
-			FinalState.finJeu("MortBonheur","haha");
+			FinalState.finJeu("MortBonheur","haha",true);
 		} else if (journee.getAnnee() - 1 > 0 && journee.getJour() == 1 && journee.getMois() == 1) {
 			if (getPlayer().getFiliaire().getDuree() < journee.getAnnee() && getPlayer().checkSavoirTotal()) {
-				FinalState.finJeu("Victoire","Vous avez gagnez");
+				FinalState.finJeu("Victoire","Vous avez gagnez",true);
 				}
 			 else if (getPlayer().checkSavoir()) {
 				getPlayer().prelassage();
-				FinalState.finJeu("Victoire","GG on maintiens le cap");
+				if(isCrousAttraper())
+				{
+					int payer= crousPunition();
+					Engine.getPlayer().setArgent(Engine.getPlayer().getArgent() - payer);
+					FinalState.finJeu("Victoire","GG on maintiens le cap.\nLe crous vous fait rembourser: " + payer ,false);
+				}else {
+					FinalState.finJeu("Victoire","GG on maintiens le cap" ,false);
+				}
 			} else {
-				FinalState.finJeu("MortSavoir","RekNub");
+				FinalState.finJeu("MortSavoir","RekNub",true);
 			}
 		}
 	}
 	
-
+	static private int crousPunition()
+	{
+		int somme=0;
+		somme = (int) (Math.random() * ( Jour.listeJoursSecher.size() - 1 )) * 11;
+		return somme;
+	}
+	
+	private static boolean isCrousAttraper()
+	{
+		int rand;
+		rand = (int) (Math.random() * ( 120 - 10 ));
+		if(Jour.listeJoursSecher.size()>rand)
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	public static void regulation() {
 
 		// Regulation

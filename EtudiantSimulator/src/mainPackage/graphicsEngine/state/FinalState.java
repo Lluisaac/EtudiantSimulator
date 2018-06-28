@@ -27,6 +27,7 @@ public class FinalState extends BasicGameState
 	private int x;
 	private int y;
 	private boolean finAfficher=false;
+	private static boolean finCursus;
 	Image image;
 	
 	@Override
@@ -58,7 +59,7 @@ public class FinalState extends BasicGameState
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		// TODO Auto-generated method stub
-		if(this.commentaireFin.equals("GG on maintiens le cap") && this.finAfficher)
+		if(this.finCursus && this.finAfficher)
 		{
 			try {
 				Thread.sleep(4000);
@@ -66,7 +67,7 @@ public class FinalState extends BasicGameState
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(this.commentaireFin.equals("GG on maintiens le cap"))
+			if(this.finCursus)
 			{
 				Engine.isGameOver=false;
 			}
@@ -81,11 +82,12 @@ public class FinalState extends BasicGameState
 		return ID;
 	}
 	
-	public static void finJeu(String nom, String texte)
+	public static void finJeu(String nom, String texte, boolean finAnnee)
 	{
 		typeFin=nom;
 		commentaireFin=texte;
 		Engine.isGameOver=true;
+		FinalState.finCursus=finAnnee;
 	}
 	
 	public void placeFinInArray() throws SlickException

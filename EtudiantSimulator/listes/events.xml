@@ -32,8 +32,8 @@
 	<Event nom="Sortir" description="Voulez-vous sortir dehors?"
 		archetype="Amis" occurence="-1" probabilite="8">
 		<default></default>
-		<choix nom=""></choix>
-		<choix nom=""></choix>
+		<choix nom="oui"></choix>
+		<choix nom="non"></choix>
 	</Event>
 	<Event nom="Vous êtes en couple"
 		description="Bien joué ! Tu as enfin trouvé ta moitié !"
