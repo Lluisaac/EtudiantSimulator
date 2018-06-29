@@ -41,9 +41,6 @@ public class Player {
 			this.setBonheurJ(10);
 		}
 
-		// this.jourAct = 0;
-		// this.moisAct = 1;
-
 		// Generation de gainParMois
 		int[] tabCROUS = { 376, 400, 463 };
 

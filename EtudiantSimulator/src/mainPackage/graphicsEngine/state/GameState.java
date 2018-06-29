@@ -385,13 +385,17 @@ public class GameState extends BasicGameState {
 					x = this.xPopup + 16 + (i - 1) * 110;
 					y = this.yPopup + 88;
 				}
-				if (Jour.isJourEcole(date)) {
+				System.out.println(date);
+				 if(Jour.isJourSecher(date))
+				{
+					g.setColor(Color.red);
+				}
+				 else if (Jour.isJourEcole(date)) {
 					g.setColor(Color.green);
-					g.drawRect(x, y, 107, 214);
 				} else {
 					g.setColor(Color.blue);
-					g.drawRect(x, y, 107, 214);
 				}
+				 g.drawRect(x, y, 107, 214);
 			}
 		}
 
