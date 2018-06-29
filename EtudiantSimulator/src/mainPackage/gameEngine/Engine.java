@@ -45,7 +45,7 @@ public class Engine {
 	public static void createEngine(boolean newGame, Filiere filiaire) throws SAXException, IOException, ParserConfigurationException {
 
 		if (newGame) {
-			player = new Player(filiaire, true);
+			player = new Player(filiaire, false);
 			ListeObjets.genererListe();
 		} else {
 			loadGame();

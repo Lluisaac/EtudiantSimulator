@@ -7,7 +7,7 @@ import org.w3c.dom.Node;
 import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.jour.Date;
 
-@SuppressWarnings("unused")
+
 public class ObjetBonus extends ObjetGeneral {
 
 	public ObjetBonus(Node item) {
