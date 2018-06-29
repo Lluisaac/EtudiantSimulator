@@ -385,7 +385,6 @@ public class GameState extends BasicGameState {
 					x = this.xPopup + 16 + (i - 1) * 110;
 					y = this.yPopup + 88;
 				}
-				System.out.println(date);
 				 if(Jour.isJourSecher(date))
 				{
 					g.setColor(Color.red);
