@@ -20,29 +20,30 @@ import mainPackage.gameEngine.jour.Jour;
 import mainPackage.gameEngine.objetsMarket.ListeObjets;
 import mainPackage.gameEngine.player.Player;
 import mainPackage.graphicsEngine.state.FinalState;
+
 public class Engine {
 
 	public static boolean jeuFini = false;
 
-	// Player One
-	private static Player player ;
+	private static Player player;
 
 	public static Jour journee = new Jour();
 
 	public static boolean eventFini = false;
-	
+
 	public static boolean isGameOver = false;
-	
+
 	public static float modifierArgent;
 	public static float modifierSavoir;
 	public static float modifierNourriture;
 	public static float modifierSommeil;
 	public static float modifierBonheur;
-	
+
 	public static boolean faireAfficherEvent;
 	public static Event event;
-	
-	public static void createEngine(boolean newGame, Filiere filiaire) throws SAXException, IOException, ParserConfigurationException {
+
+	public static void initialiserEngine(boolean newGame, Filiere filiaire)
+			throws SAXException, IOException, ParserConfigurationException {
 
 		if (newGame) {
 			player = new Player(filiaire, false);
@@ -64,83 +65,98 @@ public class Engine {
 	}
 
 	public static void gameLoop() {
-			verifierFinDeJeu();
-			regulation();
+		verifierFinDeJeu();
+		regulation();
 
-			faireEvent();
-			jeuFini = journee.declencherJour();
-			
-			ListeObjets.refreshListeObjets();
-			ListeObjets.appliquerUpgrade();
-			journee = new Jour(journee);
+		faireEvent();
+		faireFinDeMois();
+
+		ListeObjets.refreshListeObjets();
+		ListeObjets.appliquerUpgrade();
+		journee = new Jour(journee);
 	}
 
-	
+	private static void faireFinDeMois() {
+		if (journee.getJour() == 28) {
+			player.paimentEtGainsMois();
+		}
+	}
+
 	public static void verifierFinDeJeu() {
 
 		if (player.getFaim() <= 0) {
-			FinalState.finJeu("MortFaim","haha",true);
+			FinalState.finJeu("MortFaim", "haha", true);
 		} else if (player.getFatigue() >= 100) {
-			FinalState.finJeu("MortFatigue","haha le noob de merde",true);
-		} else if (player.getArgent() < (0 - player.getArgentDepart() - player.getLoyer())) { 
-			FinalState.finJeu("MortArgent","haha",true);
+			FinalState.finJeu("MortFatigue", "haha le noob de merde", true);
+		} else if (player.getArgent() < (0 - player.getArgentDepart() - player.getLoyer())) {
+			FinalState.finJeu("MortArgent", "haha", true);
 		} else if (player.getBonheur() < 0) {
-			FinalState.finJeu("MortBonheur","haha",true);
+			FinalState.finJeu("MortBonheur", "haha", true);
 		} else if (journee.getAnnee() - 1 > 0 && journee.getJour() == 1 && journee.getMois() == 1) {
 			if (getPlayer().getFiliaire().getDuree() < journee.getAnnee() && getPlayer().checkSavoirTotal()) {
-				FinalState.finJeu("Victoire","Vous avez gagnez",true);
-				}
-			 else if (getPlayer().checkSavoir()) {
+				FinalState.finJeu("Victoire", "Vous avez gagnez", true);
+			} else if (getPlayer().checkSavoir()) {
 				getPlayer().prelassage();
-				if(isCrousAttraper())
-				{
-					int payer= crousPunition();
+				if (isCrousAttraper()) {
+					int payer = crousPunition();
 					Engine.getPlayer().setArgent(Engine.getPlayer().getArgent() - payer);
-					FinalState.finJeu("Victoire","GG on maintiens le cap.\nLe crous vous fait rembourser: " + payer ,false);
-				}else {
-					FinalState.finJeu("Victoire","GG on maintiens le cap" ,false);
+					FinalState.finJeu("Victoire", "GG on maintiens le cap.\nLe crous vous fait rembourser: " + payer,
+							false);
+				} else {
+					FinalState.finJeu("Victoire", "GG on maintiens le cap", false);
 				}
 			} else {
-				FinalState.finJeu("MortSavoir","RekNub",true);
+				FinalState.finJeu("MortSavoir", "RekNub", true);
 			}
 		}
 	}
-	
-	static private int crousPunition()
-	{
-		int somme=0;
-		somme = (int) (Math.random() * ( Jour.listeJoursSecher.size() - 1 )) * 11;
+
+	static private int crousPunition() {
+		int somme = 0;
+		somme = (int) (Math.random() * (Jour.listeJoursSecher.size() - 1)) * 11;
 		return somme;
 	}
-	
-	private static boolean isCrousAttraper()
-	{
+
+	private static boolean isCrousAttraper() {
 		int rand;
-		rand = (int) (Math.random() * ( 120 - 10 ));
-		if(Jour.listeJoursSecher.size()>rand)
-		{
+		rand = (int) (Math.random() * (120 - 10));
+		if (Jour.listeJoursSecher.size() > rand) {
 			return true;
 		}
 		return false;
 	}
-	
-	public static void regulation() {
 
-		// Regulation
-		if (player.getBonheur() > 100) {
-			player.setBonheur(100);
+	public static void regulation() {
+		regulerBonheur();
+		regulerFaim();
+		regulerTempsLibre();
+		regulerFatigue();
+
+		ListEvent.regulerLesEvents();
+	}
+
+	private static void regulerFatigue() {
+		if (player.getFatigue() < 0) {
+			player.setFatigue(0);
 		}
-		if (player.getFaim() > 100) {
-			player.setFaim(100);
-		}
+	}
+
+	private static void regulerTempsLibre() {
 		if (journee.getTempsLibre() < 0) {
 			journee.setTempsLibre(0);
 		}
-		if (player.getFatigue() < 0) {
-			player.setFatigue(0) ;
+	}
+
+	private static void regulerFaim() {
+		if (player.getFaim() > 100) {
+			player.setFaim(100);
 		}
-		
-		ListEvent.regulateur();
+	}
+
+	private static void regulerBonheur() {
+		if (player.getBonheur() > 100) {
+			player.setBonheur(100);
+		}
 	}
 
 	public static Player getPlayer() {
@@ -151,10 +167,10 @@ public class Engine {
 	public static void faireEvent() {
 		ListEvent.createTampon();
 		Event choisi = ListEvent.choisisEvent();
-		
+
 		if (choisi != null) {
-			Engine.event=choisi;
-			Engine.faireAfficherEvent=true;
+			Engine.event = choisi;
+			Engine.faireAfficherEvent = true;
 		} else {
 			eventFini = true;
 		}
@@ -164,13 +180,13 @@ public class Engine {
 
 		int filiaireID = -1;
 		while (filiaireID == -1) {
-			/*FiliaireDialog dialog = new FiliaireDialog(window);
-			TODO Indiquer a slick de restart
-			filiaireID = dialog.showDialog();
-			*/
+			/*
+			 * FiliaireDialog dialog = new FiliaireDialog(window); TODO Indiquer
+			 * a slick de restart filiaireID = dialog.showDialog();
+			 */
 		}
 
-		Engine.createEngine(true, ListeFilieres.getListeFilDebloquees().get(filiaireID));
+		Engine.initialiserEngine(true, ListeFilieres.getListeFilDebloquees().get(filiaireID));
 	}
 
 	private static void deleteSave() {
@@ -202,18 +218,18 @@ public class Engine {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static String parseXML(String string) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(string));
-		
+
 		String texte = new String(encoded);
 		texte = texte.replaceAll("(\\r|\\n)", "");
 		texte = texte.replaceAll(">(\\s*+)<", "><");
-		
+
 		FileOutputStream file = new FileOutputStream("listes\\temp.xml");
 		file.write(texte.getBytes());
 		file.close();
-		
+
 		return "listes\\temp.xml";
 	}
 

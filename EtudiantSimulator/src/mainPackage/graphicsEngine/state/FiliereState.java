@@ -158,7 +158,7 @@ public class FiliereState extends BasicGameState
 				{
 					this.game.enterState(GameState.ID);
 					try {
-						Engine.createEngine(true, this.filieres.get(i));
+						Engine.initialiserEngine(true, this.filieres.get(i));
 					} catch (SAXException | IOException | ParserConfigurationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

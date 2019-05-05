@@ -17,10 +17,8 @@
 <!ELEMENT bonus EMPTY>
 
 <!ATTLIST Event nom CDATA #REQUIRED>
-<!ATTLIST Event description CDATA #REQUIRED>
-
-
-<!ATTLIST Event archetype CDATA  "Icone">
+<!ATTLIST Event description CDATA "">
+<!ATTLIST Event archetype CDATA "Icone">
 <!ATTLIST Event date CDATA #IMPLIED>
 <!ATTLIST Event occurence CDATA  "0">
 <!ATTLIST Event probabilite CDATA  "0">

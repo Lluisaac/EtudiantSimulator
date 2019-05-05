@@ -25,11 +25,6 @@ public class ObjetUpgrade extends ObjetGeneral {
 		this.attributs[6] = Float.parseFloat(attributs.getNamedItem("tempsLibreJ").getNodeValue());
 		this.attributs[7] = Float.parseFloat(attributs.getNamedItem("durabilite").getNodeValue());
 
-		String[] titres = { "Prix", "argentJ", "savoirJ", "faimJ", "fatigueJ", "bonheurJ", "tempsLibreJ",
-				"durabilite" };
-
-		this.setTitres(titres);
-
 	}
 
 	@Override
@@ -42,7 +37,7 @@ public class ObjetUpgrade extends ObjetGeneral {
 		newDate.addJour(Math.round(this.attributs[7]));
 		this.setEndOfPurchaseDate(newDate);
 		this.setDebloque(false);
-		super.appliquerModif();
+		super.appliquerModification();
 	}
 
 	@Override

@@ -54,8 +54,6 @@ public class Date {
 	}
 
 	public void addJour(int i) {
-		// Va changer la date pour que ce soit i jours apr�s l'actuel
-		// i >= 0
 		if (this.getJour() + i <= 28) {
 			this.setJour(this.getJour() + i);
 		} else {
@@ -78,8 +76,6 @@ public class Date {
 	}
 
 	public void addAnnee(int i) {
-		// Va changer la date pour que ce soit i ann�es apr�s l'actuelle
-		// i >= 0
 		this.setAnnee(this.getAnnee() + i);
 	}
 

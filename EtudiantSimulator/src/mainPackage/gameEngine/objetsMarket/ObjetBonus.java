@@ -23,11 +23,6 @@ public class ObjetBonus extends ObjetGeneral {
 		this.attributs[4] = Float.parseFloat(attributs.getNamedItem("bonheur").getNodeValue());
 		this.attributs[5] = Float.parseFloat(attributs.getNamedItem("tempsLibre").getNodeValue());
 		this.attributs[6] = Float.parseFloat(attributs.getNamedItem("durabilite").getNodeValue());
-
-		String[] titres = {"Prix:", "savoir", "faim", "fatigue", "bonheur", "tempsLibre",
-				"durabilite"};
-
-		this.setTitres(titres);
 	}
 	
 	@Override
@@ -50,7 +45,7 @@ public class ObjetBonus extends ObjetGeneral {
 			newDate.addJour(Math.round(this.attributs[6]));
 			this.setEndOfPurchaseDate(newDate);
 			this.setDebloque(false);
-			super.appliquerModif();
+			super.appliquerModification();
 		}
 	}
 

@@ -5,6 +5,13 @@ import java.util.Random;
 
 public class Filiere {
 
+	private static final String SEPARATEUR_HEURES = "_";
+	private static final String SEPARATEUR_ATTRIBUT = ",";
+	private static final int INDEX_DEBLOQUE = 4;
+	private static final int INDEX_SAVOIR = 3;
+	private static final int INDEX_HEURES = 2;
+	private static final int INDEX_DUREE = 1;
+	private static final int INDEX_NOM = 0;
 	private String nom;
 	private final int duree;
 	private int[] heures;
@@ -27,35 +34,40 @@ public class Filiere {
 		this.debloque = ListeFilieres.getFiliere(i).debloque;
 	}
 
-	public Filiere(String save) {
-		String[] content = save.split(",");
-		this.nom = content[0];
-		this.duree = Integer.parseInt(content[1]);
+	public Filiere(String sauvegarde) {
+		String[] informationsDeFiliere = sauvegarde.split(SEPARATEUR_ATTRIBUT);
+		this.nom = informationsDeFiliere[INDEX_NOM];
+		this.duree = Integer.parseInt(informationsDeFiliere[INDEX_DUREE]);
 
 		
-		String[] val = content[2].split("_");
+		String[] heuresNonFormattees = informationsDeFiliere[INDEX_HEURES].split(SEPARATEUR_HEURES);
+		int[] heures = formatter(heuresNonFormattees);
+		this.heures = heures;
+		
+		this.savoirRequis = Integer.parseInt(informationsDeFiliere[INDEX_SAVOIR]);
+		this.debloque = Boolean.parseBoolean(informationsDeFiliere[INDEX_DEBLOQUE]);
+	}
+
+	private int[] formatter(String[] val) {
 		int[] heures = new int[val.length];
 		for (int i = 0; i < val.length; i++) {
 			heures[i] = Integer.parseInt(val[i]);
 		}
-		this.heures = heures;
-		
-		this.savoirRequis = Integer.parseInt(content[3]);
-		this.debloque = Boolean.parseBoolean(content[4]);
+		return heures;
 	}
 	
 	public String toString() {
-		String r = this.nom + "," + this.duree + ",";
+		String r = this.nom + SEPARATEUR_ATTRIBUT + this.duree + SEPARATEUR_ATTRIBUT;
 		
 		for (int i = 0; i < this.heures.length; i++) {
 			if (i < this.heures.length - 1) {
-				r += this.heures[i] + "_";				
+				r += this.heures[i] + SEPARATEUR_HEURES;				
 			}
 			else {
 				r += this.heures[i];				
 			}
 		}
-		r+= "," + savoirRequis + "," + debloque;
+		r+= SEPARATEUR_ATTRIBUT + savoirRequis + SEPARATEUR_ATTRIBUT + debloque;
 		
 		return r;
 	}

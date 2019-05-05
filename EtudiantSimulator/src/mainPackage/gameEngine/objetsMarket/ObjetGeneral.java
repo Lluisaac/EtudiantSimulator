@@ -20,7 +20,6 @@ public abstract class ObjetGeneral {
 	private ArrayList<ModificateurEvent> modifEvent;
 	private ArrayList<ModificateurObjet> modifObjet;
 
-	private String[] titres;
 	private Date endOfPurchaseDate;
 
 	private boolean debloque;
@@ -75,28 +74,9 @@ public abstract class ObjetGeneral {
 		return this.attributs;
 	}
 
-	public void setTitres(String[] titres) {
-
-		this.titres = titres;
-	}
-
 	abstract public void acheter();
 	
 	abstract public void appliquer();
-
-	public ArrayList<String> toTabString() {		
-		ArrayList<String> string = new ArrayList<String>();
-		for (int i = 0; i < this.attributs.length - 1; i++) {
-			if (this.attributs[i] != 0) {
-				if (i == 0) {
-					string.add(titres[i] + ": " + attributs[i] + " euros");
-				} else {
-					string.add(titres[i] + ": " + attributs[i]);
-				}
-			}
-		}
-		return string;
-	}
 
 	public Date getEndOfPurchaseDate() {
 		return endOfPurchaseDate;
@@ -131,7 +111,7 @@ public abstract class ObjetGeneral {
 		return r;
 	}
 
-	public void appliquerModif() {
+	public void appliquerModification() {
 		for (int i = 0; i < this.modifEvent.size(); i++) {
 			this.modifEvent.get(i).appliquer();
 		}

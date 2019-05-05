@@ -165,7 +165,7 @@ public class ListEvent {
 		return date;
 	}
 
-	public static void regulateur()// Verifie que des probas ne doivent pas etre
+	public static void regulerLesEvents()// Verifie que des probas ne doivent pas etre
 									// ajuste par occurence, vérifie les jours
 									// restants et regule
 	{

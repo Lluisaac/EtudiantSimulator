@@ -4,7 +4,6 @@ package mainPackage.gameEngine.jour;
 import java.util.ArrayList;
 import java.util.Random;
 
-import mainPackage.gameEngine.Engine;
 import mainPackage.gameEngine.player.Player;
 
 public class Jour {
@@ -13,7 +12,7 @@ public class Jour {
 
 	private int tempsLibre; // Temps libre d'aujourd'hui
 
-	private int tempsLibreJ; // Temps libre a modifier pour chaque jour
+	private int tempsLibreJournalier; // Temps libre a modifier pour chaque jour
 
 	private int buffer;
 
@@ -23,7 +22,7 @@ public class Jour {
 	public Jour() {
 		this.date = new Date();
 		this.tempsLibre = 0;
-		this.tempsLibreJ = 0;
+		this.tempsLibreJournalier = 0;
 		this.buffer = 0;
 		genererJoursFeries();
 	}
@@ -39,7 +38,7 @@ public class Jour {
 			genererJoursFeries();
 		}
 		this.buffer = jourPrecedent.buffer;
-		this.tempsLibreJ = jourPrecedent.tempsLibreJ;
+		this.tempsLibreJournalier = jourPrecedent.tempsLibreJournalier;
 
 	}
 
@@ -140,15 +139,6 @@ public class Jour {
 				|| (this.getJour() > 14 && (this.getMois() == 2 || this.getMois() == 9));
 	}
 
-	public boolean declencherJour() {
-		
-		if (this.getJour() == 28) {
-			Engine.getPlayer().paimentEtGainsMois();
-		}
-		
-		return false;
-	}
-
 	public int getMois() {
 
 		return this.date.getMois();
@@ -182,9 +172,7 @@ public class Jour {
 
 	public void setTempsLibre(Player player, float i) {
 
-		this.tempsLibre = 60
-				* (24 - (this.getTempsDodo(player, i) + this.getTempsTransport(player) + this.getTempsTravail(player)))
-				+ this.buffer + this.tempsLibre;
+		this.tempsLibre = 60 * (24 - (this.getTempsDodo(player, i) + this.getTempsTransport(player) + this.getTempsTravail(player))) + this.buffer + this.tempsLibre;
 	}
 
 	public int getTempsTravail(Player player) {//TODO
@@ -215,19 +203,25 @@ public class Jour {
 		}
 	}
 
-	public int getMoisQuiArrive() {
+	public int getMoisDeDemain() {
 
 		int i;
 		if (this.getJour() == 28) {
-			if (this.getMois() == 10) {
-				i = 1;
-			} else {
-				i = this.getMois() + 1;
-			}
+			i = getMoisProchain();
 		} else {
 			i = this.getMois();
 		}
 
+		return i;
+	}
+
+	private int getMoisProchain() {
+		int i;
+		if (this.getMois() == 10) {
+			i = 1;
+		} else {
+			i = this.getMois() + 1;
+		}
 		return i;
 	}
 
@@ -245,11 +239,11 @@ public class Jour {
 	}
 
 	public void setTempsLibreJ(int i) {
-		this.tempsLibreJ = i;
+		this.tempsLibreJournalier = i;
 
 	}
 
 	public float getTempsLibreJ() {
-		return this.tempsLibreJ;
+		return this.tempsLibreJournalier;
 	}
 }
